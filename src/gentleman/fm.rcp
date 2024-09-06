@@ -1,0 +1,699 @@
+/*
+ *	file:		fm.rcp
+ *	project:	GentleMan
+ *	content:	resources
+ *	updated:	Jul. 06. 2002
+ *
+ * copyright: Collin R. Mulliner <palm@mulliner.org>
+ * web: www.mulliner.org/palm/
+ *
+ */
+
+/*
+ *  This file is part of GentleMan.
+ *
+ *  GentleMan is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  GentleMan is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with GentleMan; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+#include "fm_rcp.h"
+
+// software version
+VERSION ID 1 "0.9 Beta4.2"
+
+// this makes us HE330 compatible
+//HEX "sKst" ID 1000 0x00
+
+// application icons
+ICONFAMILY "bitmaps/gentleman_22x22x2_logo.bmp" "bitmaps/gentleman_22x22x4g_logo.bmp" "bitmaps/gentleman_22x22x16g_logo.bmp" "bitmaps/gentleman_22x22x256_logo.bmp"
+SMALLICONFAMILY "bitmaps/gentleman_15x9x2_logo.bmp" "" "" "bitmaps/gentleman_15x9x256_logo.bmp"
+
+// he330 icons
+ICONFAMILY ID 2000 "bitmaps/gentleman_32x32x2_logo.bmp" "bitmaps/gentleman_32x32x4g_logo.bmp" "bitmaps/gentleman_32x32x16g_logo.bmp" ""
+SMALLICONFAMILY ID 2001 "bitmaps/gentleman_24x14x2_logo.bmp" "bitmaps/gentleman_24x14x16_logo.bmp" "bitmaps/gentleman_24x14x16_logo.bmp" ""
+ICONFAMILY ID 2002 "bitmaps/gentleman_32x32x2_inv_logo.bmp" "bitmaps/gentleman_32x32x16g_inv_logo.bmp" "" ""
+
+// custom font for 160x160 view of date/time (non handera 330)
+FONT ID 1000 FONTID 128 "mini_font_4x11.txt"
+
+// progress bitmaps - 160x160 screen
+BITMAPCOLOR ID bmpID_ani_1 "bitmaps/ani_palm_p1.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_2 "bitmaps/ani_palm_p2.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_3 "bitmaps/ani_palm_p3.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_4 "bitmaps/ani_palm_p4.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_5 "bitmaps/ani_palm_p5.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_6 "bitmaps/ani_palm_p6.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_7 "bitmaps/ani_palm_p7.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_8 "bitmaps/ani_palm_p8.bmp" FORCECOMPRESS
+// progress bitmaps - 240x240 screen
+BITMAPCOLOR ID bmpID_ani_big_1 "bitmaps/ani_palm_big_p1.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_big_2 "bitmaps/ani_palm_big_p2.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_big_3 "bitmaps/ani_palm_big_p3.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_big_4 "bitmaps/ani_palm_big_p4.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_big_5 "bitmaps/ani_palm_big_p5.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_big_6 "bitmaps/ani_palm_big_p6.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_big_7 "bitmaps/ani_palm_big_p7.bmp" FORCECOMPRESS
+BITMAPCOLOR ID bmpID_ani_big_8 "bitmaps/ani_palm_big_p8.bmp" FORCECOMPRESS
+
+// ---== MENUS ==---
+
+/*
+ *	menu for the main screen (in volume mode)
+ */
+MENU ID vol_main_menu
+BEGIN
+	PULLDOWN "File"
+	BEGIN
+		MENUITEM "Copy"				ID	cmd_copy			"c"
+		MENUITEM "Delete"				ID	cmd_delete		"d"
+		MENUITEM "Beam"				ID	cmd_beam			"b"
+		MENUITEM	SEPARATOR
+		MENUITEM	"Make Directory"	ID	cmd_mkdir		"k"
+		MENUITEM	SEPARATOR
+		MENUITEM	"Details"			ID	cmd_fdetails	"i"
+		MENUITEM	SEPARATOR
+		MENUITEM	"Select All"		ID	cmd_sellall		"s"
+		MENUITEM	"UnSelect All"		ID	cmd_unsellall	"u"
+		
+	END
+			
+	PULLDOWN	"Options"
+	BEGIN
+		MENUITEM	"Prefs"				ID	cmd_prefs	"p"
+		MENUITEM	SEPARATOR
+		MENUITEM	"About"				ID	cmd_about	"a"
+		MENUITEM	SEPARATOR
+		MENUITEM	"Beam GentleMan"	ID	cmd_beamGentleMan
+	END
+	
+	PULLDOWN "Plugin"
+	BEGIN
+		MENUITEM "Manager"				ID	cmd_pluginMgr
+		MENUITEM	SEPARATOR
+		MENUITEM "Run Plugin"			ID	cmd_pluginActivate	"r"
+	END
+	
+END
+
+/*
+ *	menu for the main screen (in card mode)
+ */
+MENU ID card_main_menu
+BEGIN
+	PULLDOWN "File"
+	BEGIN
+		MENUITEM "Copy"			ID	cmd_copy			"c"
+		MENUITEM "Delete"			ID	cmd_delete		"d"
+		MENUITEM "Beam"			ID	cmd_beam			"b"
+		MENUITEM	SEPARATOR
+		MENUITEM	"Details"		ID	cmd_fdetails	"i"
+		MENUITEM	SEPARATOR
+		MENUITEM	"Select All"	ID	cmd_sellall		"s"
+		MENUITEM	"UnSelect All"	ID	cmd_unsellall	"u"
+	END
+	
+	PULLDOWN	"Options"
+	BEGIN
+		MENUITEM	"Prefs"				ID	cmd_prefs	"p"
+		MENUITEM	SEPARATOR
+		MENUITEM	"About"				ID	cmd_about	"a"
+		MENUITEM	SEPARATOR
+		MENUITEM	"Beam GentleMan"	ID	cmd_beamGentleMan
+	END
+	
+	PULLDOWN "Plugin"
+	BEGIN
+		MENUITEM "Manager"				ID	cmd_pluginMgr
+	END
+END
+
+/*
+ *	menu for the volDetails from
+ */
+MENU ID main_volDetails_menu
+BEGIN
+	PULLDOWN "Edit"
+	BEGIN
+		MENUITEM "Undo"				ID 10000 "U"
+		MENUITEM "Cut"					ID 10001 "X"
+		MENUITEM "Copy"				ID 10002 "C"
+		MENUITEM "Paste"				ID 10003 "P"
+		MENUITEM "Select All"		ID 10004 "S"
+		MENUITEM "-"					ID 10005
+		MENUITEM "Keyboard"			ID 10006 "K"
+		MENUITEM "Graffiti Help"	ID 10007 "G"
+	END
+END
+
+/*
+ *	plugin manager menu
+ */
+MENU ID pluginMgr_menu
+BEGIN
+	PULLDOWN "Plugin"
+	BEGIN
+		MENUITEM "About"					ID	cmd_pluginAbout	"a"
+	END
+END
+
+// ---== FORMS ==---
+
+/*
+ *	about form
+ */
+FORM ID formID_about AT (2 2 156 156)
+USABLE
+MODAL
+DEFAULTBTNID done_about_button
+BEGIN
+	TITLE "About GentleMan"
+	LABEL "GentleMan 0.9 Beta4.2" AUTOID AT (CENTER 16) FONT 7
+	LABEL "© Collin R. Mulliner" AUTOID AT (50 PREVBOTTOM+5) FONT 1
+	LABEL "July 6. 2002" AUTOID AT (50 PREVBOTTOM+1) FONT 1
+	LABEL "FreeSoftware (GPL)" AUTOID AT (50 PREVBOTTOM+5) FONT 1
+	LABEL "Email:" AUTOID AT (5 90) 
+	LABEL "palm@mulliner.org" AUTOID AT (10 100)
+	LABEL "Web Site:" AUTOID AT (5 112)
+	LABEL "www.mulliner.org/palm" AUTOID AT (10 122)
+	LABEL "developed using Linux" AUTOID AT (60 140)
+	BUTTON " Done " ID done_about_button AT (5 140 AUTO AUTO)
+END
+
+/*
+ *	the main form
+ */
+FORM ID formID_main AT (0 0 160 160)
+USABLE
+BEGIN
+	TITLE "GentleMan"
+	
+	PUSHBUTTON "Browser 1" ID brw1_main_button AT (66 1 AUTO 10) GROUP brw_group
+	PUSHBUTTON "Browser 2" ID brw2_main_button AT (PREVRIGHT+1 PREVTOP AUTO 10) GROUP brw_group
+		
+	SELECTORTRIGGER "" ID volst_main_button AT (1 17 158 11)
+	LIST "" ID volst_main_lst AT (1 17 157 AUTO) NONUSABLE VISIBLEITEMS 4
+
+	POPUPTRIGGER "Name A..Z" ID sort_main_ptrg AT (0 37 60 AUTO) LEFTANCHOR
+	LIST "Name A..Z" "Name Z..A" "Size 0..9" "Size 9..0" "cDate 0..9" "cDate 9..0" "mDate 0..9" "mDate 9..0" "aDate 0..9" "aDate 9..0"
+	 ID sort1_main_lst AT (0 37 60 AUTO) NONUSABLE VISIBLEITEMS 10
+	LIST "Name A..Z" "Name Z..A" "Size 0..9" "Size 9..0" "Type A..Z" "Type Z..A" "Creator A..Z" "Creator Z..A" 
+		  "cDate 0..9" "cDate 9..0" "mDate 0..9" "mDate 9..0" "bDate 0..9" "bDate 9..0"
+	 ID sort2_main_lst AT (0 5 60 AUTO) NONUSABLE VISIBLEITEMS 14
+	
+	POPUPTRIGGER "Size" ID show1_main_ptrg AT (66 37 45 AUTO) LEFTANCHOR
+	LIST "Size" "Attr" "cDate" "mDate" "aDate" "cTime" "mTime" "aTime" "none"
+	 ID show11_main_lst AT (66 37 40 AUTO) NONUSABLE VISIBLEITEMS 9
+	LIST "Type" "Creator" "Size" "Recs" "R/W" "Version" "mNum" "cDate" "mDate" "bDate" "cTime" "mTime" "bTime" "none"
+	 ID show12_main_lst AT (66 5 40 AUTO) NONUSABLE VISIBLEITEMS 14
+	
+	POPUPTRIGGER "Size" ID show2_main_ptrg AT (112 37 45 AUTO) LEFTANCHOR
+	LIST "Size" "Attr" "cDate" "mDate" "aDate" "cTime" "mTime" "aTime"
+	 ID show21_main_lst AT (112 37 40 AUTO) NONUSABLE VISIBLEITEMS 8
+	LIST "Type" "Creator" "Size" "Recs" "R/W" "Version" "mNum" "cDate" "mDate" "bDate" "cTime" "mTime" "bTime"
+	 ID show22_main_lst AT (112 5 40 AUTO) NONUSABLE VISIBLEITEMS 13
+	 
+	SCROLLBAR ID file_main_slb AT (153 48 7 110) VALUE 1 MIN 1 MAX 10 PAGESIZE 1
+END
+
+/*
+ *	make new directory form
+ */
+FORM ID formID_mkdir AT (2 60 156 70)
+USABLE
+MODAL
+MENUID main_volDetails_menu
+DEFAULTBTNID cancel_mkdir_button
+BEGIN
+	TITLE "Make Directory"
+	
+	FIELD ID name_mkdir_fld AT (5 20 145 AUTO) UNDERLINED EDITABLE MAXCHARS 255
+	
+	BUTTON " Ok " ID ok_mkdir_button AT (5 50 AUTO AUTO)
+	BUTTON "Cancel" ID cancel_mkdir_button AT (PREVRIGHT+5 PREVTOP AUTO AUTO)
+	
+	GRAFFITISTATEINDICATOR AT (145 53)
+END
+
+/*
+ *	details for a vfs volume file or directory
+ *	- if no changes were made only the "Done" button is visible
+ * - after an attribute was changed "Save" and "Cancel" are visible
+ */
+FORM ID formID_volDetails AT (0 0 160 160)
+USABLE
+MENUID main_volDetails_menu
+DEFAULTBTNID done_volDetails_button
+BEGIN
+	TITLE "Details"
+	
+	FIELD ID name_volDetails_fld AT (2 20 155 AUTO) EDITABLE UNDERLINED MAXCHARS 255
+	
+	LABEL "Size:" ID size_volDetails_label AT (2 38) FONT 1
+	
+	CHECKBOX "Archive" ID archive_volDetails_cbox AT (2 55 AUTO AUTO)
+	CHECKBOX "Hidden" ID hidden_volDetails_cbox AT (80 PREVTOP AUTO AUTO)
+	CHECKBOX "Link" ID link_volDetails_cbox AT (2 65 AUTO AUTO)
+	CHECKBOX "Read Only" ID readonly_volDetails_cbox AT (80 PREVTOP AUTO AUTO)
+	CHECKBOX "System" ID system_volDetails_cbox AT (2 75 AUTO AUTO)
+		
+	LABEL "Created:" AUTOID AT (6 90) FONT 1
+	SELECTORTRIGGER "" ID ds1_volDetails_button AT (60 PREVTOP 42 AUTO)
+	SELECTORTRIGGER "" ID ds4_volDetails_button AT (PREVRIGHT+8 PREVTOP 42 AUTO)
+
+	LIST "Now" "Choose" ID d1_volDetails_lst AT (60 PREVTOP 40 AUTO) NONUSABLE VISIBLEITEMS 2
+	
+	LABEL "Modified:" AUTOID AT (2 105) FONT 1
+	SELECTORTRIGGER "" ID ds2_volDetails_button AT (60 PREVTOP 42 AUTO)
+	SELECTORTRIGGER "" ID ds5_volDetails_button AT (PREVRIGHT+8 PREVTOP 42 AUTO)
+	
+	LIST "Now" "Choose" ID d2_volDetails_lst AT (60 PREVTOP 40 AUTO) NONUSABLE VISIBLEITEMS 2
+	
+	LABEL "Accessed:" AUTOID AT (2 120) FONT 1
+	SELECTORTRIGGER "" ID ds3_volDetails_button AT (60 PREVTOP 42 AUTO)
+	SELECTORTRIGGER "" ID ds6_volDetails_button AT (PREVRIGHT+8 PREVTOP 42 AUTO)
+	
+	LIST "Now" "Choose" ID d3_volDetails_lst AT (60 PREVTOP 40 AUTO) NONUSABLE VISIBLEITEMS 2
+	
+	BUTTON "Done" ID done_volDetails_button AT (2 147 AUTO AUTO)
+	BUTTON "Save" ID save_volDetails_button AT (2 147 AUTO AUTO) NONUSABLE
+	BUTTON "Cancel" ID cancel_volDetails_button AT (PREVRIGHT+5 PREVTOP AUTO AUTO) NONUSABLE
+	
+	GRAFFITISTATEINDICATOR AT (145 143)
+END
+
+/*
+ *	details for a card database
+ *	- if no changes were made only the "Done" button is visible
+ * - after an attribute was changed "Save" and "Cancel" are visible
+ */
+FORM ID formID_cardDetails AT (0 0 160 160)
+USABLE
+MENUID main_volDetails_menu
+DEFAULTBTNID done_cardDetails_button
+BEGIN
+	TITLE "Details"
+	
+	PUSHBUTTON "General" ID gen_cardDetails_button AT (58 1 50 10) GROUP cd_group
+	PUSHBUTTON "Attributes" ID attr_cardDetails_button AT (PREVRIGHT+1 PREVTOP 50 10) GROUP cd_group
+
+
+	FIELD ID name_cardDetails_fld AT (2 PREVBOTTOM+10 155 AUTO) EDITABLE UNDERLINED MAXCHARS 31
+	
+	LABEL "Type:" ID type_cardDetails_label AT (2 PREVTOP+15) FONT 1
+	FIELD ID type_cardDetails_fld AT (PREVRIGHT+2 PREVTOP 30 AUTO) EDITABLE UNDERLINED MAXCHARS 4
+	LABEL "Creator:" ID crid_cardDetails_label AT (PREVRIGHT+10 PREVTOP) FONT 1
+	FIELD ID crid_cardDetails_fld AT (PREVRIGHT+2 PREVTOP 30 AUTO) EDITABLE UNDERLINED MAXCHARS 4
+	
+	LABEL "Size:" ID size_cardDetails_label AT (2 PREVBOTTOM+5) FONT 1
+	LABEL "Records:" ID recs_cardDetails_label AT (2 PREVBOTTOM+3) FONT 1
+	
+	LABEL "Version:" ID ver_cardDetails_label AT (2 PREVBOTTOM+3) FONT 1
+	LABEL "Modification No.:" ID mnum_cardDetails_label AT (2 PREVBOTTOM+3) FONT 1
+	
+	LABEL "AppInfo:" ID app_cardDetails_label AT (2 PREVBOTTOM+3) FONT 1
+	LABEL "SortInfo:" ID sort_cardDetails_label AT (2 PREVBOTTOM+3) FONT 1
+
+
+	CHECKBOX "Backup" ID backup_cardDetails_cbox AT (2 18 AUTO AUTO)
+	CHECKBOX "Bundled" ID bundled_cardDetails_cbox AT (80 PREVTOP AUTO AUTO)
+	CHECKBOX "Copy Protect" ID copy_cardDetails_cbox AT (2 PREVBOTTOM-1 AUTO AUTO)
+	CHECKBOX "AppInfo Dirty" ID dirty_cardDetails_cbox AT (80 PREVTOP AUTO AUTO)
+	CHECKBOX "Hidden" ID hidden_cardDetails_cbox AT (2 PREVBOTTOM-1 AUTO AUTO)
+	CHECKBOX "Launchable" ID launch_cardDetails_cbox AT (80 PREVTOP AUTO AUTO)
+	CHECKBOX "Install Newer" ID install_cardDetails_cbox AT (2 PREVBOTTOM-1 AUTO AUTO)
+	CHECKBOX "Open" ID open_cardDetails_cbox AT (80 PREVTOP AUTO AUTO)
+	CHECKBOX "Read Only" ID ro_cardDetails_cbox AT (2 PREVBOTTOM-1 AUTO AUTO)
+	CHECKBOX "Recycle" ID recycle_cardDetails_cbox AT (80 PREVTOP AUTO AUTO)
+	CHECKBOX "Reset" ID reset_cardDetails_cbox AT (2 PREVBOTTOM-1 AUTO AUTO)
+	CHECKBOX "Resource" ID res_cardDetails_cbox AT (80 PREVTOP AUTO AUTO)
+	CHECKBOX "Stream" ID stream_cardDetails_cbox AT (2 PREVBOTTOM-1 AUTO AUTO)
+
+	LABEL "Created:" ID crd_cardDetails_label AT (9 98) FONT 1
+	SELECTORTRIGGER "" ID ds1_cardDetails_button AT (60 PREVTOP 42 AUTO)
+	SELECTORTRIGGER "" ID ds4_cardDetails_button AT (PREVRIGHT+8 PREVTOP 42 AUTO)
+
+	LIST "Now" "Choose" ID d1_cardDetails_lst AT (60 PREVTOP 40 AUTO) NONUSABLE VISIBLEITEMS 2
+	
+	LABEL "Modified:" ID mod_cardDetails_label AT (5 113) FONT 1
+	SELECTORTRIGGER "" ID ds2_cardDetails_button AT (60 PREVTOP 42 AUTO)
+	SELECTORTRIGGER "" ID ds5_cardDetails_button AT (PREVRIGHT+8 PREVTOP 42 AUTO)
+	
+	LIST "Now" "Choose" ID d2_cardDetails_lst AT (60 PREVTOP 40 AUTO) NONUSABLE VISIBLEITEMS 2
+	
+	LABEL "Backuped:" ID bkd_cardDetails_label AT (2 128) FONT 1
+	SELECTORTRIGGER "" ID ds3_cardDetails_button AT (60 PREVTOP 42 AUTO)
+	SELECTORTRIGGER "" ID ds6_cardDetails_button AT (PREVRIGHT+8 PREVTOP 42 AUTO)
+	
+	LIST "Now" "Choose" ID d3_cardDetails_lst AT (60 PREVTOP 40 AUTO) NONUSABLE VISIBLEITEMS 2
+
+
+	BUTTON "Done" ID done_cardDetails_button AT (2 147 AUTO AUTO)
+	BUTTON "Save" ID save_cardDetails_button AT (2 147 AUTO AUTO) NONUSABLE
+	BUTTON "Cancel" ID cancel_cardDetails_button AT (PREVRIGHT+5 PREVTOP AUTO AUTO) NONUSABLE
+	
+	GRAFFITISTATEINDICATOR AT (145 143)
+END
+
+/*
+ *	copy a file / database
+ *	- will also be used for moving files
+ */
+FORM ID formID_copy AT (2 35 156 100)
+USABLE
+MODAL
+MENUID main_volDetails_menu
+DEFAULTBTNID cancel_copy_button
+BEGIN
+	TITLE "Copy"
+	
+	LABEL "Destination:" ID dest_copy_label AT (5 15) FONT 1
+		
+	FIELD ID name_copy_fld AT (5 65 145 AUTO) UNDERLINED EDITABLE MAXCHARS 255
+	
+	BUTTON "Copy" ID copy_copy_button AT (5 PREVBOTTOM+7 AUTO AUTO)
+	BUTTON "Cancel" ID cancel_copy_button AT (PREVRIGHT+5 PREVTOP AUTO AUTO)
+	
+	GRAFFITISTATEINDICATOR AT (145 PREVTOP+1)
+END
+
+/*
+ *	preferences form
+ */
+FORM ID formID_prefs AT (0 0 160 160)
+USABLE
+DEFAULTBTNID cancel_prefs_button
+BEGIN
+	TITLE "Preferences"
+		
+	LABEL "File Mode Settings" AUTOID AT (1 15) FONT 1
+		
+	POPUPTRIGGER "Name A..Z" ID sortF_prefs_ptrg AT (0 27 60 AUTO) LEFTANCHOR
+	LIST "Name A..Z" "Name Z..A" "Size 0..9" "Size 9..0" "cDate 0..9" "cDate 9..0" "mDate 0..9" "mDate 9..0" "aDate 0..9" "aDate 9..0"
+	 ID sortF_prefs_lst AT (5 27 60 AUTO) NONUSABLE VISIBLEITEMS 10
+	POPUPLIST ID sortF_prefs_ptrg sortF_prefs_lst
+	
+	POPUPTRIGGER "Size" ID showF1_prefs_ptrg AT (66 27 45 AUTO) LEFTANCHOR
+	LIST "Size" "Attr" "cDate" "mDate" "aDate" "cTime" "mTime" "aTime" "none"
+	 ID showF1_prefs_lst AT (66 27 40 AUTO) NONUSABLE VISIBLEITEMS 9
+	POPUPLIST ID showF1_prefs_ptrg showF1_prefs_lst
+	
+	POPUPTRIGGER "Size" ID showF2_prefs_ptrg AT (112 27 45 AUTO) LEFTANCHOR
+	LIST "Size" "Attr" "cDate" "mDate" "aDate" "cTime" "mTime" "aTime"
+	 ID showF2_prefs_lst AT (112 27 40 AUTO) NONUSABLE VISIBLEITEMS 8
+	POPUPLIST ID showF2_prefs_ptrg showF2_prefs_lst
+	
+	LABEL "Double-Tap:" AUTOID AT (0 40) FONT 0
+	POPUPTRIGGER "Details" ID dtapF_prefs_ptrg AT (PREVRIGHT+5 PREVTOP 90 AUTO) LEFTANCHOR
+	LIST "Details" "Run Plugin" ID dtapF_prefs_lst AT (PREVLEFT+5 PREVTOP 90 AUTO) NONUSABLE VISIBLEITEMS 2
+	POPUPLIST ID dtapF_prefs_ptrg dtapF_prefs_lst
+	
+	LABEL "DB Mode Settings" AUTOID AT (1 60) FONT 1
+	
+	POPUPTRIGGER "Name A..Z" ID sortD_prefs_ptrg AT (0 72 60 AUTO) LEFTANCHOR
+	LIST "Name A..Z" "Name Z..A" "Size 0..9" "Size 9..0" "Type A..Z" "Type Z..A" "Creator A..Z" "Creator Z..A" 
+		  "cDate 0..9" "cDate 9..0" "mDate 0..9" "mDate 9..0" "bDate 0..9" "bDate 9..0"
+	 ID sortD_prefs_lst AT (5 5 60 AUTO) NONUSABLE VISIBLEITEMS 14
+	POPUPLIST ID sortD_prefs_ptrg sortD_prefs_lst
+	
+	POPUPTRIGGER "Size" ID showD1_prefs_ptrg AT (66 72 45 AUTO) LEFTANCHOR
+	LIST "Type" "Creator" "Size" "Recs" "R/W" "Version" "mNum" "cDate" "mDate" "bDate" "cTime" "mTime" "bTime" "none"
+	 ID showD1_prefs_lst AT (66 5 40 AUTO) NONUSABLE VISIBLEITEMS 14
+	POPUPLIST ID showD1_prefs_ptrg showD1_prefs_lst
+	
+	POPUPTRIGGER "Size" ID showD2_prefs_ptrg AT (112 72 45 AUTO) LEFTANCHOR
+	LIST "Type" "Creator" "Size" "Recs" "R/W" "Version" "mNum" "cDate" "mDate" "bDate" "cTime" "mTime" "bTime"
+	 ID showD2_prefs_lst AT (112 5 40 AUTO) NONUSABLE VISIBLEITEMS 13
+	POPUPLIST ID showD2_prefs_ptrg showD2_prefs_lst
+	
+	LABEL "Double-Tap:" AUTOID AT (0 85) FONT 0
+	POPUPTRIGGER "Details General" ID dtapD_prefs_ptrg AT (PREVRIGHT+5 PREVTOP 90 AUTO) LEFTANCHOR
+	LIST "Details General" "Details Attributes" ID dtapD_prefs_lst AT (PREVLEFT+5 PREVTOP 90 AUTO) NONUSABLE VISIBLEITEMS 2
+	POPUPLIST ID dtapD_prefs_ptrg dtapD_prefs_lst
+	
+	BUTTON " Ok " ID ok_prefs_button AT (1 147 AUTO AUTO)
+	BUTTON "Cancel" ID cancel_prefs_button AT (PREVRIGHT+5 PREVTOP AUTO AUTO)
+END
+
+/*
+ *	plugin manager form
+ */
+FORM ID formID_pluginMgr AT (0 0 160 160)
+USABLE
+DEFAULTBTNID done_plugin_button
+MENUID pluginMgr_menu
+BEGIN
+	TITLE "PluginManager"
+	
+	LIST "" ID plug_plugin_lst AT (1 20 158 30) VISIBLEITEMS 7
+	
+	LABEL "Name:" AUTOID AT (1 PREVBOTTOM+1) FONT 1
+	
+	LABEL "Supported Extension(s):" AUTOID AT (1 PREVBOTTOM+10) FONT 1
+	
+	BUTTON "Done" ID done_plugin_button AT (1 147 AUTO AUTO)
+END
+
+// --== ALERTS ==---
+
+ALERT ID alertID_volSrcDestIncompatible
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "Only .PDB/.PRC/.PQA files can be copied to RAM!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_cardDetName
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "A database with this name already exists!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_cardDBRomBased
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "This database is in ROM it can't be modified or deleted!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volReadOnly
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "The card is set to read only! You can't modify, delete or create files on this card."
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volFileName
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "Invalid file name!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volDirName
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "Invalid directory name!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volFull
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "Card full!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volPerms
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "Permission denied!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volDeleteFile
+CONFIRMATION
+BEGIN
+	TITLE "Delete"
+	MESSAGE "Really delete: ^1 ?"
+	BUTTONS " Yes " "  No  "
+END
+
+ALERT ID alertID_volDeleteFiles
+CONFIRMATION
+BEGIN
+	TITLE "Delete"
+	MESSAGE "^1 files marked for deletion. Delete all?"
+	BUTTONS " Yes " "  No  "
+END
+
+ALERT ID alertID_cardDeleteFiles
+CONFIRMATION
+BEGIN
+	TITLE "Delete"
+	MESSAGE "^1 databases marked for deletion. Delete all?"
+	BUTTONS " Yes " "  No  "
+END
+
+ALERT ID alertID_cardDetailsUnknownError
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "Changing the details of: ^1 failed! Continue with rest of databases?"
+	BUTTONS "Continue" "Stop"
+END
+
+ALERT ID alertID_volDetailsUnknownError
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "Changing the details of: ^1 failed! Continue with rest of databases?"
+	BUTTONS "Continue" "Stop"
+END
+
+ALERT ID alertID_cardNoSelDB
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "No database selected in current browser!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volNoSelFile
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "No file selected in current browser!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_cardCantChangeAttr
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "This attribute can't be changed!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volSingleFileOnly
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "This operation can't be performed on more then one file at the time!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_cardSingleDBOnly
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "This operation can't be performed on more then one database at the time!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volUnknownError
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "This operation lead to an unknown error!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volCantRemoveRO
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "The ReadOnly flag can't be removed from: ^1"
+	BUTTONS "Continue" " Stop "
+END
+
+ALERT ID alertID_volOverwriteQuestion
+CONFIRMATION
+BEGIN
+	TITLE "Overwrite"
+	MESSAGE "A file named ^1 already exists! Overwrite it?"
+	BUTTONS " Yes " "  No  "
+END
+
+ALERT ID alertID_volOverwriteQuestionAllways
+CONFIRMATION
+BEGIN
+	TITLE "Overwrite"
+	MESSAGE "A file named ^1 already exists! Overwrite it?"
+	BUTTONS " Yes " "Always" "  No  "
+END
+
+ALERT ID alertID_volSrcEqDest
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "Source and destination are the same!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_volPDBBroken
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE ".PDB/.PRC/.PQA file looks to be broken!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_stupid
+WARNING
+BEGIN
+	TITLE "Warning"
+	MESSAGE "You should not do this! So I wont let you do this!"
+	BUTTONS " Okay "
+END
+
+ALERT ID alertID_palmOSVersion
+INFORMATION
+BEGIN
+	TITLE "GentleMan"
+	MESSAGE "This application requires PalmOS 3.5 or newer!"
+	BUTTONS " Quit "
+END
+
+ALERT ID alertID_betaExpired
+INFORMATION
+BEGIN
+	TITLE "GentleMan 0.9 Beta4.2"
+	MESSAGE "This application is an early beta version! Please check my website for a newer version!\n\nwww.mulliner.org/palm"
+	BUTTONS " Quit "
+END
+
+ALERT ID alertID_cardRecycleWarning
+WARNING
+BEGIN
+	TITLE "Warning"
+	MESSAGE "Setting this attribute is like deleting the database! Don't play with the attributes!"
+	BUTTONS " Ok "
+END
+
+ALERT ID alertID_pluginNotFound
+ERROR
+BEGIN
+	TITLE "Error"
+	MESSAGE "No plugin found for this file!"
+	BUTTONS " Ok "
+END

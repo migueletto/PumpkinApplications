@@ -1,0 +1,76 @@
+/*
+ *	file:		wav.rcp
+ *	project:	WavPlayer (GentleMan Plugin)
+ *	content:	resources
+ *	updated:	17. Sep. 2001
+ * 
+ *	copyright: Collin R. Mulliner <palm@mulliner.org>
+ * web: www.mulliner.org/palm
+ *
+ */
+
+/*
+ *  This file is part of GentleMan.
+ *
+ *  GentleMan is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  GentleMan is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with GentleMan; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+#include "wav_rcp.h"
+
+// software version
+VERSION "1.0"
+
+// name
+STRING ID GM_PLUGIN_NAME_STR_ID						"WavPlayer"
+// extensions
+STRING ID GM_PLUGIN_EXTENSIONS_STR_ID				"wav"
+// plugin version
+INTEGER ID GM_PLUGIN_VERSION_INT_ID					VALUE 1
+// plugin system/interface version
+INTEGER ID GM_PLUGIN_INTERFACE_VERSION_INT_ID	VALUE 1
+
+// about form logo
+BITMAP ID bmpID_about_logo "bitmaps/mulliner_org_logo.bmp"
+
+FORM ID formID_play AT (2 50 156 50)
+USABLE
+MODAL
+BEGIN
+	TITLE "Playing"
+END
+
+// about form
+FORM ID formID_about AT (2 2 156 156)
+USABLE
+MODAL
+HELPID strID_help
+BEGIN
+	TITLE "About WavPlayer"
+	LABEL "WavPlayer 1.0" AUTOID AT (CENTER 16) FONT 7
+	LABEL "© Collin R. Mulliner" AUTOID AT (50 PREVBOTTOM+5) FONT 1
+	LABEL "September 17. 2001" AUTOID AT (50 PREVBOTTOM+1) FONT 1
+
+	LABEL "Sample Plugin for GentleMan" AUTOID AT (CENTER 100) FONT 1
+
+	FORMBITMAP AT (10 42) BITMAP bmpID_about_logo
+	LABEL "developed using Linux" AUTOID AT (60 140)
+	BUTTON "Done" AUTOID AT (5 140 AUTO AUTO)
+END
+
+STRING ID strID_help	""\
+							"\225WavPlayer\225\n\n"\
+							"This is a very simple wav player. It was made for demonstrating the "\
+							"GentleMan plugin system.\n\n It only works on the HandEra 330 and the TRGpro, sorry!\n\n"\
+							"... Collin"

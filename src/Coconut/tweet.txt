@@ -1,0 +1,9 @@
+Weird. A TRS-Color emulator developed for #PalmOS back in 2003,
+now compiled and running natively on Linux/x86.
+
+I found links to FileZ and SpaceTrader source code via palmopensource.com.
+But links there are dying fast, and I do not expect palmsource.com to be
+up and running much longer.
+
+If you developed for #PalmOS back in the day, please consider
+donating your source code. Let's make those apps alive again!

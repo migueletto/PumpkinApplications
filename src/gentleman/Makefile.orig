@@ -1,0 +1,35 @@
+INC = /usr/local/palmdev/TRG/include
+
+CC = m68k-palmos-gcc
+CFLAGS = -O3 -Wunused -I$(INC)
+
+AS = m68k-palmos-as
+ASFLAGS =
+
+LDFLAGS = 
+
+
+OBJ = fm_1.o fm_2-file_db.o fm_3-init.o fm_4-gui.o fm_5-filelist.o fm_6-anim.o fm_7-sorting.o fm_8-details.o fm_9-files.o fm_10-copy.o fm_11-prefs.o fm_12-plugin.o
+
+RCP = fm.rcp
+PRC = GentleMan.prc
+
+all: $(PRC)
+	ls -ls *.prc
+
+$(PRC): stuff fm.def
+	$(CC) $(CFLAGS) -o palmos_obj $(OBJ) fm-sections.o fm-sections.ld
+	pilrc $(RCP)
+	build-prc fm.def palmos_obj *.bin -o $(PRC)
+	rm *.o
+	rm *.bin
+	rm palmos_obj
+	rm *.ld
+	rm *.s
+
+stuff: $(OBJ)
+	m68k-palmos-multigen fm.def
+	$(CC) -c fm-sections.s
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<

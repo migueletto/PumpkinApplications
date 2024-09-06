@@ -1,0 +1,609 @@
+//********************************************************************
+// iRogue - Rogue adapted for the PalmPilot.                         *
+// Copyright (C) 1999 Bridget Spitznagel                             *
+// Note: This program is derived from rogue 5.3-clone for Linux.     *
+//                                                                   *
+// This program is free software; you can redistribute it and/or     *
+// modify it under the terms of the GNU General Public License       *
+// as published by the Free Software Foundation; either version 2    *
+// of the License, or (at your option) any later version.            *
+//                                                                   *
+// This program is distributed in the hope that it will be useful,   *
+// but WITHOUT ANY WARRANTY; without even the implied warranty of    *
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     *
+// GNU General Public License for more details.                      *
+//                                                                   *
+// You should have received a copy of the GNU General Public License *
+// along with this program; if not, write to                         *
+// The Free Software Foundation, Inc.,                               *
+// 59 Temple Place - Suite 330,                                      *
+// Boston, MA  02111-1307, USA.                                      *
+//********************************************************************
+
+#include "iRogueRsc.h"
+
+
+VERSION ID 1 "1.1.1"
+
+// For Handera, to tell it this is allegedly a hi-res application
+HEX "sKst" ID 1000 0x00 0x00 0x00 0x00
+
+//ICON "iRogue.bmp"
+//SMALLICON "iRogueSmall.bmp"
+ICONFAMILY "iRogue.bmp" "" "" "iRogueC.bmp" TRANSPARENT 255 255 255
+SMALLICONFAMILY "iRogueSmall.bmp" "" "" "iRogueSmallC.bmp" TRANSPARENT 255 255 255
+
+ICON ID 2000 "iRogueLarge.bmp"
+ICON ID 2001 "iRogueSmall330.bmp"
+ICON ID 2002 "iRogueLargeInv.bmp"
+//largeIconBW = 48 x 32
+//mediumIconBW = 24 x 14
+//largeInvertedIconBW
+
+// Changed from 128 to 129.  Let's see if this fixes Kyocera's wagon.
+FONT ID ItsyFont FONTID 129 "Font56.txt"
+
+// This seems to upset my own launcher.
+// LAUNCHERCATEGORY "Games"
+
+FORM ID MainForm AT (0 0 160 160)
+USABLE
+NOFRAME
+MENUID MainFormMenu
+BEGIN
+    GRAFFITISTATEINDICATOR AT (150 1)
+END
+//    GRAFFITISTATEINDICATOR AT (150 150)
+
+// this one was right after (m)move:
+//	MENUITEM "(,)    Pick up *" ID  menu_cmd_pickup
+MENU ID MainFormMenu
+BEGIN
+    PULLDOWN "Options"
+    BEGIN
+        MENUITEM "Map  "           ID menu_mainMap "M"
+	MENUITEM "Message Log   "          ID menu_mainMsgs "L"
+	MENUITEM "whatsit? "        ID menu_mainWhatsit "W"
+	MENUITEM SEPARATOR
+	MENUITEM "Scroll View " ID  menu_mainScroll "V"
+        MENUITEM "Re-Center"     ID menu_mainRefresh "C"
+	MENUITEM SEPARATOR
+        MENUITEM "Preferences   "        ID menu_mainSettings "R"
+        MENUITEM "Bindings   "        ID menu_mainBindings
+	MENUITEM "Change Font "        ID menu_mainFont "F"
+	MENUITEM SEPARATOR
+	MENUITEM "(Q)  QUIT" ID  menu_cmd_quit
+    END
+    PULLDOWN "Wiz"
+    BEGIN
+        MENUITEM "Wizard"  ID menu_mainWiztog "I"
+        MENUITEM "Wiz Create ..."     ID menu_mainWiz
+	MENUITEM SEPARATOR
+        MENUITEM "Autosave"        ID menu_mainAutosave "S"
+        MENUITEM "Save ..."         ID menu_mainSave
+        MENUITEM "Restore ..."      ID menu_mainRestore
+	MENUITEM SEPARATOR
+        MENUITEM "Top Scores"      ID menu_mainScores
+    END
+    PULLDOWN "Commands"
+    BEGIN
+	MENUITEM "(i)    Inventory..." ID  menu_cmd_i
+	MENUITEM SEPARATOR
+	MENUITEM "(.)    Rest" ID  menu_cmd_rest
+	MENUITEM "(m) Move" ID  menu_cmd_m
+	MENUITEM "(,)    Pick up" ID  menu_cmd_pickup
+	MENUITEM "(s)   Search" ID  menu_cmd_s
+	MENUITEM "(f)   Fight" ID  menu_cmd_f
+	MENUITEM "(F)   til death" ID  menu_cmd_F
+	MENUITEM "(<)   Up" ID  menu_cmd_ascend
+	MENUITEM "(>)   Down" ID  menu_cmd_descend
+	MENUITEM "(^)   ID trap" ID  menu_cmd_trap
+	MENUITEM "(t)   Throw" ID  menu_cmd_t
+	MENUITEM "(z)   Zap" ID  menu_cmd_z
+    END
+    PULLDOWN "??"
+    BEGIN
+	MENUITEM "Instructions   "      ID menu_mainMoveInstruct
+        MENUITEM "About iRogue   "       ID menu_mainAbout
+	MENUITEM "Graffiti Help "        ID menu_mainGraffiti "G"
+    END
+END
+//	MENUITEM "(l)    Long list..." ID  menu_cmd_l
+
+
+FORM ID TopTenForm AT (2 30 156 128)
+USABLE
+MODAL
+DEFAULTBTNID btn_dead_ok
+BEGIN
+    TITLE "Top Ten Scores"
+    FIELD ID field_topten AT (5 15 146 88) NONEDITABLE MULTIPLELINES MAXCHARS 1024
+    REPEATBUTTON "\001" ID repeat_topten_up AT (144 111 10 AUTO) NOFRAME FONT 5 
+    REPEATBUTTON "\002" ID repeat_topten_down AT (144 119 10 AUTO) NOFRAME FONT 5 
+    BUTTON "Play Again" ID btn_dead_ok AT (5 111 AUTO AUTO)
+    BUTTON "Revivify" ID btn_dead_reviv AT (PrevRight+10 PrevTop AUTO AUTO)
+    BUTTON "Done" ID btn_dead_done AT (5 111 AUTO AUTO) NONUSABLE
+END
+
+// snapshot form can reuse display-text of this sucker, how about that.
+FORM ID RevivifyForm AT (2 2 156 156)
+USABLE
+MODAL
+HELPID RevivStr
+DEFAULTBTNID btn_reviv_cancel
+BEGIN
+    TITLE "Restore Character"
+    LABEL "Which file to restore?" AUTOID AT (5 15)
+    POPUPTRIGGER "autosave" ID popup_reviv AT (4 PrevTop+11 62 AUTO) LEFTANCHOR
+    LIST "autosave" ID list_reviv AT (PrevLeft PrevTop 140 1) NONUSABLE VISIBLEITEMS 1
+    POPUPLIST ID popup_reviv list_reviv
+    BUTTON "Alive" ID btn_reviv_alive AT (5 141 AUTO AUTO)
+    BUTTON "Undead" ID btn_reviv_undead AT (PrevRight+10 PrevTop AUTO AUTO)
+    BUTTON "Cancel" ID btn_reviv_cancel AT (PrevRight+10 PrevTop AUTO AUTO)
+END
+
+FORM ID SnapshotForm AT (2 2 156 156)
+USABLE
+MODAL
+HELPID RevivStr
+DEFAULTBTNID btn_snap_cancel
+BEGIN
+    TITLE "Write/Delete Snapshot"
+    LABEL "Which slot?" AUTOID AT (5 15)
+    POPUPTRIGGER "autosave" ID popup_snap AT (4 PrevTop+11 62 AUTO) LEFTANCHOR
+    LIST "autosave" "New" ID list_snap AT (PrevLeft PrevTop 140 1) NONUSABLE VISIBLEITEMS 2
+    POPUPLIST ID popup_snap list_snap
+    BUTTON "Delete" ID btn_snap_delete AT (5 141 AUTO AUTO)
+    BUTTON "Write" ID btn_snap_save AT (PrevRight+10 PrevTop AUTO AUTO)
+    BUTTON "Cancel" ID btn_snap_cancel AT (PrevRight+10 PrevTop AUTO AUTO)
+END
+
+// FORM ID DirectionForm AT (2 48 156 110)
+// Try not to have more than 14 items in the popup list?...
+// SAVEBEHIND ?
+FORM ID DirectionForm AT (2 28 156 130)
+USABLE
+MODAL
+DEFAULTBTNID btn_d_cancel
+BEGIN
+	TITLE "--- Select Direction ---"
+
+	BUTTON "nw" ID btn_d_nw AT (20           18         35        25)         BOLDFRAME
+	BUTTON "n " ID btn_d_n  AT (PrevRight+5  PrevTop    PrevWidth PrevHeight) BOLDFRAME
+	BUTTON "ne" ID btn_d_ne AT (PrevRight+5  PrevTop    PrevWidth PrevHeight) BOLDFRAME
+	BUTTON "w " ID btn_d_w  AT (20           PrevTop+30 PrevWidth PrevHeight) BOLDFRAME
+BUTTON "Cancel" ID btn_d_cancel AT (PrevRight+5  PrevTop    PrevWidth PrevHeight) BOLDFRAME
+	BUTTON "e " ID btn_d_e  AT (PrevRight+5  PrevTop    PrevWidth PrevHeight) BOLDFRAME
+	BUTTON "sw" ID btn_d_sw AT (20           PrevTop+30 PrevWidth PrevHeight) BOLDFRAME
+	BUTTON "s " ID btn_d_s  AT (PrevRight+5  PrevTop    PrevWidth PrevHeight) BOLDFRAME
+	BUTTON "se" ID btn_d_se AT (PrevRight+5  PrevTop    PrevWidth PrevHeight) BOLDFRAME
+        POPUPTRIGGER "foo" ID popup_d AT (4 PrevTop+30 62 AUTO) LEFTANCHOR
+        LIST "foo" "bar" "baz" ID list_d AT (PrevLeft PrevTop 140 1) 
+NONUSABLE VISIBLEITEMS 3
+        POPUPLIST ID popup_d list_d
+END
+
+
+FORM ID MsgLogForm AT (2 2 156 156)
+USABLE
+MODAL
+DEFAULTBTNID btn_iv_ok
+BEGIN
+	TITLE "Message Log"
+	FIELD ID field_iv AT (5 15 146 121) NONEDITABLE MULTIPLELINES MAXCHARS 2048
+    REPEATBUTTON "\001" ID repeat_iv_up AT (144 140 10 AUTO) NOFRAME FONT 5 
+    REPEATBUTTON "\002" ID repeat_iv_down AT (144 148 10 AUTO) NOFRAME FONT 5 
+	BUTTON "Done" ID btn_iv_ok AT (5 140 37 AUTO)
+END
+
+
+// I would really like to have this label appear and disappear
+// but I haven't the faintest idea how to do it, if it can even be done.
+// 	LABEL "fingers" label_i_fingers AT (126 85)
+FORM ID InvSelectForm AT (2 2 156 156)
+USABLE
+MODAL
+HELPID InvStr
+DEFAULTBTNID btn_i_cancel
+BEGIN
+	TITLE "Select From Inventory"
+	LIST "foo" "bar" "baz" ID list_i AT (0 15 122 121)
+
+	PUSHBUTTON "DWIM" ID pbtn_if_frob AT (125 15 31 15) NONUSABLE GROUP 2
+	PUSHBUTTON "drop" ID pbtn_if_drop AT (PrevLeft PrevBottom+1 PrevWidth PrevHeight) NONUSABLE GROUP 2
+	PUSHBUTTON "throw" ID pbtn_if_throw AT (PrevLeft PrevBottom+1 PrevWidth PrevHeight) NONUSABLE GROUP 2
+	PUSHBUTTON "wield" ID pbtn_if_wield AT (PrevLeft PrevBottom+1 PrevWidth PrevHeight) NONUSABLE GROUP 2
+
+	BUTTON "Ok" ID btn_i_ok AT (5 141 35 AUTO)
+	BUTTON "Cancel" ID btn_i_cancel AT (PrevRight+5 PrevTop 35 AUTO)
+
+	PUSHBUTTON "L1" ID pbtn_i_left1 AT (125 98 15 AUTO) NONUSABLE GROUP 1
+	PUSHBUTTON "L2" ID pbtn_i_left2 AT (PrevLeft PrevBottom+1 PrevWidth AUTO) NONUSABLE GROUP 1
+	PUSHBUTTON "L3" ID pbtn_i_left3 AT (PrevLeft PrevBottom+1 PrevWidth AUTO) NONUSABLE GROUP 1
+	PUSHBUTTON "L4" ID pbtn_i_left4 AT (PrevLeft PrevBottom+1 PrevWidth AUTO) NONUSABLE GROUP 1
+	PUSHBUTTON "R1" ID pbtn_i_right1 AT (PrevRight+1 98 15 AUTO) NONUSABLE GROUP 1
+	PUSHBUTTON "R2" ID pbtn_i_right2 AT (PrevLeft PrevBottom+1 PrevWidth AUTO) NONUSABLE GROUP 1
+	PUSHBUTTON "R3" ID pbtn_i_right3 AT (PrevLeft PrevBottom+1 PrevWidth AUTO) NONUSABLE GROUP 1
+	PUSHBUTTON "R4" ID pbtn_i_right4 AT (PrevLeft PrevBottom+1 PrevWidth AUTO) NONUSABLE GROUP 1
+
+END
+//PUSHBUTTON "L =" ID pbtn_i_left AT (PrevRight+5 PrevTop 15 AUTO) NONUSABLE GROUP 1
+//PUSHBUTTON "R =" ID pbtn_i_right AT (PrevRight+1 PrevTop 15 AUTO) NONUSABLE GROUP 1
+
+
+FORM ID WizForm AT (2 2 156 156)
+USABLE
+MODAL
+HELPID WizStr
+DEFAULTBTNID btn_wiz_cancel
+BEGIN
+	TITLE "(Wizard) Create Object"
+	LIST "!" "?" ")" "]" "/" "=" "o" "," ID list_wiza AT (5 15 125 121)
+	BUTTON "Ok" ID btn_wiz_ok AT (5 141 35 AUTO) NONUSABLE
+	BUTTON "Cancel" ID btn_wiz_cancel AT (PrevRight+5 PrevTop 35 AUTO)
+END
+//	LIST "!" "?" "," "o" ")" "]" "/" "=" ID list_wiza AT (5 15 40 121)
+//	LIST "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" ID list_wizb AT (55 15 86 121)
+
+
+FORM ID MapForm AT (0 0 160 160)
+USABLE
+NOFRAME
+BEGIN
+END
+
+
+// see Ataxx, Fretboard, Launchpad
+//         FORMBITMAP AT (35 19) BITMAP Bitmap_About
+// but it has to be a FORM
+
+BITMAP ID bitmap_rogue "iRogue.bmp"
+BITMAP ID bitmap_cat "dead-spider2.bmp"
+//HELPID MoveStr
+FORM ID AboutForm AT (2 2 156 156)
+USABLE
+MODAL
+HELPID AboutStr
+DEFAULTBTNID btn_about_ok
+BEGIN
+	TITLE "About iRogue"
+	FORMBITMAP AT (8 19) BITMAP bitmap_cat
+	FORMBITMAP AT (98 15) BITMAP bitmap_rogue
+	LABEL "iRogue v1.1.1" AUTOID AT (90 40)
+	LABEL "Based on" AUTOID AT (PrevLeft-2 PrevTop+22)
+	LABEL "rogue 5.3-clone" AUTOID AT (PrevLeft-3 PrevTop+11)
+
+	LABEL "Bugs?  Contact:" AUTOID AT (Center 95)
+	LABEL "Bridget Spitznagel" AUTOID AT (Center PrevTop+11)
+        LABEL "i0lanthe@yahoo.com" AUTOID AT (Center PrevTop+11)
+	BUTTON "Done" ID btn_about_ok AT (5 141 35 AUTO)
+	BUTTON "License" ID btn_about_more AT (50 141 AUTO AUTO)
+	BUTTON "Credits" ID btn_about_credits AT (PrevRight+10 141 AUTO AUTO)
+END
+
+ALERT ID QuitP
+WARNING
+BEGIN
+	TITLE "Really Quit?"
+	MESSAGE "Do you really want to quit?  This will kill your current character."
+	BUTTON "Ok" "No, don't quit!"
+END
+
+ALERT ID WizardP
+WARNING
+BEGIN
+	TITLE "Turn On Wizard Mode?"
+	MESSAGE "Characters that use wizard mode will not appear on the top ten list.  If you care, cancel."
+	BUTTON "Cancel" "Wizardize me!"
+END
+
+ALERT ID SaveOverP
+WARNING
+BEGIN
+	TITLE "Overwrite?"
+	MESSAGE "Are you sure you want to save over this slot?"
+	BUTTON "Yes" "No, don't"
+END
+
+ALERT ID SaveDeleteP
+WARNING
+BEGIN
+	TITLE "Delete?"
+	MESSAGE "Are you sure you want to delete the data in this slot?"
+	BUTTON "Yes" "No, don't"
+END
+
+
+ALERT ID NoTiles
+ERROR
+BEGIN
+	TITLE "Can't find tiles"
+	MESSAGE "You checked \"Tiles\", but I can't find iRogueTileDB (or it doesn't have enough icons), so I'm turning \"Tiles\" off again."
+	BUTTON "Ok"
+END
+
+
+STRING AboutStr "iRogue version 1.1.1\n"\
+                "© 1999-2002 Bridget Spitznagel.\n\n"\
+                "This program was derived "\
+                "from rogue 5.3-clone (© Tim Stoehr) and urogue.\n\n"\
+                "iRogue comes with Absolutely No Warranty.\n"\
+                "This is free software, and "\
+                "you are welcome to "\
+                "redistribute it under certain "\
+                "conditions (for details see: GNU "\
+                "General Public License,\n"\
+                "http://www.gnu.org/ copyleft/gpl.html)"
+
+STRING CreditStr "Rogue has been around for 20 years or so.  "\
+		"The original Rogue was created by "\
+		"Michael Toy, Glenn Wichman, and Ken Arnold.  "\
+		"There are many descendants of that game.\n"\
+		"iRogue is a child of Linux Rogue (which is Tim Stoehr's "\
+                "Rogue Clone fixed up by Steve Wilson to run on Linux and "\
+		"then updated more by Alan Cox, thus says the README; "\
+		"Rogue Clone clones version "\
+		"5.3 of Rogue), with many additional weapons from the "\
+		"urogue_spoiler files (author unknown).\n  Thanks also to "\
+		"intrepid testers and reporters of bugs.\n"\
+		"- Bridget Spitznagel"
+
+// http://www.mo.himolde.no/~knan/roguelike/
+
+STRING MoveStr 	"-Find the amulet of yendor ,\n"\
+		"and return home with it.\n"\
+		"\n-To move, imagine the screen\n" \
+		"is an eight-point compass,\n" \
+		"and tap in the direction you\n" \
+		"want to move, regardless of\n" \
+		"the Rogue's screen position.\n" \
+		"Tap in the center to search.\n" \
+		"\n-When you are on stairs %\n" \
+		"press a hardware scroll\n"\
+		"button to ascend or descend.\n"\
+		"\n-See the Cmds menu for\n"\
+		"commands.  Write the first character in Graffiti if you\n"\
+		"prefer.  The inventory command is most useful.\n"\
+  		"\n-Items- read ? scrolls,\n"\
+		"eat o food, quaff ! potions,\n"\
+		"wield or throw ) weapons,\n"\
+		"put on and remove = rings,\n"\
+		"wear and take off ] armor,\n"\
+		"zap / wands and staffs.\n"\
+		"\n-Monsters are letters A-Z.\n"\
+		"Gold * is good, traps ^ bad."
+
+STRING WizStr	"And you call yourself a wizard."
+
+STRING RevivStr "Restoring a character is an uncanny procedure "\
+		"that will return you to your last saved position.  "\
+		"There may be adverse physical effects if you choose to "\
+		"return alive; on the other hand, scores achieved by "\
+		"undead characters will not be "\
+		"recorded in the top ten list."
+
+STRING InvStr	"Select one item from the inventory list, and one "\
+		"command from the list on the right.  Then hit OK.\n"\
+		"Remember: weAr armor, put on rings..."\
+		"tAke off armor, remove rings.\n"\
+		"When you wear a ring, you have a choice of which "\
+		"finger to use.  (It makes no difference which finger "\
+		"you choose, of course, unless maybe you are planning to "\
+		"have it bitten off later.) "
+
+STRING ButtonsStr "You can re-bind hardware buttons at whim, more or less. "\
+		"Your settings will be remembered but will not be USED "\
+		"unless you check 'use these settings'.  "\
+		"Anything set to '---' will just do what it normally would.  "\
+		"Click the OK button when you're done setting things."
+
+STRING PrefStr	"The top half of this dialog will set how a 'tap' makes "\
+		"your rogue move in the dungeon.\n\n"\
+		"The dungeon screen is divided into three concentric "\
+		"circular sections.\n- If you tap in the centermost circle, "\
+		"you will 'search' the adjacent squares for "\
+		"traps, secret doors, etc.  This circle is here designated "\
+		"as 'Hole'; you can set its radius.\n- If you tap in the "\
+		"next circle, you will move (at most) one square.  The "\
+		"direction that you move depends on where in the circle "\
+		"you tap (n, ne, e, se, etc.)  This circle is here called "\
+		"'Donut' and you can set the width of the donut (which "\
+		"is DonutRadius minus HoleRadius.)\n- The remainder of "\
+		"the screen is designated 'Outside'.  You will note a "\
+		"checkbox for Run.  If unchecked, it will be just "\
+		"like the donut: tap to move one square.  If checked, "\
+		"a tap makes you 'run' instead of 'walk': you move "\
+		"until you are next to something interesting - a wall, "\
+		"a monster, an item, stairs, etc.  "\
+		"(If 'Follow turns' is checked, when you run in a "\
+		"passage you will not stop at right-angle turns.\n\n"\
+		"If 'Scroll' is checked, when you tap at the very "\
+		"edge of the screen, this will scroll the screen.)\n\n"\
+		"'Draw' will draw the three sections (Donut in black) "\
+		"on this screen, as you've set them here, so that "\
+		"you can see what the effect would be if you click OK.  "\
+		"(If you click CANCEL, any changes you have made will not "\
+		"take effect.)  'Clear' will remove the drawing so you "\
+		"can use the rest of this form...\n\n"\
+		"There is a checkbox labeled 'autosave'.  If checked, "\
+		"iRogue will autosave the state of your game when you "\
+		"ascend/descend stairs.  You will be able to recover "\
+		"from that point if your game terminates abnormally.\n\n"\
+		"The Player Name field will contain your name (as your "\
+		"Pilot knows it) by default.  This name will appear in "\
+		"the top-ten list, which has one entry per name.  "\
+		"You can change the player name to call your rogue "\
+		"whatever you wish (you might like to do this if you "\
+		"let a friend play, to distinguish high-score entries.)\n\n"\
+		"'Sound' will turn sound on or off.  'Centered' will "\
+		"make the screen scroll as you move so that your rogue tends "\
+		"to stay in the center. "\
+		"'Rogue-relative' will use your rogue's position "\
+		"(instead of the center of the screen) as the donut center.  "\
+		"(If you turn on rogue-relative, I recommend that you "\
+		"set the donut 'hole' to 10, and do not check 'Scroll.')  "\
+		"If 'Small font' is checked, iRogue will always start up "\
+		"with the smaller font.  "\
+		"(Note: changing this does not affect your current font.)  "\
+		"'Crosshairs' will draw a spiderweb of donut segments "\
+		"around your rogue or the center of the screen (depending on "\
+		"the setting of 'Rogue-relative'), when you are moving by "\
+		"screen taps.  For greater speed it will not be drawn when "\
+		"you are moving by keyboard or hardware buttons.  "\
+		"'Color' will turn color on or off [to perceive the "\
+		"benefits of this feature you must have a color-definition "\
+		"Memo entitled 'iRogue-RGB', whose lines are each a symbol "\
+		"followed by a 6-digit hexadecimal number (rrggbb), e.g.\n"\
+		"@ 00ff00 makes you green\n"\
+		"A sample memo is included in the zipped distribution.]"\
+		"  'Tiles' will show colored tiles in place of ascii "\
+		"characters.  (You need iRogueTileDB for tiles.)"\
+		"\n\nThese preferences will be saved "\
+		"between sessions, except for the player name, "\
+		"which will return to default after the current rogue dies."
+
+
+//STRING HelpStr	"Check out 'inventory' ..."
+
+
+// 158 tall
+FORM ID MoreForm AT (2 108 156 50)
+USABLE
+MODAL
+BEGIN
+    BUTTON "--more--" ID btn_more_ok AT (0 0 156 50)
+END
+
+FORM ID WitsEndForm AT (2 30 156 128)
+USABLE
+MODAL
+BEGIN
+    TITLE "You are at Wit's End"
+    LABEL "It seems that I am out of memory" AUTOID AT (15 20)
+    LABEL "*and* orange smoke.  Sorry." AUTOID AT (PREVLEFT 31)
+    LABEL "Change to another app to exit." AUTOID AT (PREVLEFT 42)
+END
+
+
+
+FORM ID PrefsForm AT (2 2 156 156)
+USABLE
+MODAL
+HELPID PrefStr
+DEFAULTBTNID btn_bul_cancel
+BEGIN
+ TITLE "Various Settings"
+
+ LABEL "Name:" AUTOID AT (3 14)
+ FIELD ID field_usr AT (PrevRight+3 PrevTop 100 11) EDITABLE
+	SINGLELINE UNDERLINED MAXCHARS 30
+
+ CHECKBOX "Autosave." ID check_bul_2 AT (1 PrevTop+17 AUTO AUTO)
+ CHECKBOX "Sound." ID check_bul_5    AT (PrevLeft PrevTop+11 AUTO AUTO)
+ CHECKBOX "Sort pack." ID check_bul_11 AT (PrevLeft PrevTop+11 AUTO AUTO)
+
+ CHECKBOX "Small font." ID check_bul_7 AT (PrevLeft PrevTop+15 AUTO AUTO)
+ CHECKBOX "Centered." ID check_bul_6 AT (PrevLeft PrevTop+11 AUTO AUTO)
+ CHECKBOX "Rogue-relative." ID check_bul_8 AT (PrevLeft PrevTop+11 AUTO AUTO)
+ CHECKBOX "Crosshairs." ID check_bul_9 AT (PrevLeft PrevTop+11 AUTO AUTO)
+
+ CHECKBOX "Invert" ID check_bul_12 AT (PrevLeft PrevTop+15 AUTO AUTO)
+ CHECKBOX "Color!" ID check_bul_10 AT (PrevLeft PrevTop+11 AUTO AUTO) NONUSABLE
+ CHECKBOX "Tiles" ID check_bul_13 AT (PrevRight PrevTop AUTO AUTO) NONUSABLE
+
+ BUTTON "Ok" ID btn_bul_ok AT (2 141 35 AUTO)
+ BUTTON "Cancel" ID btn_bul_cancel AT (PrevRight+7 PrevTop 35 AUTO)
+
+ BUTTON "Draw" ID btn_bul_draw AT (83 28 30 AUTO)
+ LABEL "Search" AUTOID AT (PrevLeft PrevTop+13)
+ LABEL "(hole)" AUTOID AT (PrevLeft PrevTop+10)
+ LIST "10" "20" "30" "40" ID list_bul_1 AT (PrevLeft+4 PrevBottom+1 15 44) 
+	VISIBLEITEMS 4
+
+ BUTTON "Clear" ID btn_bul_clear AT (118 28 30 AUTO)
+ LABEL "Walk" AUTOID AT (PrevLeft PrevTop+13)
+ LABEL "(donut)" AUTOID AT (PrevLeft PrevTop+10)
+ LIST "10" "20" "30" "40" ID list_bul_2 AT (PrevLeft+4 PrevBottom+1 15 44) 
+	VISIBLEITEMS 4
+
+ LABEL "Outside donut:" AUTOID AT (80 109)
+ CHECKBOX "Run..." ID check_bul_1 AT (PrevLeft+5 PrevTop+11 AUTO AUTO)
+ CHECKBOX "follow turns." ID check_bul_3 AT (PrevLeft PrevTop+11 AUTO AUTO)
+ CHECKBOX "Scroll." ID check_bul_4 AT (PrevLeft PrevTop+11 AUTO AUTO)
+
+END
+
+
+//	BUTTON "Buttons..." ID btn_bul_hw AT (PrevRight+25 PrevTop 45 AUTO)
+
+//	BUTTON "Save These" ID btn_bul_save AT (PrevRight+7 PrevTop AUTO AUTO)
+//	LABEL "Hole = search," AUTOID AT (55 30)
+//	LABEL "Donut = walk," AUTOID AT (PrevLeft 41)
+//
+//	LABEL "Player name:" AUTOID AT (5 115)
+//	FIELD ID field_usr AT (5 126 146 11) EDITABLE SINGLELINE UNDERLINED MAXCHARS 30
+
+
+FORM ID HwButtonsForm AT (2 2 156 156)
+USABLE
+MODAL
+HELPID ButtonsStr
+DEFAULTBTNID btn_hwb_cancel
+BEGIN
+	TITLE "Hardware Buttons"
+	BUTTON "Ok" ID btn_hwb_ok AT (5 141 35 AUTO)
+	BUTTON "Cancel" ID btn_hwb_cancel AT (PrevRight+7 PrevTop 35 AUTO)
+
+	CHECKBOX "Use these settings" ID check_hwb AT (4 15 AUTO AUTO) CHECKED
+
+	LABEL "Date Book" AUTOID AT (4 30)
+        POPUPTRIGGER "---" ID popup_hwb_1 AT (47 PrevTop 62 AUTO) LEFTANCHOR
+        LIST "---" "north" "east" "south" "west" "up" "down" "search x 10" "rest x 10" "map" "scroll x 5" "throw" "zap" "inv" ID list_hwb_1 AT (PrevLeft PrevTop 50 1) NONUSABLE VISIBLEITEMS 14
+
+	LABEL "Address" AUTOID AT (4 PrevTop+12)
+        POPUPTRIGGER "---" ID popup_hwb_2 AT (47 PrevTop 62 AUTO) LEFTANCHOR
+        LIST "---" "north" "east" "south" "west" "up" "down" "search x 10" "rest x 10" "map" "scroll x 5" "throw" "zap" "inv" ID list_hwb_2 AT (PrevLeft PrevTop 50 1) NONUSABLE VISIBLEITEMS 14
+
+	LABEL "To Do List" AUTOID AT (4 PrevTop+12)
+        POPUPTRIGGER "---" ID popup_hwb_3 AT (47 PrevTop 62 AUTO) LEFTANCHOR
+        LIST "---" "north" "east" "south" "west" "up" "down" "search x 10" "rest x 10" "map" "scroll x 5" "throw" "zap" "inv" ID list_hwb_3 AT (PrevLeft PrevTop 50 1) NONUSABLE VISIBLEITEMS 14
+
+	LABEL "Memo Pad" AUTOID AT (4 PrevTop+12)
+        POPUPTRIGGER "---" ID popup_hwb_4 AT (PrevRight PrevTop 62 AUTO) LEFTANCHOR
+        LIST "---" "north" "east" "south" "west" "up" "down" "search x 10" "rest x 10" "map" "scroll x 5" "throw" "zap" "inv" ID list_hwb_4 AT (PrevLeft PrevTop 50 1) NONUSABLE VISIBLEITEMS 14
+
+	LABEL "Up" AUTOID AT (4 PrevTop+17)
+        POPUPTRIGGER "---" ID popup_hwb_5 AT (26 PrevTop 62 AUTO) LEFTANCHOR
+        LIST "---" "north" "east" "south" "west" "up" "down" "search x 10" "rest x 10" "map" "scroll x 5" "throw" "zap" "inv" ID list_hwb_5 AT (PrevLeft PrevTop 50 1) NONUSABLE VISIBLEITEMS 14
+
+	LABEL "Down" AUTOID AT (4 PrevTop+12)
+        POPUPTRIGGER "---" ID popup_hwb_6 AT (PrevRight PrevTop 62 AUTO) LEFTANCHOR
+        LIST "---" "north" "east" "south" "west" "up" "down" "search x 10" "rest x 10" "map" "scroll x 5" "throw" "zap" "inv" ID list_hwb_6 AT (PrevLeft PrevTop 50 1) NONUSABLE VISIBLEITEMS 14
+
+	LABEL "Calculator" AUTOID AT (4 PrevTop+17)
+        POPUPTRIGGER "---" ID popup_hwb_7 AT (PrevRight PrevTop 62 AUTO) LEFTANCHOR
+        LIST "---" "north" "east" "south" "west" "up" "down" "search x 10" "rest x 10" "map" "scroll x 5" "throw" "zap" "inv" ID list_hwb_7 AT (PrevLeft PrevTop 50 1) NONUSABLE VISIBLEITEMS 14
+
+	LABEL "Find" AUTOID AT (4 PrevTop+12)
+        POPUPTRIGGER "---" ID popup_hwb_8 AT (45 PrevTop 62 AUTO) LEFTANCHOR
+        LIST "---" "north" "east" "south" "west" "up" "down" "search x 10" "rest x 10" "map" "scroll x 5" "throw" "zap" "inv" ID list_hwb_8 AT (PrevLeft PrevTop 50 1) NONUSABLE VISIBLEITEMS 14
+
+        POPUPLIST ID popup_hwb_1 list_hwb_1
+        POPUPLIST ID popup_hwb_2 list_hwb_2
+        POPUPLIST ID popup_hwb_3 list_hwb_3
+        POPUPLIST ID popup_hwb_4 list_hwb_4
+        POPUPLIST ID popup_hwb_5 list_hwb_5
+        POPUPLIST ID popup_hwb_6 list_hwb_6
+        POPUPLIST ID popup_hwb_7 list_hwb_7
+        POPUPLIST ID popup_hwb_8 list_hwb_8
+
+END
+
+
+ALERT ID FontAlert
+WARNING
+BEGIN
+	TITLE "Wrong Version"
+	MESSAGE "Your version of iRogue does not match your OS version, so you can't change font.  If this makes you sad, you can download the right version at http://roguelike-palm.sourceforge.net"
+	BUTTON "Ok"
+END

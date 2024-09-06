@@ -1,0 +1,11 @@
+void SelectMachine(UInt8 index, UInt8 r) SECTION("aux");
+char *strdup(char *str) SECTION("aux");
+void FldInsertStr(FormPtr frm, UInt16 id, char *str) SECTION("aux");
+char *DoInput(char *msg, char *fill) SECTION("aux");
+Err check_dir(Int16 vol, char *path) SECTION("aux");
+Int16 check_volume(void) SECTION("aux");
+Boolean JoystickGadgetCallback(FormGadgetTypeInCallback *gad, UInt16 cmd, void *param) SECTION("aux");
+void hide_control(FormPtr frm, UInt16 id) SECTION("aux");
+void change_control(FormPtr frm, UInt16 id, UInt16 newid) SECTION("aux");
+void change_label(FormPtr frm, UInt16 id, char *label) SECTION("aux");
+void status(Int16 x, Int16 y, const char *fmt, ...) SECTION("aux");

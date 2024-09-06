@@ -1,0 +1,29 @@
+#include "resource.h"
+
+ICONFAMILY
+BEGIN
+  BITMAP "dosbox_low.bmp"  BPP 8 TRANSPARENT 255 255 255 DENSITY 72
+  BITMAP "dosbox_high.bmp" BPP 8 TRANSPARENT 255 255 255 DENSITY 144
+END
+
+FORM MainForm 0 0 160 160
+USABLE
+NOFRAME
+MENUID MainForm
+BEGIN
+  TITLE "DOSBox"
+END
+
+MENU MainForm
+BEGIN
+  PULLDOWN "Options"
+  BEGIN
+    MENUITEM "About"    aboutCmd    "A"
+  END
+END
+
+HEX "wind" ID 1
+  0x02 0x80 0x01 0xAE
+  //0x02 0x80 0x01 0xFE
+
+VERSION "1.0"
