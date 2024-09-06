@@ -1,0 +1,89 @@
+$(OUT)/image-caret_image.o: $(OUT)/image-caret_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-hand_image.o: $(OUT)/image-hand_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-history_image.o: $(OUT)/image-history_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-history_image_g.o: $(OUT)/image-history_image_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-left_arrow.o: $(OUT)/image-left_arrow.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-left_arrow_g.o: $(OUT)/image-left_arrow_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-menu_image.o: $(OUT)/image-menu_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-move_image.o: $(OUT)/image-move_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-osk_image.o: $(OUT)/image-osk_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-pointer_image.o: $(OUT)/image-pointer_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-progress_image.o: $(OUT)/image-progress_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-reload.o: $(OUT)/image-reload.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-reload_g.o: $(OUT)/image-reload_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-right_arrow.o: $(OUT)/image-right_arrow.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-right_arrow_g.o: $(OUT)/image-right_arrow_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-scrolld.o: $(OUT)/image-scrolld.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-scrolll.o: $(OUT)/image-scrolll.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-scrollr.o: $(OUT)/image-scrollr.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-scrollu.o: $(OUT)/image-scrollu.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-stop_image.o: $(OUT)/image-stop_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-stop_image_g.o: $(OUT)/image-stop_image_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber0.o: $(OUT)/image-throbber0.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber1.o: $(OUT)/image-throbber1.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber2.o: $(OUT)/image-throbber2.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber3.o: $(OUT)/image-throbber3.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber4.o: $(OUT)/image-throbber4.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber5.o: $(OUT)/image-throbber5.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber6.o: $(OUT)/image-throbber6.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber7.o: $(OUT)/image-throbber7.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber8.o: $(OUT)/image-throbber8.c
+	$(CC) $(CFLAGS) -o $@ -c $<

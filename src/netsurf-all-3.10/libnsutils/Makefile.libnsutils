@@ -1,0 +1,35 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include/ -I./src -I$(PUMPKINOS)/src/libpit
+CFLAGS=-MMD -MP -D_GNU_SOURCE -D_DEFAULT_SOURCE $(INC) -Wall -W -Wno-error  -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99 -D_POSIX_C_SOURCE=200809L
+OBJS=$(OUT)/src_base64.o $(OUT)/src_time.o $(OUT)/src_unistd.o
+LIB=$(OUT)/libnsutils.a
+FLIB=$(FB)/lib/libnsutils.a
+
+all: $(FLIB)
+
+$(OUT)/src_base64.o: src/base64.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_time.o: src/time.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_unistd.o: src/unistd.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include/nsutils
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/nsutils/errors.h $(FB)/include/nsutils
+	install -m 644 include/nsutils/base64.h $(FB)/include/nsutils
+	install -m 644 include/nsutils/endian.h $(FB)/include/nsutils
+	install -m 644 include/nsutils/time.h $(FB)/include/nsutils
+	install -m 644 include/nsutils/unistd.h $(FB)/include/nsutils
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB)

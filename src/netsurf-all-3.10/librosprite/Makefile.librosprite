@@ -1,0 +1,25 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include -I$(PUMPKINOS)/src/libpit
+CFLAGS=-MMD -MP $(INC) -Wall -W -Wno-error -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99
+OBJS=$(OUT)/src_librosprite.o
+LIB=$(OUT)/librosprite.a
+FLIB=$(FB)/lib/librosprite.a
+
+all: $(FLIB)
+
+$(OUT)/src_librosprite.o: src/librosprite.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/librosprite.h $(FB)/include
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB)

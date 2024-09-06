@@ -1,0 +1,668 @@
+$(OUT)/duktape_application_cache.o: $(OUT)/duktape/application_cache.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_attr.o: $(OUT)/duktape/attr.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_audio_track.o: $(OUT)/duktape/audio_track.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_audio_track_list.o: $(OUT)/duktape/audio_track_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_autocomplete_error_event.o: $(OUT)/duktape/autocomplete_error_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_autocomplete_error_event_init.o: $(OUT)/duktape/autocomplete_error_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_bar_prop.o: $(OUT)/duktape/bar_prop.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_before_unload_event.o: $(OUT)/duktape/before_unload_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_binding.o: $(OUT)/duktape/binding.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_broadcast_channel.o: $(OUT)/duktape/broadcast_channel.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_canvas_gradient.o: $(OUT)/duktape/canvas_gradient.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_canvas_pattern.o: $(OUT)/duktape/canvas_pattern.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_canvas_proxy.o: $(OUT)/duktape/canvas_proxy.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_canvas_rendering_context2d.o: $(OUT)/duktape/canvas_rendering_context2d.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_canvas_rendering_context2d_settings.o: $(OUT)/duktape/canvas_rendering_context2d_settings.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_character_data.o: $(OUT)/duktape/character_data.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_close_event.o: $(OUT)/duktape/close_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_close_event_init.o: $(OUT)/duktape/close_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_comment.o: $(OUT)/duktape/comment.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_composition_event.o: $(OUT)/duktape/composition_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_composition_event_init.o: $(OUT)/duktape/composition_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_console.o: $(OUT)/duktape/console.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css.o: $(OUT)/duktape/css.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_grouping_rule.o: $(OUT)/duktape/css_grouping_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_import_rule.o: $(OUT)/duktape/css_import_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_margin_rule.o: $(OUT)/duktape/css_margin_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_media_rule.o: $(OUT)/duktape/css_media_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_namespace_rule.o: $(OUT)/duktape/css_namespace_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_page_rule.o: $(OUT)/duktape/css_page_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_rule.o: $(OUT)/duktape/css_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_rule_list.o: $(OUT)/duktape/css_rule_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_style_declaration.o: $(OUT)/duktape/css_style_declaration.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_style_rule.o: $(OUT)/duktape/css_style_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_css_style_sheet.o: $(OUT)/duktape/css_style_sheet.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_custom_event.o: $(OUT)/duktape/custom_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_custom_event_init.o: $(OUT)/duktape/custom_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_data_transfer.o: $(OUT)/duktape/data_transfer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_data_transfer_item.o: $(OUT)/duktape/data_transfer_item.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_data_transfer_item_list.o: $(OUT)/duktape/data_transfer_item_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_dedicated_worker_global_scope.o: $(OUT)/duktape/dedicated_worker_global_scope.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_document.o: $(OUT)/duktape/document.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_document_fragment.o: $(OUT)/duktape/document_fragment.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_document_type.o: $(OUT)/duktape/document_type.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_dom_element_map.o: $(OUT)/duktape/dom_element_map.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_dom_implementation.o: $(OUT)/duktape/dom_implementation.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_dom_parser.o: $(OUT)/duktape/dom_parser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_dom_settable_token_list.o: $(OUT)/duktape/dom_settable_token_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_dom_string_map.o: $(OUT)/duktape/dom_string_map.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_dom_token_list.o: $(OUT)/duktape/dom_token_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_drag_event.o: $(OUT)/duktape/drag_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_drag_event_init.o: $(OUT)/duktape/drag_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_drawing_style.o: $(OUT)/duktape/drawing_style.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_element.o: $(OUT)/duktape/element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_error_event.o: $(OUT)/duktape/error_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_error_event_init.o: $(OUT)/duktape/error_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_event.o: $(OUT)/duktape/event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_event_init.o: $(OUT)/duktape/event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_event_listener.o: $(OUT)/duktape/event_listener.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_event_modifier_init.o: $(OUT)/duktape/event_modifier_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_event_source.o: $(OUT)/duktape/event_source.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_event_source_init.o: $(OUT)/duktape/event_source_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_event_target.o: $(OUT)/duktape/event_target.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_external.o: $(OUT)/duktape/external.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_focus_event.o: $(OUT)/duktape/focus_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_focus_event_init.o: $(OUT)/duktape/focus_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_hash_change_event.o: $(OUT)/duktape/hash_change_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_hash_change_event_init.o: $(OUT)/duktape/hash_change_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_history.o: $(OUT)/duktape/history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_hit_region_options.o: $(OUT)/duktape/hit_region_options.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_all_collection.o: $(OUT)/duktape/html_all_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_anchor_element.o: $(OUT)/duktape/html_anchor_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_applet_element.o: $(OUT)/duktape/html_applet_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_area_element.o: $(OUT)/duktape/html_area_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_audio_element.o: $(OUT)/duktape/html_audio_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_base_element.o: $(OUT)/duktape/html_base_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_body_element.o: $(OUT)/duktape/html_body_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_br_element.o: $(OUT)/duktape/html_br_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_button_element.o: $(OUT)/duktape/html_button_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_canvas_element.o: $(OUT)/duktape/html_canvas_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_collection.o: $(OUT)/duktape/html_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_data_element.o: $(OUT)/duktape/html_data_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_data_list_element.o: $(OUT)/duktape/html_data_list_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_details_element.o: $(OUT)/duktape/html_details_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_dialog_element.o: $(OUT)/duktape/html_dialog_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_directory_element.o: $(OUT)/duktape/html_directory_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_div_element.o: $(OUT)/duktape/html_div_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_dlist_element.o: $(OUT)/duktape/html_dlist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_element.o: $(OUT)/duktape/html_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_embed_element.o: $(OUT)/duktape/html_embed_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_field_set_element.o: $(OUT)/duktape/html_field_set_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_font_element.o: $(OUT)/duktape/html_font_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_form_controls_collection.o: $(OUT)/duktape/html_form_controls_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_form_element.o: $(OUT)/duktape/html_form_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_frame_element.o: $(OUT)/duktape/html_frame_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_frame_set_element.o: $(OUT)/duktape/html_frame_set_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_head_element.o: $(OUT)/duktape/html_head_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_heading_element.o: $(OUT)/duktape/html_heading_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_hr_element.o: $(OUT)/duktape/html_hr_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_html_element.o: $(OUT)/duktape/html_html_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_iframe_element.o: $(OUT)/duktape/html_iframe_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_image_element.o: $(OUT)/duktape/html_image_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_input_element.o: $(OUT)/duktape/html_input_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_keygen_element.o: $(OUT)/duktape/html_keygen_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_label_element.o: $(OUT)/duktape/html_label_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_legend_element.o: $(OUT)/duktape/html_legend_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_li_element.o: $(OUT)/duktape/html_li_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_link_element.o: $(OUT)/duktape/html_link_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_map_element.o: $(OUT)/duktape/html_map_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_marquee_element.o: $(OUT)/duktape/html_marquee_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_media_element.o: $(OUT)/duktape/html_media_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_menu_element.o: $(OUT)/duktape/html_menu_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_menu_item_element.o: $(OUT)/duktape/html_menu_item_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_meta_element.o: $(OUT)/duktape/html_meta_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_meter_element.o: $(OUT)/duktape/html_meter_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_mod_element.o: $(OUT)/duktape/html_mod_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_object_element.o: $(OUT)/duktape/html_object_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_olist_element.o: $(OUT)/duktape/html_olist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_opt_group_element.o: $(OUT)/duktape/html_opt_group_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_option_element.o: $(OUT)/duktape/html_option_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_options_collection.o: $(OUT)/duktape/html_options_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_output_element.o: $(OUT)/duktape/html_output_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_paragraph_element.o: $(OUT)/duktape/html_paragraph_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_param_element.o: $(OUT)/duktape/html_param_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_picture_element.o: $(OUT)/duktape/html_picture_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_pre_element.o: $(OUT)/duktape/html_pre_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_progress_element.o: $(OUT)/duktape/html_progress_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_quote_element.o: $(OUT)/duktape/html_quote_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_script_element.o: $(OUT)/duktape/html_script_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_select_element.o: $(OUT)/duktape/html_select_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_source_element.o: $(OUT)/duktape/html_source_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_span_element.o: $(OUT)/duktape/html_span_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_style_element.o: $(OUT)/duktape/html_style_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_table_caption_element.o: $(OUT)/duktape/html_table_caption_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_table_cell_element.o: $(OUT)/duktape/html_table_cell_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_table_col_element.o: $(OUT)/duktape/html_table_col_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_table_data_cell_element.o: $(OUT)/duktape/html_table_data_cell_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_table_element.o: $(OUT)/duktape/html_table_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_table_header_cell_element.o: $(OUT)/duktape/html_table_header_cell_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_table_row_element.o: $(OUT)/duktape/html_table_row_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_table_section_element.o: $(OUT)/duktape/html_table_section_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_template_element.o: $(OUT)/duktape/html_template_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_text_area_element.o: $(OUT)/duktape/html_text_area_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_time_element.o: $(OUT)/duktape/html_time_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_title_element.o: $(OUT)/duktape/html_title_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_track_element.o: $(OUT)/duktape/html_track_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_ulist_element.o: $(OUT)/duktape/html_ulist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_unknown_element.o: $(OUT)/duktape/html_unknown_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_html_video_element.o: $(OUT)/duktape/html_video_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_image_bitmap.o: $(OUT)/duktape/image_bitmap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_image_data.o: $(OUT)/duktape/image_data.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_keyboard_event.o: $(OUT)/duktape/keyboard_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_keyboard_event_init.o: $(OUT)/duktape/keyboard_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_location.o: $(OUT)/duktape/location.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_media_controller.o: $(OUT)/duktape/media_controller.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_media_error.o: $(OUT)/duktape/media_error.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_media_list.o: $(OUT)/duktape/media_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_message_channel.o: $(OUT)/duktape/message_channel.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_message_event.o: $(OUT)/duktape/message_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_message_event_init.o: $(OUT)/duktape/message_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_message_port.o: $(OUT)/duktape/message_port.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_mime_type.o: $(OUT)/duktape/mime_type.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_mime_type_array.o: $(OUT)/duktape/mime_type_array.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_mouse_event.o: $(OUT)/duktape/mouse_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_mouse_event_init.o: $(OUT)/duktape/mouse_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_mutation_event.o: $(OUT)/duktape/mutation_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_mutation_observer.o: $(OUT)/duktape/mutation_observer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_mutation_observer_init.o: $(OUT)/duktape/mutation_observer_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_mutation_record.o: $(OUT)/duktape/mutation_record.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_named_node_map.o: $(OUT)/duktape/named_node_map.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_navigator.o: $(OUT)/duktape/navigator.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_node.o: $(OUT)/duktape/node.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_node_filter.o: $(OUT)/duktape/node_filter.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_node_iterator.o: $(OUT)/duktape/node_iterator.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_node_list.o: $(OUT)/duktape/node_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_page_transition_event.o: $(OUT)/duktape/page_transition_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_page_transition_event_init.o: $(OUT)/duktape/page_transition_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_path2d.o: $(OUT)/duktape/path2d.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_plugin.o: $(OUT)/duktape/plugin.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_plugin_array.o: $(OUT)/duktape/plugin_array.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_pop_state_event.o: $(OUT)/duktape/pop_state_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_pop_state_event_init.o: $(OUT)/duktape/pop_state_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_processing_instruction.o: $(OUT)/duktape/processing_instruction.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_pseudo_element.o: $(OUT)/duktape/pseudo_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_radio_node_list.o: $(OUT)/duktape/radio_node_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_range.o: $(OUT)/duktape/range.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_related_event.o: $(OUT)/duktape/related_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_related_event_init.o: $(OUT)/duktape/related_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_shared_worker.o: $(OUT)/duktape/shared_worker.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_shared_worker_global_scope.o: $(OUT)/duktape/shared_worker_global_scope.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_storage.o: $(OUT)/duktape/storage.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_storage_event.o: $(OUT)/duktape/storage_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_storage_event_init.o: $(OUT)/duktape/storage_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_style_sheet.o: $(OUT)/duktape/style_sheet.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_style_sheet_list.o: $(OUT)/duktape/style_sheet_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_svg_element.o: $(OUT)/duktape/svg_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_text.o: $(OUT)/duktape/text.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_text_metrics.o: $(OUT)/duktape/text_metrics.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_text_track.o: $(OUT)/duktape/text_track.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_text_track_cue.o: $(OUT)/duktape/text_track_cue.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_text_track_cue_list.o: $(OUT)/duktape/text_track_cue_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_text_track_list.o: $(OUT)/duktape/text_track_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_time_ranges.o: $(OUT)/duktape/time_ranges.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_touch.o: $(OUT)/duktape/touch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_track_event.o: $(OUT)/duktape/track_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_track_event_init.o: $(OUT)/duktape/track_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_tree_walker.o: $(OUT)/duktape/tree_walker.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_ui_event.o: $(OUT)/duktape/ui_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_ui_event_init.o: $(OUT)/duktape/ui_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_url.o: $(OUT)/duktape/url.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_url_search_params.o: $(OUT)/duktape/url_search_params.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_validity_state.o: $(OUT)/duktape/validity_state.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_video_track.o: $(OUT)/duktape/video_track.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_video_track_list.o: $(OUT)/duktape/video_track_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_web_socket.o: $(OUT)/duktape/web_socket.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_wheel_event.o: $(OUT)/duktape/wheel_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_wheel_event_init.o: $(OUT)/duktape/wheel_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_window.o: $(OUT)/duktape/window.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_worker.o: $(OUT)/duktape/worker.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_worker_global_scope.o: $(OUT)/duktape/worker_global_scope.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_worker_location.o: $(OUT)/duktape/worker_location.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_worker_navigator.o: $(OUT)/duktape/worker_navigator.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_xml_document.o: $(OUT)/duktape/xml_document.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape_xml_serializer.o: $(OUT)/duktape/xml_serializer.c
+	$(CC) $(CFLAGS) -o $@ -c $<

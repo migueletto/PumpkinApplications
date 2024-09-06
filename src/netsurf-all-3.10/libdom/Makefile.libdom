@@ -1,0 +1,407 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include/ -I./src
+CFLAGS=-MMD -MP -D_BSD_SOURCE -D_DEFAULT_SOURCE $(INC) -Wall -W -Wno-error -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99 -I$(FB)/include
+OBJS=$(OUT)/src_events_event.o $(OUT)/src_events_dispatch.o $(OUT)/src_events_event_target.o $(OUT)/src_events_document_event.o $(OUT)/src_events_custom_event.o $(OUT)/src_events_keyboard_event.o $(OUT)/src_events_mouse_wheel_event.o $(OUT)/src_events_text_event.o $(OUT)/src_events_event_listener.o $(OUT)/src_events_mouse_event.o $(OUT)/src_events_mutation_event.o $(OUT)/src_events_ui_event.o $(OUT)/src_events_mouse_multi_wheel_event.o $(OUT)/src_events_mutation_name_event.o $(OUT)/src_html_html_applet_element.o $(OUT)/src_html_html_area_element.o $(OUT)/src_html_html_anchor_element.o $(OUT)/src_html_html_basefont_element.o $(OUT)/src_html_html_base_element.o $(OUT)/src_html_html_body_element.o $(OUT)/src_html_html_button_element.o $(OUT)/src_html_html_canvas_element.o $(OUT)/src_html_html_collection.o \
+$(OUT)/src_html_html_document.o $(OUT)/src_html_html_element.o $(OUT)/src_html_html_dlist_element.o $(OUT)/src_html_html_directory_element.o $(OUT)/src_html_html_options_collection.o $(OUT)/src_html_html_html_element.o $(OUT)/src_html_html_head_element.o $(OUT)/src_html_html_link_element.o $(OUT)/src_html_html_title_element.o $(OUT)/src_html_html_meta_element.o $(OUT)/src_html_html_style_element.o $(OUT)/src_html_html_form_element.o $(OUT)/src_html_html_select_element.o $(OUT)/src_html_html_input_element.o $(OUT)/src_html_html_text_area_element.o $(OUT)/src_html_html_opt_group_element.o $(OUT)/src_html_html_option_element.o $(OUT)/src_html_html_hr_element.o $(OUT)/src_html_html_menu_element.o $(OUT)/src_html_html_fieldset_element.o $(OUT)/src_html_html_legend_element.o $(OUT)/src_html_html_div_element.o $(OUT)/src_html_html_paragraph_element.o $(OUT)/src_html_html_heading_element.o $(OUT)/src_html_html_quote_element.o $(OUT)/src_html_html_pre_element.o $(OUT)/src_html_html_br_element.o $(OUT)/src_html_html_label_element.o $(OUT)/src_html_html_ulist_element.o $(OUT)/src_html_html_olist_element.o $(OUT)/src_html_html_li_element.o $(OUT)/src_html_html_font_element.o $(OUT)/src_html_html_mod_element.o $(OUT)/src_html_html_image_element.o $(OUT)/src_html_html_object_element.o \
+$(OUT)/src_html_html_param_element.o $(OUT)/src_html_html_map_element.o $(OUT)/src_html_html_script_element.o $(OUT)/src_html_html_tablecaption_element.o $(OUT)/src_html_html_tablecell_element.o $(OUT)/src_html_html_tablecol_element.o $(OUT)/src_html_html_tablesection_element.o $(OUT)/src_html_html_table_element.o $(OUT)/src_html_html_tablerow_element.o $(OUT)/src_html_html_frameset_element.o $(OUT)/src_html_html_frame_element.o $(OUT)/src_html_html_iframe_element.o $(OUT)/src_html_html_isindex_element.o $(OUT)/src_core_string.o $(OUT)/src_core_node.o $(OUT)/src_core_attr.o $(OUT)/src_core_characterdata.o $(OUT)/src_core_element.o $(OUT)/src_core_implementation.o $(OUT)/src_core_text.o $(OUT)/src_core_typeinfo.o $(OUT)/src_core_comment.o $(OUT)/src_core_namednodemap.o $(OUT)/src_core_nodelist.o $(OUT)/src_core_cdatasection.o $(OUT)/src_core_document_type.o $(OUT)/src_core_entity_ref.o $(OUT)/src_core_pi.o $(OUT)/src_core_doc_fragment.o $(OUT)/src_core_document.o $(OUT)/src_utils_namespace.o $(OUT)/src_utils_hashtable.o $(OUT)/src_utils_character_valid.o $(OUT)/src_utils_validate.o $(OUT)/bindings_xml_expat_xmlparser.o $(OUT)/bindings_hubbub_parser.o
+LIB=$(OUT)/libdom.a
+FLIB=$(FB)/lib/libdom.a
+
+all: $(FLIB)
+
+$(OUT)/src_events_event.o: src/events/event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_dispatch.o: src/events/dispatch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_event_target.o: src/events/event_target.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_document_event.o: src/events/document_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_custom_event.o: src/events/custom_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_keyboard_event.o: src/events/keyboard_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_mouse_wheel_event.o: src/events/mouse_wheel_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_text_event.o: src/events/text_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_event_listener.o: src/events/event_listener.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_mouse_event.o: src/events/mouse_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_mutation_event.o: src/events/mutation_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_ui_event.o: src/events/ui_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_mouse_multi_wheel_event.o: src/events/mouse_multi_wheel_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_events_mutation_name_event.o: src/events/mutation_name_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_applet_element.o: src/html/html_applet_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_area_element.o: src/html/html_area_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_anchor_element.o: src/html/html_anchor_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_basefont_element.o: src/html/html_basefont_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_base_element.o: src/html/html_base_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_body_element.o: src/html/html_body_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_button_element.o: src/html/html_button_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_canvas_element.o: src/html/html_canvas_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_collection.o: src/html/html_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_document.o: src/html/html_document.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_element.o: src/html/html_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_dlist_element.o: src/html/html_dlist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_directory_element.o: src/html/html_directory_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_options_collection.o: src/html/html_options_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_html_element.o: src/html/html_html_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_head_element.o: src/html/html_head_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_link_element.o: src/html/html_link_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_title_element.o: src/html/html_title_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_meta_element.o: src/html/html_meta_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_style_element.o: src/html/html_style_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_form_element.o: src/html/html_form_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_select_element.o: src/html/html_select_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_input_element.o: src/html/html_input_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_text_area_element.o: src/html/html_text_area_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_opt_group_element.o: src/html/html_opt_group_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_option_element.o: src/html/html_option_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_hr_element.o: src/html/html_hr_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_menu_element.o: src/html/html_menu_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_fieldset_element.o: src/html/html_fieldset_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_legend_element.o: src/html/html_legend_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_div_element.o: src/html/html_div_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_paragraph_element.o: src/html/html_paragraph_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_heading_element.o: src/html/html_heading_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_quote_element.o: src/html/html_quote_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_pre_element.o: src/html/html_pre_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_br_element.o: src/html/html_br_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_label_element.o: src/html/html_label_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_ulist_element.o: src/html/html_ulist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_olist_element.o: src/html/html_olist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_li_element.o: src/html/html_li_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_font_element.o: src/html/html_font_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_mod_element.o: src/html/html_mod_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_image_element.o: src/html/html_image_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_object_element.o: src/html/html_object_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_param_element.o: src/html/html_param_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_map_element.o: src/html/html_map_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_script_element.o: src/html/html_script_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_tablecaption_element.o: src/html/html_tablecaption_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_tablecell_element.o: src/html/html_tablecell_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_tablecol_element.o: src/html/html_tablecol_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_tablesection_element.o: src/html/html_tablesection_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_table_element.o: src/html/html_table_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_tablerow_element.o: src/html/html_tablerow_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_frameset_element.o: src/html/html_frameset_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_frame_element.o: src/html/html_frame_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_iframe_element.o: src/html/html_iframe_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_html_html_isindex_element.o: src/html/html_isindex_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_string.o: src/core/string.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_node.o: src/core/node.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_attr.o: src/core/attr.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_characterdata.o: src/core/characterdata.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_element.o: src/core/element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_implementation.o: src/core/implementation.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_text.o: src/core/text.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_typeinfo.o: src/core/typeinfo.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_comment.o: src/core/comment.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_namednodemap.o: src/core/namednodemap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_nodelist.o: src/core/nodelist.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_cdatasection.o: src/core/cdatasection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_document_type.o: src/core/document_type.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_entity_ref.o: src/core/entity_ref.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_pi.o: src/core/pi.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_doc_fragment.o: src/core/doc_fragment.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core_document.o: src/core/document.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils_namespace.o: src/utils/namespace.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils_hashtable.o: src/utils/hashtable.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils_character_valid.o: src/utils/character_valid.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils_validate.o: src/utils/validate.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/bindings_xml_expat_xmlparser.o: bindings/xml/expat_xmlparser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/bindings_hubbub_parser.o: bindings/hubbub/parser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include/dom
+	mkdir -p $(FB)/include/dom/bindings/hubbub
+	mkdir -p $(FB)/include/dom/bindings/xml
+	mkdir -p $(FB)/include/dom/core
+	mkdir -p $(FB)/include/dom/events
+	mkdir -p $(FB)/include/dom/html
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 bindings/xml/xmlerror.h $(FB)/include/dom/bindings/xml
+	install -m 644 bindings/xml/xmlparser.h $(FB)/include/dom/bindings/xml
+	install -m 644 bindings/hubbub/errors.h $(FB)/include/dom/bindings/hubbub
+	install -m 644 bindings/hubbub/parser.h $(FB)/include/dom/bindings/hubbub
+	install -m 644 include/dom/dom.h $(FB)/include/dom
+	install -m 644 include/dom/functypes.h $(FB)/include/dom
+	install -m 644 include/dom/inttypes.h $(FB)/include/dom
+	install -m 644 include/dom/core/attr.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/characterdata.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/cdatasection.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/comment.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/doc_fragment.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/document.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/document_type.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/entity_ref.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/element.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/exceptions.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/implementation.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/namednodemap.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/node.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/nodelist.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/string.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/pi.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/text.h $(FB)/include/dom/core
+	install -m 644 include/dom/core/typeinfo.h $(FB)/include/dom/core
+	install -m 644 include/dom/events/event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/ui_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/custom_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/mouse_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/keyboard_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/text_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/mouse_wheel_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/mouse_multi_wheel_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/mutation_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/event_target.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/mutation_name_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/events.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/event_listener.h $(FB)/include/dom/events
+	install -m 644 include/dom/events/document_event.h $(FB)/include/dom/events
+	install -m 644 include/dom/html/html_document.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_collection.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_elements.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_html_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_head_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_link_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_title_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_body_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_meta_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_form_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_button_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_canvas_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_input_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_select_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_text_area_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_option_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_opt_group_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_options_collection.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_hr_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_dlist_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_directory_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_menu_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_fieldset_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_legend_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_div_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_paragraph_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_heading_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_quote_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_pre_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_br_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_label_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_ulist_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_olist_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_li_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_font_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_mod_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_anchor_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_basefont_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_image_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_object_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_param_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_applet_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_area_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_map_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_script_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_tablecaption_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_tablecell_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_tablecol_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_tablesection_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_table_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_tablerow_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_base_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_style_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_frameset_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_frame_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_iframe_element.h $(FB)/include/dom/html
+	install -m 644 include/dom/html/html_isindex_element.h $(FB)/include/dom/html
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB)

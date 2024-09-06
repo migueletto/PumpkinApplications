@@ -1,0 +1,89 @@
+include ../Makefile.common
+
+OUT=./out
+INC=-I./include/ -I./src -I$(PUMPKINOS)/src/libpit
+CFLAGS=-MMD -MP -D_BSD_SOURCE -D_DEFAULT_SOURCE $(INC) -Wall -W -Wno-error -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99 -I$(FB)/include
+OBJS=$(OUT)/src_parser.o $(OUT)/src_treebuilder_treebuilder.o $(OUT)/src_treebuilder_initial.o $(OUT)/src_treebuilder_before_html.o $(OUT)/src_treebuilder_before_head.o $(OUT)/src_treebuilder_in_head.o $(OUT)/src_treebuilder_in_head_noscript.o $(OUT)/src_treebuilder_after_head.o $(OUT)/src_treebuilder_in_body.o $(OUT)/src_treebuilder_in_table.o $(OUT)/src_treebuilder_in_caption.o $(OUT)/src_treebuilder_in_column_group.o $(OUT)/src_treebuilder_in_table_body.o $(OUT)/src_treebuilder_in_row.o $(OUT)/src_treebuilder_in_cell.o $(OUT)/src_treebuilder_in_select.o $(OUT)/src_treebuilder_in_select_in_table.o $(OUT)/src_treebuilder_in_foreign_content.o $(OUT)/src_treebuilder_after_body.o $(OUT)/src_treebuilder_in_frameset.o $(OUT)/src_treebuilder_after_frameset.o $(OUT)/src_treebuilder_after_after_body.o $(OUT)/src_treebuilder_after_after_frameset.o $(OUT)/src_treebuilder_generic_rcdata.o $(OUT)/src_utils_errors.o $(OUT)/src_utils_string.o $(OUT)/src_tokeniser_entities.o $(OUT)/src_tokeniser_tokeniser.o $(OUT)/src_charset_detect.o
+LIB=$(OUT)/libhubbub.a
+FLIB=$(FB)/lib/libhubbub.a
+
+all: $(FLIB)
+
+$(OUT)/src_parser.o: src/parser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_treebuilder.o: src/treebuilder/treebuilder.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_initial.o: src/treebuilder/initial.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_before_html.o: src/treebuilder/before_html.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_before_head.o: src/treebuilder/before_head.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_head.o: src/treebuilder/in_head.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_head_noscript.o: src/treebuilder/in_head_noscript.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_after_head.o: src/treebuilder/after_head.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_body.o: src/treebuilder/in_body.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_table.o: src/treebuilder/in_table.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_caption.o: src/treebuilder/in_caption.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_column_group.o: src/treebuilder/in_column_group.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_table_body.o: src/treebuilder/in_table_body.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_row.o: src/treebuilder/in_row.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_cell.o: src/treebuilder/in_cell.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_select.o: src/treebuilder/in_select.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_select_in_table.o: src/treebuilder/in_select_in_table.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_foreign_content.o: src/treebuilder/in_foreign_content.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_after_body.o: src/treebuilder/after_body.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_in_frameset.o: src/treebuilder/in_frameset.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_after_frameset.o: src/treebuilder/after_frameset.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_after_after_body.o: src/treebuilder/after_after_body.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_after_after_frameset.o: src/treebuilder/after_after_frameset.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_treebuilder_generic_rcdata.o: src/treebuilder/generic_rcdata.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_utils_errors.o: src/utils/errors.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_utils_string.o: src/utils/string.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_tokeniser_entities.o: src/tokeniser/entities.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_tokeniser_tokeniser.o: src/tokeniser/tokeniser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+$(OUT)/src_charset_detect.o: src/charset/detect.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+src/tokeniser/entities.inc:
+	perl build/make-entities.pl
+
+$(LIB): src/tokeniser/entities.inc $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include/hubbub
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/hubbub/errors.h $(FB)/include/hubbub
+	install -m 644 include/hubbub/functypes.h $(FB)/include/hubbub
+	install -m 644 include/hubbub/hubbub.h $(FB)/include/hubbub
+	install -m 644 include/hubbub/parser.h $(FB)/include/hubbub
+	install -m 644 include/hubbub/tree.h $(FB)/include/hubbub
+	install -m 644 include/hubbub/types.h $(FB)/include/hubbub
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB) src/tokeniser/entities.inc

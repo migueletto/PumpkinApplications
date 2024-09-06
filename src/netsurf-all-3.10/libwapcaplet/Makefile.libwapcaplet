@@ -1,0 +1,25 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include/ -I./src -I$(PUMPKINOS)/src/libpit
+CFLAGS=-MMD -MP -D_BSD_SOURCE -D_DEFAULT_SOURCE -Wall -W -Wno-error $(INC) -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99
+OBJS=$(OUT)/libwapcaplet.o
+LIB=$(OUT)/libwapcaplet.a
+FLIB=$(FB)/lib/libwapcaplet.a
+
+all: $(FLIB)
+
+$(OUT)/libwapcaplet.o: src/libwapcaplet.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include/libwapcaplet
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/libwapcaplet/libwapcaplet.h $(FB)/include/libwapcaplet
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB)

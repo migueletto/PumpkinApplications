@@ -1,0 +1,25 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include/ -I./src -I$(PUMPKINOS)/src/libpit
+CFLAGS=-MMD -MP -D_GNU_SOURCE -D_DEFAULT_SOURCE $(INC) -Wall -W -Wno-error  -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99 -D_POSIX_C_SOURCE=200809L
+OBJS=$(OUT)/src_nspsl.o
+LIB=$(OUT)/libnspsl.a
+FLIB=$(FB)/lib/libnspsl.a
+
+all: $(FLIB)
+
+$(OUT)/src_nspsl.o: src/nspsl.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/nspsl.h $(FB)/include
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB) $(OUT)/*.d

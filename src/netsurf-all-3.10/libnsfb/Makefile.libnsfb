@@ -1,0 +1,70 @@
+include ../Makefile.common
+
+OUT=./build
+PALMINC=$(PUMPKINOS)/src/PalmOS
+INC=-I./include/ -I./src -I../pumpkin -I$(PUMPKINOS)/src/libpumpkin -I$(PUMPKINOS)/src/libpit -I$(PUMPKINOS)/src/font -DUNIX -I$(PALMINC) -I$(PALMINC)/Core -I$(PALMINC)/Core/System -I$(PALMINC)/Dynamic -I$(PALMINC)/Core/UI -I$(PALMINC)/Libraries -I$(PALMINC)/Garmin -I$(PALMINC)/Libraries/PalmOSGlue -I$(PALMINC)/Extensions/ExpansionMgr -I$(PALMINC)/Libraries/Pdi -Wno-multichar -I$(FB)/include
+CFLAGS=-MMD -MP -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200112L $(INC) -Wall -W -Wno-unknown-pragmas -Wno-error -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99
+OBJS=$(OUT)/src_libnsfb.o $(OUT)/src_cursor.o $(OUT)/src_palette.o $(OUT)/src_plot_api.o $(OUT)/src_plot_util.o $(OUT)/src_plot_generic.o $(OUT)/src_plot_32bpp-xrgb8888.o $(OUT)/src_plot_32bpp-xbgr8888.o $(OUT)/src_plot_16bpp.o $(OUT)/src_plot_8bpp.o $(OUT)/src_surface_surface.o $(OUT)/src_surface_ram.o $(OUT)/src_surface_pit.o
+LIB=$(OUT)/libnsfb.a
+FLIB=$(FB)/lib/libnsfb.a
+
+all: $(FLIB)
+
+$(OUT)/src_libnsfb.o: src/libnsfb.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_dump.o: src/dump.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_cursor.o: src/cursor.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_palette.o: src/palette.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_plot_api.o: src/plot/api.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_plot_util.o: src/plot/util.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_plot_generic.o: src/plot/generic.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_plot_32bpp-xrgb8888.o: src/plot/32bpp-xrgb8888.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_plot_32bpp-xbgr8888.o: src/plot/32bpp-xbgr8888.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_plot_16bpp.o: src/plot/16bpp.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_plot_8bpp.o: src/plot/8bpp.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_surface_surface.o: src/surface/surface.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_surface_ram.o: src/surface/ram.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_surface_pit.o: src/surface/pit.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/libnsfb.h $(FB)/include
+	install -m 644 include/libnsfb_plot.h $(FB)/include
+	install -m 644 include/libnsfb_plot_util.h $(FB)/include
+	install -m 644 include/libnsfb_event.h $(FB)/include
+	install -m 644 include/libnsfb_cursor.h $(FB)/include
+	install -m 644 src/surfaces.h $(FB)/include
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB) $(OUT)/*.d

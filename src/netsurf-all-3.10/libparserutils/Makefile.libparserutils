@@ -1,0 +1,84 @@
+include ../Makefile.common
+
+OUT=./out
+INC=-I./include/ -I./src -I./test
+CFLAGS=-MMD -MP -D_BSD_SOURCE -D_DEFAULT_SOURCE $(INC) -Wall -W -Wno-error -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99
+OBJS=$(OUT)/src_input_filter.o $(OUT)/src_input_inputstream.o $(OUT)/src_utils_buffer.o $(OUT)/src_utils_errors.o $(OUT)/src_utils_stack.o $(OUT)/src_utils_vector.o $(OUT)/src_charset_aliases.o $(OUT)/src_charset_codec.o $(OUT)/src_charset_codecs_codec_ascii.o $(OUT)/src_charset_codecs_codec_8859.o $(OUT)/src_charset_codecs_codec_ext8.o $(OUT)/src_charset_codecs_codec_utf8.o $(OUT)/src_charset_codecs_codec_utf16.o $(OUT)/src_charset_encodings_utf8.o $(OUT)/src_charset_encodings_utf16.o
+LIB=$(OUT)/libparserutils.a
+FLIB=$(FB)/lib/libparserutils.a
+
+all: $(FLIB)
+
+$(OUT)/src_input_filter.o: src/input/filter.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_input_inputstream.o: src/input/inputstream.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils_buffer.o: src/utils/buffer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils_errors.o: src/utils/errors.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils_stack.o: src/utils/stack.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils_vector.o: src/utils/vector.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+src/charset/aliases.inc:
+	perl build/make-aliases.pl
+
+$(OUT)/src_charset_aliases.o: src/charset/aliases.c src/charset/aliases.inc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_charset_codec.o: src/charset/codec.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_charset_codecs_codec_ascii.o: src/charset/codecs/codec_ascii.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_charset_codecs_codec_8859.o: src/charset/codecs/codec_8859.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_charset_codecs_codec_ext8.o: src/charset/codecs/codec_ext8.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_charset_codecs_codec_utf8.o: src/charset/codecs/codec_utf8.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_charset_codecs_codec_utf16.o: src/charset/codecs/codec_utf16.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_charset_encodings_utf8.o: src/charset/encodings/utf8.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_charset_encodings_utf16.o: src/charset/encodings/utf16.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	install -m 644 $(LIB) $(FLIB)
+	mkdir -p $(FB)/include/parserutils
+	mkdir -p $(FB)/include/parserutils/charset
+	mkdir -p $(FB)/include/parserutils/input
+	mkdir -p $(FB)/include/parserutils/utils
+	install -m 644 include/parserutils/errors.h $(FB)/include/parserutils
+	install -m 644 include/parserutils/functypes.h $(FB)/include/parserutils
+	install -m 644 include/parserutils/parserutils.h $(FB)/include/parserutils
+	install -m 644 include/parserutils/types.h $(FB)/include/parserutils
+	install -m 644 include/parserutils/charset/codec.h $(FB)/include/parserutils/charset
+	install -m 644 include/parserutils/charset/mibenum.h $(FB)/include/parserutils/charset
+	install -m 644 include/parserutils/charset/utf16.h $(FB)/include/parserutils/charset
+	install -m 644 include/parserutils/charset/utf8.h $(FB)/include/parserutils/charset
+	install -m 644 include/parserutils/input/inputstream.h $(FB)/include/parserutils/input
+	install -m 644 include/parserutils/utils/buffer.h $(FB)/include/parserutils/utils
+	install -m 644 include/parserutils/utils/stack.h $(FB)/include/parserutils/utils
+	install -m 644 include/parserutils/utils/vector.h $(FB)/include/parserutils/utils
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB) $(OUT)/*.d src/charset/aliases.inc

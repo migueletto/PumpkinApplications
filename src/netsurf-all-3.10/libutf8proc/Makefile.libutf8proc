@@ -1,0 +1,25 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include/libutf8proc -I./src -I$(PUMPKINOS)/src/libpit
+CFLAGS=-MMD -MP -DUTF8PROC_EXPORTS $(INC) -Wall -W -Wno-error -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99
+OBJS=$(OUT)/src_utf8proc.o
+LIB=$(OUT)/libutf8proc.a
+FLIB=$(FB)/lib/libutf8proc.a
+
+all: $(FLIB)
+
+$(OUT)/src_utf8proc.o: src/utf8proc.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include/libutf8proc
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/libutf8proc/utf8proc.h $(FB)/include/libutf8proc
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB)

@@ -1,0 +1,78 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include/ -I./src -I$(OUT)
+CFLAGS= -MMD -MP -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809L $(INC) -Wall -W -Wundef -Wpointer-arith -Wcast-align -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99 -DYYENABLE_NLS=0
+OBJS=$(OUT)/nsgenbind-parser.o $(OUT)/nsgenbind-lexer.o $(OUT)/webidl-parser.o $(OUT)/webidl-lexer.o $(OUT)/src_nsgenbind.o $(OUT)/src_utils.o $(OUT)/src_output.o $(OUT)/src_webidl-ast.o $(OUT)/src_nsgenbind-ast.o $(OUT)/src_ir.o $(OUT)/src_duk-libdom.o $(OUT)/src_duk-libdom-interface.o $(OUT)/src_duk-libdom-dictionary.o $(OUT)/src_duk-libdom-common.o $(OUT)/src_duk-libdom-generated.o
+BIN=$(OUT)/nsgenbind
+FBIN=$(FB)/bin/nsgenbind
+
+all: $(FBIN)
+
+$(OUT)/webidl-parser.c: src/webidl-parser.y $(OUT)/webidl-lexer.c
+	bison -d -t --define=api.prefix={webidl_} --report=all --output=$(OUT)/webidl-parser.c --defines=$(OUT)/webidl-parser.h src/webidl-parser.y
+
+$(OUT)/webidl-lexer.c: src/webidl-lexer.l
+	flex --outfile=$(OUT)/webidl-lexer.c --header-file=$(OUT)/webidl-lexer.h src/webidl-lexer.l
+
+$(OUT)/nsgenbind-parser.c: src/nsgenbind-parser.y $(OUT)/nsgenbind-lexer.c
+	bison -d -t --define=api.prefix={nsgenbind_} --report=all --output=$(OUT)/nsgenbind-parser.c --defines=$(OUT)/nsgenbind-parser.h src/nsgenbind-parser.y
+
+$(OUT)/nsgenbind-lexer.c: src/nsgenbind-lexer.l
+	flex --outfile=$(OUT)/nsgenbind-lexer.c --header-file=$(OUT)/nsgenbind-lexer.h src/nsgenbind-lexer.l
+
+$(OUT)/nsgenbind-parser.o: $(OUT)/nsgenbind-parser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/nsgenbind-lexer.o: $(OUT)/nsgenbind-lexer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/webidl-parser.o: $(OUT)/webidl-parser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/webidl-lexer.o: $(OUT)/webidl-lexer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_nsgenbind.o: src/nsgenbind.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_utils.o: src/utils.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_output.o: src/output.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_webidl-ast.o: src/webidl-ast.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_nsgenbind-ast.o: src/nsgenbind-ast.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_ir.o: src/ir.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_duk-libdom.o: src/duk-libdom.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_duk-libdom-interface.o: src/duk-libdom-interface.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_duk-libdom-dictionary.o: src/duk-libdom-dictionary.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_duk-libdom-common.o: src/duk-libdom-common.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_duk-libdom-generated.o: src/duk-libdom-generated.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(BIN): $(OBJS)
+	$(CC) -o $(BIN) $(OBJS)
+
+$(FBIN): $(BIN)
+	mkdir -p $(FB)/bin
+	install -m 755 $(BIN) $(FBIN)
+
+clean:
+	rm -f $(OBJS) $(BIN) $(FBIN) $(OUT)/webidl-parser.c $(OUT)/webidl-lexer.c $(OUT)/nsgenbind-parser.c $(OUT)/nsgenbind-lexer.c $(OUT)/nsgenbind-parser.h $(OUT)/nsgenbind-parser.output $(OUT)/webidl-parser.output $(OUT)/webidl-parser.h $(OUT)/*.d
+

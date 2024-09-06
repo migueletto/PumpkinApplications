@@ -1,0 +1,45 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include/ -I./src -I$(PUMPKINOS)/src/libpit
+CFLAGS=-MMD -MP -D_GNU_SOURCE -D_DEFAULT_SOURCE -Wall -W -Wno-error $(INC) -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99 -D_POSIX_C_SOURCE=200809L -I$(OUT)
+OBJS=$(OUT)/$(OUT)_filter-parser.o $(OUT)/$(OUT)_filter-lexer.o $(OUT)/src_core.o $(OUT)/src_filter.o
+LIB=$(OUT)/libnslog.a
+FLIB=$(FB)/lib/libnslog.a
+
+all: $(FLIB)
+
+$(OUT)/filter-parser.c: src/filter-parser.y
+	bison -d -t --define=api.prefix={filter_} --report=all --output=$(OUT)/filter-parser.c --defines=$(OUT)/filter-parser.h src/filter-parser.y
+
+$(OUT)/filter-lexer.inc: src/filter-lexer.l
+	flex --outfile=$(OUT)/filter-lexer.inc --header-file=$(OUT)/filter-lexer.h src/filter-lexer.l
+
+$(OUT)/filter-lexer.c: $(OUT)/filter-lexer.inc
+	echo "#ifndef __clang_analyzer__" > $(OUT)/filter-lexer.c
+	echo "#include \"filter-lexer.inc\"" >> $(OUT)/filter-lexer.c
+	echo "#endif" >> $(OUT)/filter-lexer.c
+
+$(OUT)/$(OUT)_filter-parser.o: $(OUT)/filter-parser.c $(OUT)/filter-lexer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/$(OUT)_filter-lexer.o: $(OUT)/filter-lexer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_core.o: src/core.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_filter.o: src/filter.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include/nslog
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/nslog/nslog.h $(FB)/include/nslog
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB) $(OUT)/filter-parser.c $(OUT)/filter-parser.h $(OUT)/filter-lexer.inc $(OUT)/filter-lexer.h $(OUT)/filter-lexer.c $(OUT)/filter-parser.output

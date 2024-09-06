@@ -1,0 +1,110 @@
+$(OUT)/content_handlers_css_css.o: content/handlers/css/css.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_dump.o: content/handlers/css/dump.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_hints.o: content/handlers/css/hints.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_internal.o: content/handlers/css/internal.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_select.o: content/handlers/css/select.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_utils.o: content/handlers/css/utils.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_construct.o: content/handlers/html/box_construct.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_inspect.o: content/handlers/html/box_inspect.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_manipulate.o: content/handlers/html/box_manipulate.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_normalise.o: content/handlers/html/box_normalise.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_special.o: content/handlers/html/box_special.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_textarea.o: content/handlers/html/box_textarea.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_css.o: content/handlers/html/css.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_css_fetcher.o: content/handlers/html/css_fetcher.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_dom_event.o: content/handlers/html/dom_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_font.o: content/handlers/html/font.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_form.o: content/handlers/html/form.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_forms.o: content/handlers/html/forms.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_html.o: content/handlers/html/html.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_imagemap.o: content/handlers/html/imagemap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_interaction.o: content/handlers/html/interaction.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_layout.o: content/handlers/html/layout.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_object.o: content/handlers/html/object.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_redraw.o: content/handlers/html/redraw.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_redraw_border.o: content/handlers/html/redraw_border.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_script.o: content/handlers/html/script.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_table.o: content/handlers/html/table.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_textselection.o: content/handlers/html/textselection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_bmp.o: content/handlers/image/bmp.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_gif.o: content/handlers/image/gif.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_ico.o: content/handlers/image/ico.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_image.o: content/handlers/image/image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_image_cache.o: content/handlers/image/image_cache.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_jpeg.o: content/handlers/image/jpeg.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_nssprite.o: content/handlers/image/nssprite.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_png.o: content/handlers/image/png.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_svg.o: content/handlers/image/svg.c
+	$(CC) $(CFLAGS) -o $@ -c $<

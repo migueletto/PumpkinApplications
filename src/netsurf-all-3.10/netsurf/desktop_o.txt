@@ -1,0 +1,89 @@
+$(OUT)/desktop_browser.o: desktop/browser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_browser_history.o: desktop/browser_history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_browser_window.o: desktop/browser_window.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_cookie_manager.o: desktop/cookie_manager.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_cw_helper.o: desktop/cw_helper.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_download.o: desktop/download.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_font_haru.o: desktop/font_haru.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_frames.o: desktop/frames.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_global_history.o: desktop/global_history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_gui_factory.o: desktop/gui_factory.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_hotlist.o: desktop/hotlist.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_knockout.o: desktop/knockout.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_local_history.o: desktop/local_history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_mouse.o: desktop/mouse.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_netsurf.o: desktop/netsurf.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_page-info.o: desktop/page-info.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_plot_style.o: desktop/plot_style.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_print.o: desktop/print.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_save_complete.o: desktop/save_complete.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_save_pdf.o: desktop/save_pdf.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_save_text.o: desktop/save_text.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_scrollbar.o: desktop/scrollbar.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_search.o: desktop/search.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_searchweb.o: desktop/searchweb.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_selection.o: desktop/selection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_system_colour.o: desktop/system_colour.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_textarea.o: desktop/textarea.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_textinput.o: desktop/textinput.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_treeview.o: desktop/treeview.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_version.o: desktop/version.c
+	$(CC) $(CFLAGS) -o $@ -c $<

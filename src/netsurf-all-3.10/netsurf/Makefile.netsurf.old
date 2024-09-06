@@ -1,0 +1,1312 @@
+include ../Makefile.common
+
+#NETSURF_USE_JPEG=YES
+#NETSURF_USE_HARU_PDF=NO
+#NETSURF_USE_LIBICONV_PLUG=YES
+#NETSURF_USE_DUKTAPE=YES
+#NETSURF_USE_CURL=YES
+#NETSURF_USE_OPENSSL=YES
+#NETSURF_USE_UTF8PROC=YES
+#NETSURF_USE_WEBP=NO
+#NETSURF_USE_PNG=YES
+#NETSURF_USE_BMP=YES
+#NETSURF_USE_GIF=YES
+#NETSURF_USE_NSSVG=YES
+#NETSURF_USE_ROSPRITE=YES
+#NETSURF_USE_NSPSL=YES
+#NETSURF_USE_NSLOG=YES
+
+CC=gcc
+OUT=./build/Linux-framebuffer
+#CFLAGS=-W -Wall -Wundef -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-declarations -Wuninitialized -Wno-unused-parameter -Wno-unused-but-set-variable -Wimplicit-fallthrough=3 -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -I. -Iinclude -I$(OUT) -Ifrontends -Icontent/handlers -O2 -DWITH_JPEG -UWITH_PDF_EXPORT -DLIBICONV_PLUG -I$(FB)/include -I$(FB)/include -I$(FB)/include -I/usr/include/x86_64-linux-gnu -DWITH_CURL -DWITH_OPENSSL -DUTF8PROC_EXPORTS -I$(FB)/include -DWITH_UTF8PROC -DWITH_WEBP -I/usr/include/libpng16 -DWITH_PNG -I$(FB)/include/ -DWITH_BMP -I$(FB)/include -DWITH_GIF -I$(FB)/include -DWITH_NS_SVG -I$(FB)/include -DWITH_NSSPRITE -I$(FB)/include -DWITH_NSPSL -I$(FB)/include -DWITH_NSLOG -DNETSURF_UA_FORMAT_STRING=\""NetSurf/%d.%d (%s)"\" -DNETSURF_HOMEPAGE=\""about:welcome"\" -DNETSURF_LOG_LEVEL=VERBOSE -DNETSURF_BUILTIN_LOG_FILTER=\""(level:WARNING || cat:jserrors)"\" -DNETSURF_BUILTIN_VERBOSE_FILTER=\""(level:VERBOSE || cat:jserrors)"\" -DSTMTEXPR=1 -std=c99 -g -Dnsframebuffer -Dsmall -DNETSURF_FB_RESPATH=\"./frontends/framebuffer/res\" -DNETSURF_FB_FONTPATH=\"/usr/share/fonts/truetype/dejavu:/usr/share/fonts/truetype/msttcorefonts\" '-DNETSURF_FB_FONT_SANS_SERIF="DejaVuSans.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_BOLD="DejaVuSans-Bold.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_ITALIC="DejaVuSans-Oblique.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_ITALIC_BOLD="DejaVuSans-BoldOblique.ttf"' '-DNETSURF_FB_FONT_SERIF="DejaVuSerif.ttf"' '-DNETSURF_FB_FONT_SERIF_BOLD="DejaVuSerif-Bold.ttf"' '-DNETSURF_FB_FONT_MONOSPACE="DejaVuSansMono.ttf"' '-DNETSURF_FB_FONT_MONOSPACE_BOLD="DejaVuSansMono-Bold.ttf"' '-DNETSURF_FB_FONT_CURSIVE="Comic_Sans_MS.ttf"' '-DNETSURF_FB_FONT_FANTASY="Impact.ttf"' -I$(FB)/include -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_NETBSD_SOURCE -DDUK_OPT_HAVE_CUSTOM_H -fPIC -I$(PIT)/src/jpeg-8d
+
+CFLAGS=-W -Wall -Wundef -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-declarations -Wuninitialized -Wno-unused-parameter -Wno-unused-but-set-variable -Wimplicit-fallthrough=3 -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -I. -Iinclude -I$(OUT) -Ifrontends -Icontent/handlers $(OPT) -DWITH_JPEG -UWITH_PDF_EXPORT -I$(FB)/include -I/usr/include/x86_64-linux-gnu -DWITH_CURL -DWITH_OPENSSL -DUTF8PROC_EXPORTS -DWITH_UTF8PROC -I/usr/include/libpng16 -DWITH_PNG -DWITH_BMP -DWITH_GIF -DWITH_NS_SVG -DWITH_NSSPRITE -DWITH_NSPSL -DWITH_NSLOG -DNETSURF_UA_FORMAT_STRING=\""NetSurf/%d.%d (%s)"\" -DNETSURF_HOMEPAGE=\""about:welcome"\" -DNETSURF_LOG_LEVEL=VERBOSE -DNETSURF_BUILTIN_LOG_FILTER=\""(level:WARNING || cat:jserrors)"\" -DNETSURF_BUILTIN_VERBOSE_FILTER=\""(level:VERBOSE || cat:jserrors)"\" -DSTMTEXPR=1 -std=c99 -g -Dnsframebuffer -Dsmall -DNETSURF_FB_RESPATH=\"./frontends/framebuffer/res\" -DNETSURF_FB_FONTPATH=\"\" '-DNETSURF_FB_FONT_SANS_SERIF="DejaVuSans.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_BOLD="DejaVuSans-Bold.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_ITALIC="DejaVuSans-Oblique.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_ITALIC_BOLD="DejaVuSans-BoldOblique.ttf"' '-DNETSURF_FB_FONT_SERIF="DejaVuSerif.ttf"' '-DNETSURF_FB_FONT_SERIF_BOLD="DejaVuSerif-Bold.ttf"' '-DNETSURF_FB_FONT_MONOSPACE="DejaVuSansMono.ttf"' '-DNETSURF_FB_FONT_MONOSPACE_BOLD="DejaVuSansMono-Bold.ttf"' '-DNETSURF_FB_FONT_CURSIVE="Comic_Sans_MS.ttf"' '-DNETSURF_FB_FONT_FANTASY="Impact.ttf"' -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_NETBSD_SOURCE -DDUK_OPT_HAVE_CUSTOM_H -fPIC -I$(PIT)/src/jpeg-8d -I$(PIT)/src/libpit
+
+OBJS=$(OUT)/build_Linux-framebuffer_duktape_application_cache.o $(OUT)/build_Linux-framebuffer_duktape_attr.o $(OUT)/build_Linux-framebuffer_duktape_audio_track.o $(OUT)/build_Linux-framebuffer_duktape_audio_track_list.o $(OUT)/build_Linux-framebuffer_duktape_autocomplete_error_event.o $(OUT)/build_Linux-framebuffer_duktape_autocomplete_error_event_init.o $(OUT)/build_Linux-framebuffer_duktape_bar_prop.o $(OUT)/build_Linux-framebuffer_duktape_before_unload_event.o $(OUT)/build_Linux-framebuffer_duktape_binding.o $(OUT)/build_Linux-framebuffer_duktape_broadcast_channel.o $(OUT)/build_Linux-framebuffer_duktape_canvas_gradient.o $(OUT)/build_Linux-framebuffer_duktape_canvas_pattern.o $(OUT)/build_Linux-framebuffer_duktape_canvas_proxy.o $(OUT)/build_Linux-framebuffer_duktape_canvas_rendering_context2d.o $(OUT)/build_Linux-framebuffer_duktape_canvas_rendering_context2d_settings.o $(OUT)/build_Linux-framebuffer_duktape_character_data.o $(OUT)/build_Linux-framebuffer_duktape_close_event.o $(OUT)/build_Linux-framebuffer_duktape_close_event_init.o $(OUT)/build_Linux-framebuffer_duktape_comment.o $(OUT)/build_Linux-framebuffer_duktape_composition_event.o $(OUT)/build_Linux-framebuffer_duktape_composition_event_init.o $(OUT)/build_Linux-framebuffer_duktape_console.o $(OUT)/build_Linux-framebuffer_duktape_css.o $(OUT)/build_Linux-framebuffer_duktape_css_grouping_rule.o $(OUT)/build_Linux-framebuffer_duktape_css_import_rule.o $(OUT)/build_Linux-framebuffer_duktape_css_margin_rule.o $(OUT)/build_Linux-framebuffer_duktape_css_media_rule.o $(OUT)/build_Linux-framebuffer_duktape_css_namespace_rule.o $(OUT)/build_Linux-framebuffer_duktape_css_page_rule.o $(OUT)/build_Linux-framebuffer_duktape_css_rule.o $(OUT)/build_Linux-framebuffer_duktape_css_rule_list.o $(OUT)/build_Linux-framebuffer_duktape_css_style_declaration.o $(OUT)/build_Linux-framebuffer_duktape_css_style_rule.o $(OUT)/build_Linux-framebuffer_duktape_css_style_sheet.o $(OUT)/build_Linux-framebuffer_duktape_custom_event.o $(OUT)/build_Linux-framebuffer_duktape_custom_event_init.o \
+$(OUT)/build_Linux-framebuffer_duktape_data_transfer.o $(OUT)/build_Linux-framebuffer_duktape_data_transfer_item.o $(OUT)/build_Linux-framebuffer_duktape_data_transfer_item_list.o $(OUT)/build_Linux-framebuffer_duktape_dedicated_worker_global_scope.o $(OUT)/build_Linux-framebuffer_duktape_document.o $(OUT)/build_Linux-framebuffer_duktape_document_fragment.o $(OUT)/build_Linux-framebuffer_duktape_document_type.o $(OUT)/build_Linux-framebuffer_duktape_dom_element_map.o $(OUT)/build_Linux-framebuffer_duktape_dom_implementation.o $(OUT)/build_Linux-framebuffer_duktape_dom_parser.o $(OUT)/build_Linux-framebuffer_duktape_dom_settable_token_list.o $(OUT)/build_Linux-framebuffer_duktape_dom_string_map.o $(OUT)/build_Linux-framebuffer_duktape_dom_token_list.o $(OUT)/build_Linux-framebuffer_duktape_drag_event.o $(OUT)/build_Linux-framebuffer_duktape_drag_event_init.o $(OUT)/build_Linux-framebuffer_duktape_drawing_style.o $(OUT)/build_Linux-framebuffer_duktape_element.o $(OUT)/build_Linux-framebuffer_duktape_error_event.o $(OUT)/build_Linux-framebuffer_duktape_error_event_init.o $(OUT)/build_Linux-framebuffer_duktape_event.o $(OUT)/build_Linux-framebuffer_duktape_event_init.o $(OUT)/build_Linux-framebuffer_duktape_event_listener.o $(OUT)/build_Linux-framebuffer_duktape_event_modifier_init.o $(OUT)/build_Linux-framebuffer_duktape_event_source.o $(OUT)/build_Linux-framebuffer_duktape_event_source_init.o $(OUT)/build_Linux-framebuffer_duktape_event_target.o $(OUT)/build_Linux-framebuffer_duktape_external.o $(OUT)/build_Linux-framebuffer_duktape_focus_event.o $(OUT)/build_Linux-framebuffer_duktape_focus_event_init.o $(OUT)/build_Linux-framebuffer_duktape_hash_change_event.o $(OUT)/build_Linux-framebuffer_duktape_hash_change_event_init.o $(OUT)/build_Linux-framebuffer_duktape_history.o \
+$(OUT)/build_Linux-framebuffer_duktape_hit_region_options.o $(OUT)/build_Linux-framebuffer_duktape_html_all_collection.o $(OUT)/build_Linux-framebuffer_duktape_html_anchor_element.o $(OUT)/build_Linux-framebuffer_duktape_html_applet_element.o $(OUT)/build_Linux-framebuffer_duktape_html_area_element.o $(OUT)/build_Linux-framebuffer_duktape_html_audio_element.o $(OUT)/build_Linux-framebuffer_duktape_html_base_element.o $(OUT)/build_Linux-framebuffer_duktape_html_body_element.o $(OUT)/build_Linux-framebuffer_duktape_html_br_element.o $(OUT)/build_Linux-framebuffer_duktape_html_button_element.o $(OUT)/build_Linux-framebuffer_duktape_html_canvas_element.o $(OUT)/build_Linux-framebuffer_duktape_html_collection.o $(OUT)/build_Linux-framebuffer_duktape_html_data_element.o $(OUT)/build_Linux-framebuffer_duktape_html_data_list_element.o $(OUT)/build_Linux-framebuffer_duktape_html_details_element.o $(OUT)/build_Linux-framebuffer_duktape_html_dialog_element.o $(OUT)/build_Linux-framebuffer_duktape_html_directory_element.o $(OUT)/build_Linux-framebuffer_duktape_html_div_element.o $(OUT)/build_Linux-framebuffer_duktape_html_dlist_element.o $(OUT)/build_Linux-framebuffer_duktape_html_element.o $(OUT)/build_Linux-framebuffer_duktape_html_embed_element.o $(OUT)/build_Linux-framebuffer_duktape_html_field_set_element.o $(OUT)/build_Linux-framebuffer_duktape_html_font_element.o $(OUT)/build_Linux-framebuffer_duktape_html_form_controls_collection.o $(OUT)/build_Linux-framebuffer_duktape_html_form_element.o $(OUT)/build_Linux-framebuffer_duktape_html_frame_element.o $(OUT)/build_Linux-framebuffer_duktape_html_frame_set_element.o $(OUT)/build_Linux-framebuffer_duktape_html_head_element.o $(OUT)/build_Linux-framebuffer_duktape_html_heading_element.o $(OUT)/build_Linux-framebuffer_duktape_html_hr_element.o $(OUT)/build_Linux-framebuffer_duktape_html_html_element.o \
+$(OUT)/build_Linux-framebuffer_duktape_html_iframe_element.o $(OUT)/build_Linux-framebuffer_duktape_html_image_element.o $(OUT)/build_Linux-framebuffer_duktape_html_input_element.o $(OUT)/build_Linux-framebuffer_duktape_html_keygen_element.o $(OUT)/build_Linux-framebuffer_duktape_html_label_element.o $(OUT)/build_Linux-framebuffer_duktape_html_legend_element.o $(OUT)/build_Linux-framebuffer_duktape_html_li_element.o $(OUT)/build_Linux-framebuffer_duktape_html_link_element.o $(OUT)/build_Linux-framebuffer_duktape_html_map_element.o $(OUT)/build_Linux-framebuffer_duktape_html_marquee_element.o $(OUT)/build_Linux-framebuffer_duktape_html_media_element.o $(OUT)/build_Linux-framebuffer_duktape_html_menu_element.o $(OUT)/build_Linux-framebuffer_duktape_html_menu_item_element.o $(OUT)/build_Linux-framebuffer_duktape_html_meta_element.o $(OUT)/build_Linux-framebuffer_duktape_html_meter_element.o $(OUT)/build_Linux-framebuffer_duktape_html_mod_element.o $(OUT)/build_Linux-framebuffer_duktape_html_object_element.o $(OUT)/build_Linux-framebuffer_duktape_html_olist_element.o $(OUT)/build_Linux-framebuffer_duktape_html_opt_group_element.o $(OUT)/build_Linux-framebuffer_duktape_html_option_element.o $(OUT)/build_Linux-framebuffer_duktape_html_options_collection.o $(OUT)/build_Linux-framebuffer_duktape_html_output_element.o $(OUT)/build_Linux-framebuffer_duktape_html_paragraph_element.o $(OUT)/build_Linux-framebuffer_duktape_html_param_element.o $(OUT)/build_Linux-framebuffer_duktape_html_picture_element.o $(OUT)/build_Linux-framebuffer_duktape_html_pre_element.o $(OUT)/build_Linux-framebuffer_duktape_html_progress_element.o $(OUT)/build_Linux-framebuffer_duktape_html_quote_element.o $(OUT)/build_Linux-framebuffer_duktape_html_script_element.o $(OUT)/build_Linux-framebuffer_duktape_html_select_element.o $(OUT)/build_Linux-framebuffer_duktape_html_source_element.o $(OUT)/build_Linux-framebuffer_duktape_html_span_element.o $(OUT)/build_Linux-framebuffer_duktape_html_style_element.o $(OUT)/build_Linux-framebuffer_duktape_html_table_caption_element.o $(OUT)/build_Linux-framebuffer_duktape_html_table_cell_element.o $(OUT)/build_Linux-framebuffer_duktape_html_table_col_element.o $(OUT)/build_Linux-framebuffer_duktape_html_table_data_cell_element.o \
+$(OUT)/build_Linux-framebuffer_duktape_html_table_element.o $(OUT)/build_Linux-framebuffer_duktape_html_table_header_cell_element.o $(OUT)/build_Linux-framebuffer_duktape_html_table_row_element.o $(OUT)/build_Linux-framebuffer_duktape_html_table_section_element.o $(OUT)/build_Linux-framebuffer_duktape_html_template_element.o $(OUT)/build_Linux-framebuffer_duktape_html_text_area_element.o $(OUT)/build_Linux-framebuffer_duktape_html_time_element.o $(OUT)/build_Linux-framebuffer_duktape_html_title_element.o $(OUT)/build_Linux-framebuffer_duktape_html_track_element.o $(OUT)/build_Linux-framebuffer_duktape_html_ulist_element.o $(OUT)/build_Linux-framebuffer_duktape_html_unknown_element.o $(OUT)/build_Linux-framebuffer_duktape_html_video_element.o $(OUT)/build_Linux-framebuffer_duktape_image_bitmap.o $(OUT)/build_Linux-framebuffer_duktape_image_data.o $(OUT)/build_Linux-framebuffer_duktape_keyboard_event.o $(OUT)/build_Linux-framebuffer_duktape_keyboard_event_init.o $(OUT)/build_Linux-framebuffer_duktape_location.o $(OUT)/build_Linux-framebuffer_duktape_media_controller.o $(OUT)/build_Linux-framebuffer_duktape_media_error.o $(OUT)/build_Linux-framebuffer_duktape_media_list.o $(OUT)/build_Linux-framebuffer_duktape_message_channel.o $(OUT)/build_Linux-framebuffer_duktape_message_event.o $(OUT)/build_Linux-framebuffer_duktape_message_event_init.o $(OUT)/build_Linux-framebuffer_duktape_message_port.o $(OUT)/build_Linux-framebuffer_duktape_mime_type.o $(OUT)/build_Linux-framebuffer_duktape_mime_type_array.o $(OUT)/build_Linux-framebuffer_duktape_mouse_event.o $(OUT)/build_Linux-framebuffer_duktape_mouse_event_init.o $(OUT)/build_Linux-framebuffer_duktape_mutation_event.o $(OUT)/build_Linux-framebuffer_duktape_mutation_observer.o $(OUT)/build_Linux-framebuffer_duktape_mutation_observer_init.o $(OUT)/build_Linux-framebuffer_duktape_mutation_record.o $(OUT)/build_Linux-framebuffer_duktape_named_node_map.o $(OUT)/build_Linux-framebuffer_duktape_navigator.o $(OUT)/build_Linux-framebuffer_duktape_node.o $(OUT)/build_Linux-framebuffer_duktape_node_filter.o $(OUT)/build_Linux-framebuffer_duktape_node_iterator.o $(OUT)/build_Linux-framebuffer_duktape_node_list.o $(OUT)/build_Linux-framebuffer_duktape_page_transition_event.o $(OUT)/build_Linux-framebuffer_duktape_page_transition_event_init.o $(OUT)/build_Linux-framebuffer_duktape_path2d.o $(OUT)/build_Linux-framebuffer_duktape_plugin.o \
+$(OUT)/build_Linux-framebuffer_duktape_plugin_array.o $(OUT)/build_Linux-framebuffer_duktape_pop_state_event.o $(OUT)/build_Linux-framebuffer_duktape_pop_state_event_init.o $(OUT)/build_Linux-framebuffer_duktape_processing_instruction.o $(OUT)/build_Linux-framebuffer_duktape_pseudo_element.o $(OUT)/build_Linux-framebuffer_duktape_radio_node_list.o $(OUT)/build_Linux-framebuffer_duktape_range.o $(OUT)/build_Linux-framebuffer_duktape_related_event.o $(OUT)/build_Linux-framebuffer_duktape_related_event_init.o $(OUT)/build_Linux-framebuffer_duktape_shared_worker.o $(OUT)/build_Linux-framebuffer_duktape_shared_worker_global_scope.o $(OUT)/build_Linux-framebuffer_duktape_storage.o $(OUT)/build_Linux-framebuffer_duktape_storage_event.o $(OUT)/build_Linux-framebuffer_duktape_storage_event_init.o $(OUT)/build_Linux-framebuffer_duktape_style_sheet.o $(OUT)/build_Linux-framebuffer_duktape_style_sheet_list.o $(OUT)/build_Linux-framebuffer_duktape_svg_element.o $(OUT)/build_Linux-framebuffer_duktape_text.o $(OUT)/build_Linux-framebuffer_duktape_text_metrics.o $(OUT)/build_Linux-framebuffer_duktape_text_track.o $(OUT)/build_Linux-framebuffer_duktape_text_track_cue.o $(OUT)/build_Linux-framebuffer_duktape_text_track_cue_list.o $(OUT)/build_Linux-framebuffer_duktape_text_track_list.o $(OUT)/build_Linux-framebuffer_duktape_time_ranges.o $(OUT)/build_Linux-framebuffer_duktape_touch.o $(OUT)/build_Linux-framebuffer_duktape_track_event.o $(OUT)/build_Linux-framebuffer_duktape_track_event_init.o \
+$(OUT)/build_Linux-framebuffer_duktape_tree_walker.o $(OUT)/build_Linux-framebuffer_duktape_ui_event.o $(OUT)/build_Linux-framebuffer_duktape_ui_event_init.o $(OUT)/build_Linux-framebuffer_duktape_url.o $(OUT)/build_Linux-framebuffer_duktape_url_search_params.o $(OUT)/build_Linux-framebuffer_duktape_validity_state.o $(OUT)/build_Linux-framebuffer_duktape_video_track.o $(OUT)/build_Linux-framebuffer_duktape_video_track_list.o $(OUT)/build_Linux-framebuffer_duktape_web_socket.o $(OUT)/build_Linux-framebuffer_duktape_wheel_event.o $(OUT)/build_Linux-framebuffer_duktape_wheel_event_init.o $(OUT)/build_Linux-framebuffer_duktape_window.o $(OUT)/build_Linux-framebuffer_duktape_worker.o $(OUT)/build_Linux-framebuffer_duktape_worker_global_scope.o $(OUT)/build_Linux-framebuffer_duktape_worker_location.o $(OUT)/build_Linux-framebuffer_duktape_worker_navigator.o $(OUT)/build_Linux-framebuffer_duktape_xml_document.o $(OUT)/build_Linux-framebuffer_duktape_xml_serializer.o \
+$(OUT)/image-caret_image.o $(OUT)/image-hand_image.o $(OUT)/image-history_image.o $(OUT)/image-history_image_g.o $(OUT)/image-left_arrow.o $(OUT)/image-left_arrow_g.o $(OUT)/image-menu_image.o $(OUT)/image-move_image.o $(OUT)/image-osk_image.o $(OUT)/image-pointer_image.o $(OUT)/image-progress_image.o $(OUT)/image-reload.o $(OUT)/image-reload_g.o $(OUT)/image-right_arrow.o $(OUT)/image-right_arrow_g.o $(OUT)/image-scrolld.o $(OUT)/image-scrolll.o $(OUT)/image-scrollr.o $(OUT)/image-scrollu.o $(OUT)/image-stop_image.o $(OUT)/image-stop_image_g.o $(OUT)/image-throbber0.o $(OUT)/image-throbber1.o $(OUT)/image-throbber2.o $(OUT)/image-throbber3.o $(OUT)/image-throbber4.o $(OUT)/image-throbber5.o $(OUT)/image-throbber6.o $(OUT)/image-throbber7.o $(OUT)/image-throbber8.o \
+$(OUT)/content_content.o $(OUT)/content_content_factory.o $(OUT)/content_dirlist.o $(OUT)/content_fetch.o $(OUT)/content_fetchers_about.o $(OUT)/content_fetchers_curl.o $(OUT)/content_fetchers_data.o $(OUT)/content_fetchers_file.o $(OUT)/content_fetchers_resource.o $(OUT)/content_handlers_css_css.o $(OUT)/content_handlers_css_dump.o $(OUT)/content_handlers_css_hints.o $(OUT)/content_handlers_css_internal.o $(OUT)/content_handlers_css_select.o $(OUT)/content_handlers_css_utils.o $(OUT)/content_handlers_html_box_construct.o $(OUT)/content_handlers_html_box_inspect.o $(OUT)/content_handlers_html_box_manipulate.o $(OUT)/content_handlers_html_box_normalise.o $(OUT)/content_handlers_html_box_special.o $(OUT)/content_handlers_html_box_textarea.o $(OUT)/content_handlers_html_css.o $(OUT)/content_handlers_html_css_fetcher.o $(OUT)/content_handlers_html_dom_event.o $(OUT)/content_handlers_html_font.o $(OUT)/content_handlers_html_form.o $(OUT)/content_handlers_html_forms.o $(OUT)/content_handlers_html_html.o $(OUT)/content_handlers_html_imagemap.o $(OUT)/content_handlers_html_interaction.o $(OUT)/content_handlers_html_layout.o \
+$(OUT)/content_handlers_html_object.o $(OUT)/content_handlers_html_redraw.o $(OUT)/content_handlers_html_redraw_border.o $(OUT)/content_handlers_html_script.o $(OUT)/content_handlers_html_table.o $(OUT)/content_handlers_html_textselection.o $(OUT)/content_handlers_image_bmp.o $(OUT)/content_handlers_image_gif.o $(OUT)/content_handlers_image_ico.o $(OUT)/content_handlers_image_image.o $(OUT)/content_handlers_image_image_cache.o $(OUT)/content_handlers_image_jpeg.o $(OUT)/content_handlers_image_nssprite.o $(OUT)/content_handlers_image_png.o $(OUT)/content_handlers_image_svg.o $(OUT)/content_handlers_javascript_content.o $(OUT)/content_handlers_javascript_duktape_dukky.o $(OUT)/content_handlers_javascript_duktape_duktape.o $(OUT)/content_handlers_javascript_fetcher.o $(OUT)/content_handlers_text_textplain.o $(OUT)/content_hlcache.o $(OUT)/content_llcache.o $(OUT)/content_mimesniff.o $(OUT)/content_no_backing_store.o $(OUT)/content_textsearch.o $(OUT)/content_urldb.o \
+$(OUT)/desktop_browser.o $(OUT)/desktop_browser_history.o $(OUT)/desktop_browser_window.o $(OUT)/desktop_cookie_manager.o $(OUT)/desktop_cw_helper.o $(OUT)/desktop_download.o $(OUT)/desktop_font_haru.o $(OUT)/desktop_frames.o $(OUT)/desktop_global_history.o $(OUT)/desktop_gui_factory.o $(OUT)/desktop_hotlist.o $(OUT)/desktop_knockout.o $(OUT)/desktop_local_history.o $(OUT)/desktop_mouse.o $(OUT)/desktop_netsurf.o $(OUT)/desktop_page-info.o $(OUT)/desktop_plot_style.o $(OUT)/desktop_print.o $(OUT)/desktop_save_complete.o $(OUT)/desktop_save_pdf.o $(OUT)/desktop_save_text.o $(OUT)/desktop_scrollbar.o $(OUT)/desktop_search.o $(OUT)/desktop_searchweb.o $(OUT)/desktop_selection.o $(OUT)/desktop_system_colour.o $(OUT)/desktop_textarea.o $(OUT)/desktop_textinput.o $(OUT)/desktop_treeview.o $(OUT)/desktop_version.o \
+$(OUT)/frontends_framebuffer_bitmap.o $(OUT)/frontends_framebuffer_clipboard.o $(OUT)/frontends_framebuffer_corewindow.o $(OUT)/frontends_framebuffer_fbtk_bitmap.o $(OUT)/frontends_framebuffer_fbtk_event.o $(OUT)/frontends_framebuffer_fbtk_fbtk.o $(OUT)/frontends_framebuffer_fbtk_fill.o $(OUT)/frontends_framebuffer_fbtk_osk.o $(OUT)/frontends_framebuffer_fbtk_scroll.o $(OUT)/frontends_framebuffer_fbtk_text.o $(OUT)/frontends_framebuffer_fbtk_user.o $(OUT)/frontends_framebuffer_fbtk_window.o $(OUT)/frontends_framebuffer_fetch.o $(OUT)/frontends_framebuffer_findfile.o $(OUT)/frontends_framebuffer_font_internal.o $(OUT)/frontends_framebuffer_framebuffer.o $(OUT)/frontends_framebuffer_gui.o $(OUT)/frontends_framebuffer_local_history.o $(OUT)/frontends_framebuffer_schedule.o \
+$(OUT)/utils_bloom.o $(OUT)/utils_corestrings.o $(OUT)/utils_file.o $(OUT)/utils_filename.o $(OUT)/utils_filepath.o $(OUT)/utils_hashmap.o $(OUT)/utils_hashtable.o $(OUT)/utils_http_cache-control.o $(OUT)/utils_http_challenge.o $(OUT)/utils_http_content-disposition.o $(OUT)/utils_http_content-type.o $(OUT)/utils_http_generics.o $(OUT)/utils_http_parameter.o $(OUT)/utils_http_primitives.o $(OUT)/utils_http_strict-transport-security.o $(OUT)/utils_http_www-authenticate.o $(OUT)/utils_idna.o $(OUT)/utils_libdom.o $(OUT)/utils_log.o $(OUT)/utils_messages.o $(OUT)/utils_nscolour.o $(OUT)/utils_nsoption.o $(OUT)/utils_nsurl_nsurl.o $(OUT)/utils_nsurl_parse.o $(OUT)/utils_punycode.o $(OUT)/utils_ssl_certs.o $(OUT)/utils_talloc.o $(OUT)/utils_time.o $(OUT)/utils_url.o $(OUT)/utils_useragent.o $(OUT)/utils_utf8.o $(OUT)/utils_utils.o \
+$(OUT)/font-ns-sans.o
+
+
+NSGENBIND=$(FB)/bin/nsgenbind
+
+all: netsurf
+
+dirs:
+	mkdir -p $(OUT)/deps
+	mkdir -p $(OUT)/duktape
+	mkdir -p $(OUT)/tools
+
+gen: content/handlers/javascript/duktape/netsurf.bnd
+	$(NSGENBIND) -D -I content/handlers/javascript/WebIDL content/handlers/javascript/duktape/netsurf.bnd $(OUT)/duktape
+	touch gen
+
+$(OUT)/build_Linux-framebuffer_duktape_application_cache.o: $(OUT)/duktape/application_cache.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_attr.o: $(OUT)/duktape/attr.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_audio_track.o: $(OUT)/duktape/audio_track.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_audio_track_list.o: $(OUT)/duktape/audio_track_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_autocomplete_error_event.o: $(OUT)/duktape/autocomplete_error_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_autocomplete_error_event_init.o: $(OUT)/duktape/autocomplete_error_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_bar_prop.o: $(OUT)/duktape/bar_prop.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_before_unload_event.o: $(OUT)/duktape/before_unload_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_binding.o: $(OUT)/duktape/binding.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_broadcast_channel.o: $(OUT)/duktape/broadcast_channel.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_canvas_gradient.o: $(OUT)/duktape/canvas_gradient.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_canvas_pattern.o: $(OUT)/duktape/canvas_pattern.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_canvas_proxy.o: $(OUT)/duktape/canvas_proxy.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_canvas_rendering_context2d.o: $(OUT)/duktape/canvas_rendering_context2d.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_canvas_rendering_context2d_settings.o: $(OUT)/duktape/canvas_rendering_context2d_settings.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_character_data.o: $(OUT)/duktape/character_data.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_close_event.o: $(OUT)/duktape/close_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_close_event_init.o: $(OUT)/duktape/close_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_comment.o: $(OUT)/duktape/comment.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_composition_event.o: $(OUT)/duktape/composition_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_composition_event_init.o: $(OUT)/duktape/composition_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_console.o: $(OUT)/duktape/console.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css.o: $(OUT)/duktape/css.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_grouping_rule.o: $(OUT)/duktape/css_grouping_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_import_rule.o: $(OUT)/duktape/css_import_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_margin_rule.o: $(OUT)/duktape/css_margin_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_media_rule.o: $(OUT)/duktape/css_media_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_namespace_rule.o: $(OUT)/duktape/css_namespace_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_page_rule.o: $(OUT)/duktape/css_page_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_rule.o: $(OUT)/duktape/css_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_rule_list.o: $(OUT)/duktape/css_rule_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_style_declaration.o: $(OUT)/duktape/css_style_declaration.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_style_rule.o: $(OUT)/duktape/css_style_rule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_css_style_sheet.o: $(OUT)/duktape/css_style_sheet.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_custom_event.o: $(OUT)/duktape/custom_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_custom_event_init.o: $(OUT)/duktape/custom_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_data_transfer.o: $(OUT)/duktape/data_transfer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_data_transfer_item.o: $(OUT)/duktape/data_transfer_item.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_data_transfer_item_list.o: $(OUT)/duktape/data_transfer_item_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_dedicated_worker_global_scope.o: $(OUT)/duktape/dedicated_worker_global_scope.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_document.o: $(OUT)/duktape/document.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_document_fragment.o: $(OUT)/duktape/document_fragment.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_document_type.o: $(OUT)/duktape/document_type.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_dom_element_map.o: $(OUT)/duktape/dom_element_map.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_dom_implementation.o: $(OUT)/duktape/dom_implementation.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_dom_parser.o: $(OUT)/duktape/dom_parser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_dom_settable_token_list.o: $(OUT)/duktape/dom_settable_token_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_dom_string_map.o: $(OUT)/duktape/dom_string_map.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_dom_token_list.o: $(OUT)/duktape/dom_token_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_drag_event.o: $(OUT)/duktape/drag_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_drag_event_init.o: $(OUT)/duktape/drag_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_drawing_style.o: $(OUT)/duktape/drawing_style.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_element.o: $(OUT)/duktape/element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_error_event.o: $(OUT)/duktape/error_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_error_event_init.o: $(OUT)/duktape/error_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_event.o: $(OUT)/duktape/event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_event_init.o: $(OUT)/duktape/event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_event_listener.o: $(OUT)/duktape/event_listener.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_event_modifier_init.o: $(OUT)/duktape/event_modifier_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_event_source.o: $(OUT)/duktape/event_source.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_event_source_init.o: $(OUT)/duktape/event_source_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_event_target.o: $(OUT)/duktape/event_target.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_external.o: $(OUT)/duktape/external.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_focus_event.o: $(OUT)/duktape/focus_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_focus_event_init.o: $(OUT)/duktape/focus_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_hash_change_event.o: $(OUT)/duktape/hash_change_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_hash_change_event_init.o: $(OUT)/duktape/hash_change_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_history.o: $(OUT)/duktape/history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_hit_region_options.o: $(OUT)/duktape/hit_region_options.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_all_collection.o: $(OUT)/duktape/html_all_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_anchor_element.o: $(OUT)/duktape/html_anchor_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_applet_element.o: $(OUT)/duktape/html_applet_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_area_element.o: $(OUT)/duktape/html_area_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_audio_element.o: $(OUT)/duktape/html_audio_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_base_element.o: $(OUT)/duktape/html_base_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_body_element.o: $(OUT)/duktape/html_body_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_br_element.o: $(OUT)/duktape/html_br_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_button_element.o: $(OUT)/duktape/html_button_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_canvas_element.o: $(OUT)/duktape/html_canvas_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_collection.o: $(OUT)/duktape/html_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_data_element.o: $(OUT)/duktape/html_data_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_data_list_element.o: $(OUT)/duktape/html_data_list_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_details_element.o: $(OUT)/duktape/html_details_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_dialog_element.o: $(OUT)/duktape/html_dialog_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_directory_element.o: $(OUT)/duktape/html_directory_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_div_element.o: $(OUT)/duktape/html_div_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_dlist_element.o: $(OUT)/duktape/html_dlist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_element.o: $(OUT)/duktape/html_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_embed_element.o: $(OUT)/duktape/html_embed_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_field_set_element.o: $(OUT)/duktape/html_field_set_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_font_element.o: $(OUT)/duktape/html_font_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_form_controls_collection.o: $(OUT)/duktape/html_form_controls_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_form_element.o: $(OUT)/duktape/html_form_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_frame_element.o: $(OUT)/duktape/html_frame_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_frame_set_element.o: $(OUT)/duktape/html_frame_set_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_head_element.o: $(OUT)/duktape/html_head_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_heading_element.o: $(OUT)/duktape/html_heading_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_hr_element.o: $(OUT)/duktape/html_hr_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_html_element.o: $(OUT)/duktape/html_html_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_iframe_element.o: $(OUT)/duktape/html_iframe_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_image_element.o: $(OUT)/duktape/html_image_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_input_element.o: $(OUT)/duktape/html_input_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_keygen_element.o: $(OUT)/duktape/html_keygen_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_label_element.o: $(OUT)/duktape/html_label_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_legend_element.o: $(OUT)/duktape/html_legend_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_li_element.o: $(OUT)/duktape/html_li_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_link_element.o: $(OUT)/duktape/html_link_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_map_element.o: $(OUT)/duktape/html_map_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_marquee_element.o: $(OUT)/duktape/html_marquee_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_media_element.o: $(OUT)/duktape/html_media_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_menu_element.o: $(OUT)/duktape/html_menu_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_menu_item_element.o: $(OUT)/duktape/html_menu_item_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_meta_element.o: $(OUT)/duktape/html_meta_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_meter_element.o: $(OUT)/duktape/html_meter_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_mod_element.o: $(OUT)/duktape/html_mod_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_object_element.o: $(OUT)/duktape/html_object_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_olist_element.o: $(OUT)/duktape/html_olist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_opt_group_element.o: $(OUT)/duktape/html_opt_group_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_option_element.o: $(OUT)/duktape/html_option_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_options_collection.o: $(OUT)/duktape/html_options_collection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_output_element.o: $(OUT)/duktape/html_output_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_paragraph_element.o: $(OUT)/duktape/html_paragraph_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_param_element.o: $(OUT)/duktape/html_param_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_picture_element.o: $(OUT)/duktape/html_picture_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_pre_element.o: $(OUT)/duktape/html_pre_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_progress_element.o: $(OUT)/duktape/html_progress_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_quote_element.o: $(OUT)/duktape/html_quote_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_script_element.o: $(OUT)/duktape/html_script_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_select_element.o: $(OUT)/duktape/html_select_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_source_element.o: $(OUT)/duktape/html_source_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_span_element.o: $(OUT)/duktape/html_span_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_style_element.o: $(OUT)/duktape/html_style_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_table_caption_element.o: $(OUT)/duktape/html_table_caption_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_table_cell_element.o: $(OUT)/duktape/html_table_cell_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_table_col_element.o: $(OUT)/duktape/html_table_col_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_table_data_cell_element.o: $(OUT)/duktape/html_table_data_cell_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_table_element.o: $(OUT)/duktape/html_table_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_table_header_cell_element.o: $(OUT)/duktape/html_table_header_cell_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_table_row_element.o: $(OUT)/duktape/html_table_row_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_table_section_element.o: $(OUT)/duktape/html_table_section_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_template_element.o: $(OUT)/duktape/html_template_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_text_area_element.o: $(OUT)/duktape/html_text_area_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_time_element.o: $(OUT)/duktape/html_time_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_title_element.o: $(OUT)/duktape/html_title_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_track_element.o: $(OUT)/duktape/html_track_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_ulist_element.o: $(OUT)/duktape/html_ulist_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_unknown_element.o: $(OUT)/duktape/html_unknown_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_html_video_element.o: $(OUT)/duktape/html_video_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_image_bitmap.o: $(OUT)/duktape/image_bitmap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_image_data.o: $(OUT)/duktape/image_data.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_keyboard_event.o: $(OUT)/duktape/keyboard_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_keyboard_event_init.o: $(OUT)/duktape/keyboard_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_location.o: $(OUT)/duktape/location.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_media_controller.o: $(OUT)/duktape/media_controller.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_media_error.o: $(OUT)/duktape/media_error.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_media_list.o: $(OUT)/duktape/media_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_message_channel.o: $(OUT)/duktape/message_channel.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_message_event.o: $(OUT)/duktape/message_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_message_event_init.o: $(OUT)/duktape/message_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_message_port.o: $(OUT)/duktape/message_port.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_mime_type.o: $(OUT)/duktape/mime_type.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_mime_type_array.o: $(OUT)/duktape/mime_type_array.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_mouse_event.o: $(OUT)/duktape/mouse_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_mouse_event_init.o: $(OUT)/duktape/mouse_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_mutation_event.o: $(OUT)/duktape/mutation_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_mutation_observer.o: $(OUT)/duktape/mutation_observer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_mutation_observer_init.o: $(OUT)/duktape/mutation_observer_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_mutation_record.o: $(OUT)/duktape/mutation_record.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_named_node_map.o: $(OUT)/duktape/named_node_map.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_navigator.o: $(OUT)/duktape/navigator.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_node.o: $(OUT)/duktape/node.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_node_filter.o: $(OUT)/duktape/node_filter.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_node_iterator.o: $(OUT)/duktape/node_iterator.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_node_list.o: $(OUT)/duktape/node_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_page_transition_event.o: $(OUT)/duktape/page_transition_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_page_transition_event_init.o: $(OUT)/duktape/page_transition_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_path2d.o: $(OUT)/duktape/path2d.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_plugin.o: $(OUT)/duktape/plugin.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_plugin_array.o: $(OUT)/duktape/plugin_array.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_pop_state_event.o: $(OUT)/duktape/pop_state_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_pop_state_event_init.o: $(OUT)/duktape/pop_state_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_processing_instruction.o: $(OUT)/duktape/processing_instruction.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_pseudo_element.o: $(OUT)/duktape/pseudo_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_radio_node_list.o: $(OUT)/duktape/radio_node_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_range.o: $(OUT)/duktape/range.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_related_event.o: $(OUT)/duktape/related_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_related_event_init.o: $(OUT)/duktape/related_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_shared_worker.o: $(OUT)/duktape/shared_worker.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_shared_worker_global_scope.o: $(OUT)/duktape/shared_worker_global_scope.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_storage.o: $(OUT)/duktape/storage.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_storage_event.o: $(OUT)/duktape/storage_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_storage_event_init.o: $(OUT)/duktape/storage_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_style_sheet.o: $(OUT)/duktape/style_sheet.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_style_sheet_list.o: $(OUT)/duktape/style_sheet_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_svg_element.o: $(OUT)/duktape/svg_element.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_text.o: $(OUT)/duktape/text.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_text_metrics.o: $(OUT)/duktape/text_metrics.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_text_track.o: $(OUT)/duktape/text_track.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_text_track_cue.o: $(OUT)/duktape/text_track_cue.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_text_track_cue_list.o: $(OUT)/duktape/text_track_cue_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_text_track_list.o: $(OUT)/duktape/text_track_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_time_ranges.o: $(OUT)/duktape/time_ranges.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_touch.o: $(OUT)/duktape/touch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_track_event.o: $(OUT)/duktape/track_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_track_event_init.o: $(OUT)/duktape/track_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_tree_walker.o: $(OUT)/duktape/tree_walker.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_ui_event.o: $(OUT)/duktape/ui_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_ui_event_init.o: $(OUT)/duktape/ui_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_url.o: $(OUT)/duktape/url.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_url_search_params.o: $(OUT)/duktape/url_search_params.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_validity_state.o: $(OUT)/duktape/validity_state.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_video_track.o: $(OUT)/duktape/video_track.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_video_track_list.o: $(OUT)/duktape/video_track_list.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_web_socket.o: $(OUT)/duktape/web_socket.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_wheel_event.o: $(OUT)/duktape/wheel_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_wheel_event_init.o: $(OUT)/duktape/wheel_event_init.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_window.o: $(OUT)/duktape/window.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_worker.o: $(OUT)/duktape/worker.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_worker_global_scope.o: $(OUT)/duktape/worker_global_scope.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_worker_location.o: $(OUT)/duktape/worker_location.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_worker_navigator.o: $(OUT)/duktape/worker_navigator.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_xml_document.o: $(OUT)/duktape/xml_document.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/build_Linux-framebuffer_duktape_xml_serializer.o: $(OUT)/duktape/xml_serializer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/tools/convert_font:
+	$(CC) -o $(OUT)/tools/convert_font frontends/framebuffer/convert_font.c
+
+$(OUT)/tools/convert_image:
+	$(CC) -o $(OUT)/tools/convert_image frontends/framebuffer/convert_image.c -lpng16 -lz
+
+tools: $(OUT)/tools/convert_font $(OUT)/tools/convert_image
+
+$(OUT)/font-ns-sans.c: frontends/framebuffer/res/fonts/glyph_data
+	$(OUT)/tools/convert_font -H $(OUT)/font-ns-sans.h frontends/framebuffer/res/fonts/glyph_data $(OUT)/font-ns-sans.c
+
+$(OUT)/font-ns-sans.o: $(OUT)/font-ns-sans.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+font: $(OUT)/font-ns-sans.o
+
+img:
+	$(OUT)/tools/convert_image frontends/framebuffer/res/pointers/caret.png $(OUT)/image-caret_image.c caret_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/pointers/point.png $(OUT)/image-hand_image.c hand_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/history.png $(OUT)/image-history_image.c history_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/history_g.png $(OUT)/image-history_image_g.c history_image_g
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/back.png $(OUT)/image-left_arrow.c left_arrow
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/back_g.png $(OUT)/image-left_arrow_g.c left_arrow_g
+	$(OUT)/tools/convert_image frontends/framebuffer/res/pointers/menu.png $(OUT)/image-menu_image.c menu_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/pointers/move.png $(OUT)/image-move_image.c move_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/osk.png $(OUT)/image-osk_image.c osk_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/pointers/default.png $(OUT)/image-pointer_image.c pointer_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/pointers/progress.png $(OUT)/image-progress_image.c progress_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/reload.png $(OUT)/image-reload.c reload
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/reload_g.png $(OUT)/image-reload_g.c reload_g
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/forward.png $(OUT)/image-right_arrow.c right_arrow
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/forward_g.png $(OUT)/image-right_arrow_g.c right_arrow_g
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/scrolld.png $(OUT)/image-scrolld.c scrolld
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/scrolll.png $(OUT)/image-scrolll.c scrolll
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/scrollr.png $(OUT)/image-scrollr.c scrollr
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/scrollu.png $(OUT)/image-scrollu.c scrollu
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/stop.png $(OUT)/image-stop_image.c stop_image
+	$(OUT)/tools/convert_image frontends/framebuffer/res/icons/stop_g.png $(OUT)/image-stop_image_g.c stop_image_g
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber0.png $(OUT)/image-throbber0.c throbber0
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber1.png $(OUT)/image-throbber1.c throbber1
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber2.png $(OUT)/image-throbber2.c throbber2
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber3.png $(OUT)/image-throbber3.c throbber3
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber4.png $(OUT)/image-throbber4.c throbber4
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber5.png $(OUT)/image-throbber5.c throbber5
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber6.png $(OUT)/image-throbber6.c throbber6
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber7.png $(OUT)/image-throbber7.c throbber7
+	$(OUT)/tools/convert_image frontends/framebuffer/res/throbber/throbber8.png $(OUT)/image-throbber8.c throbber8
+	touch img
+
+$(OUT)/image-caret_image.o: $(OUT)/image-caret_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-hand_image.o: $(OUT)/image-hand_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-history_image.o: $(OUT)/image-history_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-history_image_g.o: $(OUT)/image-history_image_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-left_arrow.o: $(OUT)/image-left_arrow.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-left_arrow_g.o: $(OUT)/image-left_arrow_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-menu_image.o: $(OUT)/image-menu_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-move_image.o: $(OUT)/image-move_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-osk_image.o: $(OUT)/image-osk_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-pointer_image.o: $(OUT)/image-pointer_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-progress_image.o: $(OUT)/image-progress_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-reload.o: $(OUT)/image-reload.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-reload_g.o: $(OUT)/image-reload_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-right_arrow.o: $(OUT)/image-right_arrow.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-right_arrow_g.o: $(OUT)/image-right_arrow_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-scrolld.o: $(OUT)/image-scrolld.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-scrolll.o: $(OUT)/image-scrolll.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-scrollr.o: $(OUT)/image-scrollr.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-scrollu.o: $(OUT)/image-scrollu.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-stop_image.o: $(OUT)/image-stop_image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-stop_image_g.o: $(OUT)/image-stop_image_g.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber0.o: $(OUT)/image-throbber0.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber1.o: $(OUT)/image-throbber1.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber2.o: $(OUT)/image-throbber2.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber3.o: $(OUT)/image-throbber3.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber4.o: $(OUT)/image-throbber4.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber5.o: $(OUT)/image-throbber5.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber6.o: $(OUT)/image-throbber6.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber7.o: $(OUT)/image-throbber7.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-throbber8.o: $(OUT)/image-throbber8.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+
+$(OUT)/testament.h:
+	perl utils/git-testament.pl $(NS) $(OUT)/testament.h
+
+$(OUT)/content_content.o: content/content.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_content_factory.o: content/content_factory.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_dirlist.o: content/dirlist.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetch.o: content/fetch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_about.o: content/fetchers/about.c $(OUT)/testament.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_curl.o: content/fetchers/curl.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_data.o: content/fetchers/data.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_file.o: content/fetchers/file.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_resource.o: content/fetchers/resource.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_css.o: content/handlers/css/css.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_dump.o: content/handlers/css/dump.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_hints.o: content/handlers/css/hints.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_internal.o: content/handlers/css/internal.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_select.o: content/handlers/css/select.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_utils.o: content/handlers/css/utils.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_construct.o: content/handlers/html/box_construct.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_inspect.o: content/handlers/html/box_inspect.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_manipulate.o: content/handlers/html/box_manipulate.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_normalise.o: content/handlers/html/box_normalise.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_special.o: content/handlers/html/box_special.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_box_textarea.o: content/handlers/html/box_textarea.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_css.o: content/handlers/html/css.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_css_fetcher.o: content/handlers/html/css_fetcher.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_dom_event.o: content/handlers/html/dom_event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_font.o: content/handlers/html/font.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_form.o: content/handlers/html/form.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_forms.o: content/handlers/html/forms.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_html.o: content/handlers/html/html.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_imagemap.o: content/handlers/html/imagemap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_interaction.o: content/handlers/html/interaction.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_layout.o: content/handlers/html/layout.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_object.o: content/handlers/html/object.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_redraw.o: content/handlers/html/redraw.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_redraw_border.o: content/handlers/html/redraw_border.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_script.o: content/handlers/html/script.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_table.o: content/handlers/html/table.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_textselection.o: content/handlers/html/textselection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_bmp.o: content/handlers/image/bmp.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_gif.o: content/handlers/image/gif.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_ico.o: content/handlers/image/ico.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_image.o: content/handlers/image/image.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_image_cache.o: content/handlers/image/image_cache.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_jpeg.o: content/handlers/image/jpeg.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_nssprite.o: content/handlers/image/nssprite.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_png.o: content/handlers/image/png.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_svg.o: content/handlers/image/svg.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_javascript_content.o: content/handlers/javascript/content.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape/generics.js.inc:
+	xxd -i content/handlers/javascript/duktape/generics.js $(OUT)/duktape/generics.js.inc.tmp
+	sed -e 's/content_handlers_javascript_duktape_generics_js/generics_js/' $(OUT)/duktape/generics.js.inc.tmp > $(OUT)/duktape/generics.js.inc
+
+$(OUT)/duktape/polyfill.js.inc:
+	xxd -i content/handlers/javascript/duktape/polyfill.js $(OUT)/duktape/polyfill.js.inc.tmp
+	sed -e 's/content_handlers_javascript_duktape_polyfill_js/polyfill_js/' $(OUT)/duktape/polyfill.js.inc.tmp > $(OUT)/duktape/polyfill.js.inc
+
+$(OUT)/content_handlers_javascript_duktape_dukky.o: content/handlers/javascript/duktape/dukky.c $(OUT)/duktape/generics.js.inc $(OUT)/duktape/polyfill.js.inc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_javascript_duktape_duktape.o: content/handlers/javascript/duktape/duktape.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_javascript_fetcher.o: content/handlers/javascript/fetcher.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_text_textplain.o: content/handlers/text/textplain.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_hlcache.o: content/hlcache.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_llcache.o: content/llcache.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_mimesniff.o: content/mimesniff.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_no_backing_store.o: content/no_backing_store.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_textsearch.o: content/textsearch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_urldb.o: content/urldb.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_browser.o: desktop/browser.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_browser_history.o: desktop/browser_history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_browser_window.o: desktop/browser_window.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_cookie_manager.o: desktop/cookie_manager.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_cw_helper.o: desktop/cw_helper.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_download.o: desktop/download.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_font_haru.o: desktop/font_haru.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_frames.o: desktop/frames.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_global_history.o: desktop/global_history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_gui_factory.o: desktop/gui_factory.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_hotlist.o: desktop/hotlist.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_knockout.o: desktop/knockout.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_local_history.o: desktop/local_history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_mouse.o: desktop/mouse.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_netsurf.o: desktop/netsurf.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_page-info.o: desktop/page-info.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_plot_style.o: desktop/plot_style.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_print.o: desktop/print.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_save_complete.o: desktop/save_complete.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_save_pdf.o: desktop/save_pdf.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_save_text.o: desktop/save_text.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_scrollbar.o: desktop/scrollbar.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_search.o: desktop/search.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_searchweb.o: desktop/searchweb.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_selection.o: desktop/selection.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_system_colour.o: desktop/system_colour.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_textarea.o: desktop/textarea.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_textinput.o: desktop/textinput.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_treeview.o: desktop/treeview.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_version.o: desktop/version.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_bitmap.o: frontends/framebuffer/bitmap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_clipboard.o: frontends/framebuffer/clipboard.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_corewindow.o: frontends/framebuffer/corewindow.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_bitmap.o: frontends/framebuffer/fbtk/bitmap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_event.o: frontends/framebuffer/fbtk/event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_fbtk.o: frontends/framebuffer/fbtk/fbtk.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_fill.o: frontends/framebuffer/fbtk/fill.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_osk.o: frontends/framebuffer/fbtk/osk.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_scroll.o: frontends/framebuffer/fbtk/scroll.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_text.o: frontends/framebuffer/fbtk/text.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_user.o: frontends/framebuffer/fbtk/user.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_window.o: frontends/framebuffer/fbtk/window.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fetch.o: frontends/framebuffer/fetch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_findfile.o: frontends/framebuffer/findfile.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_font_internal.o: frontends/framebuffer/font_internal.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_framebuffer.o: frontends/framebuffer/framebuffer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_gui.o: frontends/framebuffer/gui.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_local_history.o: frontends/framebuffer/local_history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_schedule.o: frontends/framebuffer/schedule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_bloom.o: utils/bloom.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_corestrings.o: utils/corestrings.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_file.o: utils/file.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_filename.o: utils/filename.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_filepath.o: utils/filepath.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_hashmap.o: utils/hashmap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_hashtable.o: utils/hashtable.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_cache-control.o: utils/http/cache-control.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_challenge.o: utils/http/challenge.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_content-disposition.o: utils/http/content-disposition.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_content-type.o: utils/http/content-type.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_generics.o: utils/http/generics.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_parameter.o: utils/http/parameter.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_primitives.o: utils/http/primitives.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_strict-transport-security.o: utils/http/strict-transport-security.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_www-authenticate.o: utils/http/www-authenticate.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_idna.o: utils/idna.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_libdom.o: utils/libdom.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_log.o: utils/log.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_messages.o: utils/messages.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_nscolour.o: utils/nscolour.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_nsoption.o: utils/nsoption.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_nsurl_nsurl.o: utils/nsurl/nsurl.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_nsurl_parse.o: utils/nsurl/parse.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_punycode.o: utils/punycode.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_ssl_certs.o: utils/ssl_certs.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_talloc.o: utils/talloc.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_time.o: utils/time.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_url.o: utils/url.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_useragent.o: utils/useragent.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_utf8.o: utils/utf8.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_utils.o: utils/utils.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+msg: resources/FatMessages
+	mkdir -p frontends/framebuffer/res/de
+	mkdir -p frontends/framebuffer/res/en
+	mkdir -p frontends/framebuffer/res/fr
+	mkdir -p frontends/framebuffer/res/it
+	mkdir -p frontends/framebuffer/res/nl
+	perl utils/split-messages.pl -l de -p fb -f messages -o frontends/framebuffer/res/de/Messages -z resources/FatMessages
+	perl utils/split-messages.pl -l en -p fb -f messages -o frontends/framebuffer/res/en/Messages -z resources/FatMessages
+	perl utils/split-messages.pl -l fr -p fb -f messages -o frontends/framebuffer/res/fr/Messages -z resources/FatMessages
+	perl utils/split-messages.pl -l it -p fb -f messages -o frontends/framebuffer/res/it/Messages -z resources/FatMessages
+	perl utils/split-messages.pl -l nl -p fb -f messages -o frontends/framebuffer/res/nl/Messages -z resources/FatMessages
+
+#LDFLAGS=-L$(PIT)/lib -L$(FB)/lib -lcss -lparserutils -lwapcaplet -lnsutils -lcurl-4 -lssl -lcrypto -lutf8proc -lpng16 -lz -lnsbmp -lnsgif -lsvgtiny -ldom -lexpat -lhubbub -lrosprite -lnspsl -lnslog -lregex -lnsfb -losapi -lpit -ljpeg8 -liconv -lwsock32 -lws2_32 -lm
+LDFLAGS=-L$(PIT)/lib -L$(FB)/lib -lcss -lparserutils -lwapcaplet -lnsutils -lcurl -lssl -lcrypto -lutf8proc -lpng16 -lz -lnsbmp -lnsgif -lsvgtiny -ldom -lexpat -lhubbub -lrosprite -lnspsl -lnslog -lnsfb -losapi -lpit -ljpeg8 -lm
+
+#SOEXT=.dll
+SOEXT=.so
+
+netsurf: nsfb$(SOEXT)
+
+nsfb$(SOEXT): dirs tools gen img font $(OBJS)
+	$(CC) -shared -o nsfb$(SOEXT) $(OBJS) $(LDFLAGS)
+
+clean:
+	rm -f $(OBJS) gen

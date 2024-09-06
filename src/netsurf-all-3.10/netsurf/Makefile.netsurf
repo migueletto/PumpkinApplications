@@ -1,0 +1,359 @@
+include ../Makefile.common
+
+CC=gcc
+OUT=./build
+#CFLAGS=-W -Wall -Wundef -Wpointer-arith -Wcast-align -Wwrite-strings -Wmissing-declarations -Wuninitialized -Wno-unused-parameter -Wno-unused-but-set-variable -Wimplicit-fallthrough=3 -Wredundant-decls -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -I. -Iinclude -I$(OUT) -Ifrontends -Icontent/handlers -O2 -DWITH_JPEG -UWITH_PDF_EXPORT -DLIBICONV_PLUG -I$(FB)/include -I$(FB)/include -I$(FB)/include -I/usr/include/x86_64-linux-gnu -DWITH_CURL -DWITH_OPENSSL -DUTF8PROC_EXPORTS -I$(FB)/include -DWITH_UTF8PROC -DWITH_WEBP -I/usr/include/libpng16 -DWITH_PNG -I$(FB)/include/ -DWITH_BMP -I$(FB)/include -DWITH_GIF -I$(FB)/include -DWITH_NS_SVG -I$(FB)/include -DWITH_NSSPRITE -I$(FB)/include -DWITH_NSPSL -I$(FB)/include -DWITH_NSLOG -DNETSURF_UA_FORMAT_STRING=\""NetSurf/%d.%d (%s)"\" -DNETSURF_HOMEPAGE=\""about:welcome"\" -DNETSURF_LOG_LEVEL=VERBOSE -DNETSURF_BUILTIN_LOG_FILTER=\""(level:WARNING || cat:jserrors)"\" -DNETSURF_BUILTIN_VERBOSE_FILTER=\""(level:VERBOSE || cat:jserrors)"\" -DSTMTEXPR=1 -std=c99 -g -Dnsframebuffer -Dsmall -DNETSURF_FB_RESPATH=\"./frontends/framebuffer/res\" -DNETSURF_FB_FONTPATH=\"/usr/share/fonts/truetype/dejavu:/usr/share/fonts/truetype/msttcorefonts\" '-DNETSURF_FB_FONT_SANS_SERIF="DejaVuSans.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_BOLD="DejaVuSans-Bold.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_ITALIC="DejaVuSans-Oblique.ttf"' '-DNETSURF_FB_FONT_SANS_SERIF_ITALIC_BOLD="DejaVuSans-BoldOblique.ttf"' '-DNETSURF_FB_FONT_SERIF="DejaVuSerif.ttf"' '-DNETSURF_FB_FONT_SERIF_BOLD="DejaVuSerif-Bold.ttf"' '-DNETSURF_FB_FONT_MONOSPACE="DejaVuSansMono.ttf"' '-DNETSURF_FB_FONT_MONOSPACE_BOLD="DejaVuSansMono-Bold.ttf"' '-DNETSURF_FB_FONT_CURSIVE="Comic_Sans_MS.ttf"' '-DNETSURF_FB_FONT_FANTASY="Impact.ttf"' -I$(FB)/include -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_NETBSD_SOURCE -DDUK_OPT_HAVE_CUSTOM_H -fPIC -I$(PIT)/src/jpeg-8d
+
+PALMINC=$(PUMPKINOS)/src/PalmOS
+INC=-I./include/ -I./src -I../pumpkin -I$(PUMPKINOS)/src/libpumpkin -I$(PUMPKINOS)/src/libpit -I$(PUMPKINOS)/src/font -DUNIX -I$(PALMINC) -I$(PALMINC)/Core -I$(PALMINC)/Core/System -I$(PALMINC)/Dynamic -I$(PALMINC)/Core/UI -I$(PALMINC)/Libraries -I$(PALMINC)/Garmin -I$(PALMINC)/Libraries/PalmOSGlue -I$(PALMINC)/Extensions/ExpansionMgr -I$(PALMINC)/Libraries/Pdi -Wno-multichar -I$(FB)/include
+
+CFLAGS=-W -Wall -Wno-unknown-pragmas -Wpointer-arith -Wcast-align -Wwrite-strings -Wuninitialized -Wno-unused-parameter -Wno-unused-but-set-variable -Wimplicit-fallthrough=3 -Wredundant-decls -Wnested-externs -I. -Iinclude -I$(OUT) -Ifrontends -Icontent/handlers $(OPT) -DWITH_JPEG -UWITH_PDF_EXPORT -I$(FB)/include -I/usr/include/x86_64-linux-gnu -DWITH_CURL -DWITH_OPENSSL -DUTF8PROC_EXPORTS -DWITH_UTF8PROC -I/usr/include/libpng16 -DWITH_PNG -DWITH_BMP -DWITH_GIF -DWITH_NS_SVG -DWITH_NSSPRITE -DWITH_NSPSL -DNETSURF_UA_FORMAT_STRING=\""NetSurf/%d.%d (%s)"\" -DNETSURF_HOMEPAGE=\""about:blank"\" -DNETSURF_LOG_LEVEL=VERBOSE -DNETSURF_BUILTIN_LOG_FILTER=\""(level:WARNING || cat:jserrors)"\" -DNETSURF_BUILTIN_VERBOSE_FILTER=\""(level:VERBOSE || cat:jserrors)"\" -DSTMTEXPR=1 -std=c99 -Dnsframebuffer -Dsmall -DNETSURF_FB_RESPATH=\"./vfs/app_card/PALM/Programs/netsurf/frontends/framebuffer/res\" -DNETSURF_FB_FONTPATH=\"\" -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_NETBSD_SOURCE -DDUK_OPT_HAVE_CUSTOM_H -fPIC -I$(PUMPKINOS)/src/jpeg-8d -I$(PUMPKINOS)/src/libpit $(INC)
+
+OBJS=$(OUT)/main.o $(OUT)/duktape_application_cache.o $(OUT)/duktape_attr.o $(OUT)/duktape_audio_track.o $(OUT)/duktape_audio_track_list.o $(OUT)/duktape_autocomplete_error_event.o $(OUT)/duktape_autocomplete_error_event_init.o $(OUT)/duktape_bar_prop.o $(OUT)/duktape_before_unload_event.o $(OUT)/duktape_binding.o $(OUT)/duktape_broadcast_channel.o $(OUT)/duktape_canvas_gradient.o $(OUT)/duktape_canvas_pattern.o $(OUT)/duktape_canvas_proxy.o $(OUT)/duktape_canvas_rendering_context2d.o $(OUT)/duktape_canvas_rendering_context2d_settings.o $(OUT)/duktape_character_data.o $(OUT)/duktape_close_event.o $(OUT)/duktape_close_event_init.o $(OUT)/duktape_comment.o $(OUT)/duktape_composition_event.o $(OUT)/duktape_composition_event_init.o $(OUT)/duktape_console.o $(OUT)/duktape_css.o $(OUT)/duktape_css_grouping_rule.o $(OUT)/duktape_css_import_rule.o $(OUT)/duktape_css_margin_rule.o $(OUT)/duktape_css_media_rule.o $(OUT)/duktape_css_namespace_rule.o $(OUT)/duktape_css_page_rule.o $(OUT)/duktape_css_rule.o $(OUT)/duktape_css_rule_list.o $(OUT)/duktape_css_style_declaration.o $(OUT)/duktape_css_style_rule.o $(OUT)/duktape_css_style_sheet.o $(OUT)/duktape_custom_event.o $(OUT)/duktape_custom_event_init.o \
+$(OUT)/duktape_data_transfer.o $(OUT)/duktape_data_transfer_item.o $(OUT)/duktape_data_transfer_item_list.o $(OUT)/duktape_dedicated_worker_global_scope.o $(OUT)/duktape_document.o $(OUT)/duktape_document_fragment.o $(OUT)/duktape_document_type.o $(OUT)/duktape_dom_element_map.o $(OUT)/duktape_dom_implementation.o $(OUT)/duktape_dom_parser.o $(OUT)/duktape_dom_settable_token_list.o $(OUT)/duktape_dom_string_map.o $(OUT)/duktape_dom_token_list.o $(OUT)/duktape_drag_event.o $(OUT)/duktape_drag_event_init.o $(OUT)/duktape_drawing_style.o $(OUT)/duktape_element.o $(OUT)/duktape_error_event.o $(OUT)/duktape_error_event_init.o $(OUT)/duktape_event.o $(OUT)/duktape_event_init.o $(OUT)/duktape_event_listener.o $(OUT)/duktape_event_modifier_init.o $(OUT)/duktape_event_source.o $(OUT)/duktape_event_source_init.o $(OUT)/duktape_event_target.o $(OUT)/duktape_external.o $(OUT)/duktape_focus_event.o $(OUT)/duktape_focus_event_init.o $(OUT)/duktape_hash_change_event.o $(OUT)/duktape_hash_change_event_init.o $(OUT)/duktape_history.o \
+$(OUT)/duktape_hit_region_options.o $(OUT)/duktape_html_all_collection.o $(OUT)/duktape_html_anchor_element.o $(OUT)/duktape_html_applet_element.o $(OUT)/duktape_html_area_element.o $(OUT)/duktape_html_audio_element.o $(OUT)/duktape_html_base_element.o $(OUT)/duktape_html_body_element.o $(OUT)/duktape_html_br_element.o $(OUT)/duktape_html_button_element.o $(OUT)/duktape_html_canvas_element.o $(OUT)/duktape_html_collection.o $(OUT)/duktape_html_data_element.o $(OUT)/duktape_html_data_list_element.o $(OUT)/duktape_html_details_element.o $(OUT)/duktape_html_dialog_element.o $(OUT)/duktape_html_directory_element.o $(OUT)/duktape_html_div_element.o $(OUT)/duktape_html_dlist_element.o $(OUT)/duktape_html_element.o $(OUT)/duktape_html_embed_element.o $(OUT)/duktape_html_field_set_element.o $(OUT)/duktape_html_font_element.o $(OUT)/duktape_html_form_controls_collection.o $(OUT)/duktape_html_form_element.o $(OUT)/duktape_html_frame_element.o $(OUT)/duktape_html_frame_set_element.o $(OUT)/duktape_html_head_element.o $(OUT)/duktape_html_heading_element.o $(OUT)/duktape_html_hr_element.o $(OUT)/duktape_html_html_element.o \
+$(OUT)/duktape_html_iframe_element.o $(OUT)/duktape_html_image_element.o $(OUT)/duktape_html_input_element.o $(OUT)/duktape_html_keygen_element.o $(OUT)/duktape_html_label_element.o $(OUT)/duktape_html_legend_element.o $(OUT)/duktape_html_li_element.o $(OUT)/duktape_html_link_element.o $(OUT)/duktape_html_map_element.o $(OUT)/duktape_html_marquee_element.o $(OUT)/duktape_html_media_element.o $(OUT)/duktape_html_menu_element.o $(OUT)/duktape_html_menu_item_element.o $(OUT)/duktape_html_meta_element.o $(OUT)/duktape_html_meter_element.o $(OUT)/duktape_html_mod_element.o $(OUT)/duktape_html_object_element.o $(OUT)/duktape_html_olist_element.o $(OUT)/duktape_html_opt_group_element.o $(OUT)/duktape_html_option_element.o $(OUT)/duktape_html_options_collection.o $(OUT)/duktape_html_output_element.o $(OUT)/duktape_html_paragraph_element.o $(OUT)/duktape_html_param_element.o $(OUT)/duktape_html_picture_element.o $(OUT)/duktape_html_pre_element.o $(OUT)/duktape_html_progress_element.o $(OUT)/duktape_html_quote_element.o $(OUT)/duktape_html_script_element.o $(OUT)/duktape_html_select_element.o $(OUT)/duktape_html_source_element.o $(OUT)/duktape_html_span_element.o $(OUT)/duktape_html_style_element.o $(OUT)/duktape_html_table_caption_element.o $(OUT)/duktape_html_table_cell_element.o $(OUT)/duktape_html_table_col_element.o $(OUT)/duktape_html_table_data_cell_element.o \
+$(OUT)/duktape_html_table_element.o $(OUT)/duktape_html_table_header_cell_element.o $(OUT)/duktape_html_table_row_element.o $(OUT)/duktape_html_table_section_element.o $(OUT)/duktape_html_template_element.o $(OUT)/duktape_html_text_area_element.o $(OUT)/duktape_html_time_element.o $(OUT)/duktape_html_title_element.o $(OUT)/duktape_html_track_element.o $(OUT)/duktape_html_ulist_element.o $(OUT)/duktape_html_unknown_element.o $(OUT)/duktape_html_video_element.o $(OUT)/duktape_image_bitmap.o $(OUT)/duktape_image_data.o $(OUT)/duktape_keyboard_event.o $(OUT)/duktape_keyboard_event_init.o $(OUT)/duktape_location.o $(OUT)/duktape_media_controller.o $(OUT)/duktape_media_error.o $(OUT)/duktape_media_list.o $(OUT)/duktape_message_channel.o $(OUT)/duktape_message_event.o $(OUT)/duktape_message_event_init.o $(OUT)/duktape_message_port.o $(OUT)/duktape_mime_type.o $(OUT)/duktape_mime_type_array.o $(OUT)/duktape_mouse_event.o $(OUT)/duktape_mouse_event_init.o $(OUT)/duktape_mutation_event.o $(OUT)/duktape_mutation_observer.o $(OUT)/duktape_mutation_observer_init.o $(OUT)/duktape_mutation_record.o $(OUT)/duktape_named_node_map.o $(OUT)/duktape_navigator.o $(OUT)/duktape_node.o $(OUT)/duktape_node_filter.o $(OUT)/duktape_node_iterator.o $(OUT)/duktape_node_list.o $(OUT)/duktape_page_transition_event.o $(OUT)/duktape_page_transition_event_init.o $(OUT)/duktape_path2d.o $(OUT)/duktape_plugin.o \
+$(OUT)/duktape_plugin_array.o $(OUT)/duktape_pop_state_event.o $(OUT)/duktape_pop_state_event_init.o $(OUT)/duktape_processing_instruction.o $(OUT)/duktape_pseudo_element.o $(OUT)/duktape_radio_node_list.o $(OUT)/duktape_range.o $(OUT)/duktape_related_event.o $(OUT)/duktape_related_event_init.o $(OUT)/duktape_shared_worker.o $(OUT)/duktape_shared_worker_global_scope.o $(OUT)/duktape_storage.o $(OUT)/duktape_storage_event.o $(OUT)/duktape_storage_event_init.o $(OUT)/duktape_style_sheet.o $(OUT)/duktape_style_sheet_list.o $(OUT)/duktape_svg_element.o $(OUT)/duktape_text.o $(OUT)/duktape_text_metrics.o $(OUT)/duktape_text_track.o $(OUT)/duktape_text_track_cue.o $(OUT)/duktape_text_track_cue_list.o $(OUT)/duktape_text_track_list.o $(OUT)/duktape_time_ranges.o $(OUT)/duktape_touch.o $(OUT)/duktape_track_event.o $(OUT)/duktape_track_event_init.o \
+$(OUT)/duktape_tree_walker.o $(OUT)/duktape_ui_event.o $(OUT)/duktape_ui_event_init.o $(OUT)/duktape_url.o $(OUT)/duktape_url_search_params.o $(OUT)/duktape_validity_state.o $(OUT)/duktape_video_track.o $(OUT)/duktape_video_track_list.o $(OUT)/duktape_web_socket.o $(OUT)/duktape_wheel_event.o $(OUT)/duktape_wheel_event_init.o $(OUT)/duktape_window.o $(OUT)/duktape_worker.o $(OUT)/duktape_worker_global_scope.o $(OUT)/duktape_worker_location.o $(OUT)/duktape_worker_navigator.o $(OUT)/duktape_xml_document.o $(OUT)/duktape_xml_serializer.o \
+$(OUT)/image-caret_image.o $(OUT)/image-hand_image.o $(OUT)/image-history_image.o $(OUT)/image-history_image_g.o $(OUT)/image-left_arrow.o $(OUT)/image-left_arrow_g.o $(OUT)/image-menu_image.o $(OUT)/image-move_image.o $(OUT)/image-osk_image.o $(OUT)/image-pointer_image.o $(OUT)/image-progress_image.o $(OUT)/image-reload.o $(OUT)/image-reload_g.o $(OUT)/image-right_arrow.o $(OUT)/image-right_arrow_g.o $(OUT)/image-scrolld.o $(OUT)/image-scrolll.o $(OUT)/image-scrollr.o $(OUT)/image-scrollu.o $(OUT)/image-stop_image.o $(OUT)/image-stop_image_g.o $(OUT)/image-throbber0.o $(OUT)/image-throbber1.o $(OUT)/image-throbber2.o $(OUT)/image-throbber3.o $(OUT)/image-throbber4.o $(OUT)/image-throbber5.o $(OUT)/image-throbber6.o $(OUT)/image-throbber7.o $(OUT)/image-throbber8.o \
+$(OUT)/content_content.o $(OUT)/content_content_factory.o $(OUT)/content_dirlist.o $(OUT)/content_fetch.o $(OUT)/content_fetchers_about.o $(OUT)/content_fetchers_curl.o $(OUT)/content_fetchers_data.o $(OUT)/content_fetchers_file.o $(OUT)/content_fetchers_resource.o $(OUT)/content_handlers_css_css.o $(OUT)/content_handlers_css_dump.o $(OUT)/content_handlers_css_hints.o $(OUT)/content_handlers_css_internal.o $(OUT)/content_handlers_css_select.o $(OUT)/content_handlers_css_utils.o $(OUT)/content_handlers_html_box_construct.o $(OUT)/content_handlers_html_box_inspect.o $(OUT)/content_handlers_html_box_manipulate.o $(OUT)/content_handlers_html_box_normalise.o $(OUT)/content_handlers_html_box_special.o $(OUT)/content_handlers_html_box_textarea.o $(OUT)/content_handlers_html_css.o $(OUT)/content_handlers_html_css_fetcher.o $(OUT)/content_handlers_html_dom_event.o $(OUT)/content_handlers_html_font.o $(OUT)/content_handlers_html_form.o $(OUT)/content_handlers_html_forms.o $(OUT)/content_handlers_html_html.o $(OUT)/content_handlers_html_imagemap.o $(OUT)/content_handlers_html_interaction.o $(OUT)/content_handlers_html_layout.o \
+$(OUT)/content_handlers_html_object.o $(OUT)/content_handlers_html_redraw.o $(OUT)/content_handlers_html_redraw_border.o $(OUT)/content_handlers_html_script.o $(OUT)/content_handlers_html_table.o $(OUT)/content_handlers_html_textselection.o $(OUT)/content_handlers_image_bmp.o $(OUT)/content_handlers_image_gif.o $(OUT)/content_handlers_image_ico.o $(OUT)/content_handlers_image_image.o $(OUT)/content_handlers_image_image_cache.o $(OUT)/content_handlers_image_jpeg.o $(OUT)/content_handlers_image_nssprite.o $(OUT)/content_handlers_image_png.o $(OUT)/content_handlers_image_svg.o $(OUT)/content_handlers_javascript_content.o $(OUT)/content_handlers_javascript_duktape_dukky.o $(OUT)/content_handlers_javascript_duktape_duktape.o $(OUT)/content_handlers_javascript_fetcher.o $(OUT)/content_handlers_text_textplain.o $(OUT)/content_hlcache.o $(OUT)/content_llcache.o $(OUT)/content_mimesniff.o $(OUT)/content_no_backing_store.o $(OUT)/content_textsearch.o $(OUT)/content_urldb.o \
+$(OUT)/desktop_browser.o $(OUT)/desktop_browser_history.o $(OUT)/desktop_browser_window.o $(OUT)/desktop_cookie_manager.o $(OUT)/desktop_cw_helper.o $(OUT)/desktop_download.o $(OUT)/desktop_font_haru.o $(OUT)/desktop_frames.o $(OUT)/desktop_global_history.o $(OUT)/desktop_gui_factory.o $(OUT)/desktop_hotlist.o $(OUT)/desktop_knockout.o $(OUT)/desktop_local_history.o $(OUT)/desktop_mouse.o $(OUT)/desktop_netsurf.o $(OUT)/desktop_page-info.o $(OUT)/desktop_plot_style.o $(OUT)/desktop_print.o $(OUT)/desktop_save_complete.o $(OUT)/desktop_save_pdf.o $(OUT)/desktop_save_text.o $(OUT)/desktop_scrollbar.o $(OUT)/desktop_search.o $(OUT)/desktop_searchweb.o $(OUT)/desktop_selection.o $(OUT)/desktop_system_colour.o $(OUT)/desktop_textarea.o $(OUT)/desktop_textinput.o $(OUT)/desktop_treeview.o $(OUT)/desktop_version.o \
+$(OUT)/font-ns-sans.o \
+$(OUT)/frontends_framebuffer_bitmap.o $(OUT)/frontends_framebuffer_clipboard.o $(OUT)/frontends_framebuffer_corewindow.o $(OUT)/frontends_framebuffer_fbtk_bitmap.o $(OUT)/frontends_framebuffer_fbtk_event.o $(OUT)/frontends_framebuffer_fbtk_fbtk.o $(OUT)/frontends_framebuffer_fbtk_fill.o $(OUT)/frontends_framebuffer_fbtk_osk.o $(OUT)/frontends_framebuffer_fbtk_scroll.o $(OUT)/frontends_framebuffer_fbtk_text.o $(OUT)/frontends_framebuffer_fbtk_user.o $(OUT)/frontends_framebuffer_fbtk_window.o $(OUT)/frontends_framebuffer_fetch.o $(OUT)/frontends_framebuffer_findfile.o $(OUT)/frontends_framebuffer_font_internal.o $(OUT)/frontends_framebuffer_framebuffer.o $(OUT)/frontends_framebuffer_gui.o $(OUT)/frontends_framebuffer_local_history.o $(OUT)/frontends_framebuffer_schedule.o \
+$(OUT)/utils_bloom.o $(OUT)/utils_corestrings.o $(OUT)/utils_file.o $(OUT)/utils_filename.o $(OUT)/utils_filepath.o $(OUT)/utils_hashmap.o $(OUT)/utils_hashtable.o $(OUT)/utils_http_cache-control.o $(OUT)/utils_http_challenge.o $(OUT)/utils_http_content-disposition.o $(OUT)/utils_http_content-type.o $(OUT)/utils_http_generics.o $(OUT)/utils_http_parameter.o $(OUT)/utils_http_primitives.o $(OUT)/utils_http_strict-transport-security.o $(OUT)/utils_http_www-authenticate.o $(OUT)/utils_idna.o $(OUT)/utils_libdom.o $(OUT)/utils_log.o $(OUT)/utils_messages.o $(OUT)/utils_nscolour.o $(OUT)/utils_nsoption.o $(OUT)/utils_nsurl_nsurl.o $(OUT)/utils_nsurl_parse.o $(OUT)/utils_punycode.o $(OUT)/utils_ssl_certs.o $(OUT)/utils_talloc.o $(OUT)/utils_time.o $(OUT)/utils_url.o $(OUT)/utils_useragent.o $(OUT)/utils_utf8.o $(OUT)/utils_utils.o
+
+
+#SOEXT=.dll
+SOEXT=.so
+
+MSG=frontends/framebuffer/res/de/Messages frontends/framebuffer/res/en/Messages frontends/framebuffer/res/fr/Messages frontends/framebuffer/res/it/Messages frontends/framebuffer/res/nl/Messages
+
+all: $(MSG) nsfb$(SOEXT)
+
+frontends/framebuffer/res/%/Messages: resources/FatMessages
+	rm -f $@
+	mkdir -p frontends/framebuffer/res/$*
+	$(PERL) utils/split-messages.pl -l $* -p fb -f messages -o $@ -z $<
+
+NSGENBIND=$(FB)/bin/nsgenbind
+
+gen: content/handlers/javascript/duktape/netsurf.bnd
+	mkdir -p $(OUT)/duktape
+	$(NSGENBIND) -I content/handlers/javascript/WebIDL content/handlers/javascript/duktape/netsurf.bnd $(OUT)/duktape
+	touch gen
+
+$(OUT)/duktape_%.o: $(OUT)/duktape/%.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/convert_font: frontends/framebuffer/convert_font.c
+	$(CC) -o $(OUT)/convert_font frontends/framebuffer/convert_font.c
+
+$(OUT)/font-ns-sans.c: frontends/framebuffer/res/fonts/glyph_data $(OUT)/convert_font
+	$(OUT)/convert_font -H $(OUT)/font-ns-sans.h frontends/framebuffer/res/fonts/glyph_data $(OUT)/font-ns-sans.c
+
+$(OUT)/font-ns-sans.o: $(OUT)/font-ns-sans.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/convert_image: frontends/framebuffer/convert_image.c
+	$(CC) -o $(OUT)/convert_image frontends/framebuffer/convert_image.c -lpng16 -lz
+
+img: $(OUT)/convert_image
+	$(OUT)/convert_image frontends/framebuffer/res/pointers/caret.png $(OUT)/image-caret_image.c caret_image
+	$(OUT)/convert_image frontends/framebuffer/res/pointers/point.png $(OUT)/image-hand_image.c hand_image
+	$(OUT)/convert_image frontends/framebuffer/res/pointers/menu.png $(OUT)/image-menu_image.c menu_image
+	$(OUT)/convert_image frontends/framebuffer/res/pointers/move.png $(OUT)/image-move_image.c move_image
+	$(OUT)/convert_image frontends/framebuffer/res/pointers/default.png $(OUT)/image-pointer_image.c pointer_image
+	$(OUT)/convert_image frontends/framebuffer/res/pointers/progress.png $(OUT)/image-progress_image.c progress_image
+	$(OUT)/convert_image frontends/framebuffer/res/icons/history.png $(OUT)/image-history_image.c history_image
+	$(OUT)/convert_image frontends/framebuffer/res/icons/history_g.png $(OUT)/image-history_image_g.c history_image_g
+	$(OUT)/convert_image frontends/framebuffer/res/icons/back.png $(OUT)/image-left_arrow.c left_arrow
+	$(OUT)/convert_image frontends/framebuffer/res/icons/back_g.png $(OUT)/image-left_arrow_g.c left_arrow_g
+	$(OUT)/convert_image frontends/framebuffer/res/icons/osk.png $(OUT)/image-osk_image.c osk_image
+	$(OUT)/convert_image frontends/framebuffer/res/icons/reload.png $(OUT)/image-reload.c reload
+	$(OUT)/convert_image frontends/framebuffer/res/icons/reload_g.png $(OUT)/image-reload_g.c reload_g
+	$(OUT)/convert_image frontends/framebuffer/res/icons/forward.png $(OUT)/image-right_arrow.c right_arrow
+	$(OUT)/convert_image frontends/framebuffer/res/icons/forward_g.png $(OUT)/image-right_arrow_g.c right_arrow_g
+	$(OUT)/convert_image frontends/framebuffer/res/icons/scrolld.png $(OUT)/image-scrolld.c scrolld
+	$(OUT)/convert_image frontends/framebuffer/res/icons/scrolll.png $(OUT)/image-scrolll.c scrolll
+	$(OUT)/convert_image frontends/framebuffer/res/icons/scrollr.png $(OUT)/image-scrollr.c scrollr
+	$(OUT)/convert_image frontends/framebuffer/res/icons/scrollu.png $(OUT)/image-scrollu.c scrollu
+	$(OUT)/convert_image frontends/framebuffer/res/icons/stop.png $(OUT)/image-stop_image.c stop_image
+	$(OUT)/convert_image frontends/framebuffer/res/icons/stop_g.png $(OUT)/image-stop_image_g.c stop_image_g
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber0.png $(OUT)/image-throbber0.c throbber0
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber1.png $(OUT)/image-throbber1.c throbber1
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber2.png $(OUT)/image-throbber2.c throbber2
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber3.png $(OUT)/image-throbber3.c throbber3
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber4.png $(OUT)/image-throbber4.c throbber4
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber5.png $(OUT)/image-throbber5.c throbber5
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber6.png $(OUT)/image-throbber6.c throbber6
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber7.png $(OUT)/image-throbber7.c throbber7
+	$(OUT)/convert_image frontends/framebuffer/res/throbber/throbber8.png $(OUT)/image-throbber8.c throbber8
+	touch img
+
+$(OUT)/main.o: main.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/image-%.o: $(OUT)/image-%.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/testament.h:
+	$(PERL) utils/git-testament.pl $(NS) $(OUT)/testament.h
+
+$(OUT)/content_content.o: content/content.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_content_factory.o: content/content_factory.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_dirlist.o: content/dirlist.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetch.o: content/fetch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_about.o: content/fetchers/about.c $(OUT)/testament.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_curl.o: content/fetchers/curl.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_data.o: content/fetchers/data.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_file.o: content/fetchers/file.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_fetchers_resource.o: content/fetchers/resource.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_css_%.o: content/handlers/css/%.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_html_%.o: content/handlers/html/%.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_image_%.o: content/handlers/image/%.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_javascript_content.o: content/handlers/javascript/content.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/duktape/generics.js.inc:
+	xxd -i content/handlers/javascript/duktape/generics.js $(OUT)/duktape/generics.js.inc.tmp
+	sed -e 's/content_handlers_javascript_duktape_generics_js/generics_js/' $(OUT)/duktape/generics.js.inc.tmp > $(OUT)/duktape/generics.js.inc
+	rm -f $(OUT)/duktape/generics.js.inc.tmp
+
+$(OUT)/duktape/polyfill.js.inc:
+	xxd -i content/handlers/javascript/duktape/polyfill.js $(OUT)/duktape/polyfill.js.inc.tmp
+	sed -e 's/content_handlers_javascript_duktape_polyfill_js/polyfill_js/' $(OUT)/duktape/polyfill.js.inc.tmp > $(OUT)/duktape/polyfill.js.inc
+	rm -f $(OUT)/duktape/polyfill.js.inc.tmp
+
+$(OUT)/content_handlers_javascript_duktape_dukky.o: content/handlers/javascript/duktape/dukky.c $(OUT)/duktape/generics.js.inc $(OUT)/duktape/polyfill.js.inc
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_javascript_duktape_duktape.o: content/handlers/javascript/duktape/duktape.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_javascript_fetcher.o: content/handlers/javascript/fetcher.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_handlers_text_textplain.o: content/handlers/text/textplain.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_hlcache.o: content/hlcache.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_llcache.o: content/llcache.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_mimesniff.o: content/mimesniff.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_no_backing_store.o: content/no_backing_store.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_textsearch.o: content/textsearch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/content_urldb.o: content/urldb.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/desktop_%.o: desktop/%.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_bitmap.o: frontends/framebuffer/bitmap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_clipboard.o: frontends/framebuffer/clipboard.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_corewindow.o: frontends/framebuffer/corewindow.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_bitmap.o: frontends/framebuffer/fbtk/bitmap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_event.o: frontends/framebuffer/fbtk/event.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_fbtk.o: frontends/framebuffer/fbtk/fbtk.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_fill.o: frontends/framebuffer/fbtk/fill.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_osk.o: frontends/framebuffer/fbtk/osk.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_scroll.o: frontends/framebuffer/fbtk/scroll.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_text.o: frontends/framebuffer/fbtk/text.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_user.o: frontends/framebuffer/fbtk/user.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fbtk_window.o: frontends/framebuffer/fbtk/window.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_fetch.o: frontends/framebuffer/fetch.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_findfile.o: frontends/framebuffer/findfile.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_font_internal.o: frontends/framebuffer/font_internal.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_framebuffer.o: frontends/framebuffer/framebuffer.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_gui.o: frontends/framebuffer/gui.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_local_history.o: frontends/framebuffer/local_history.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/frontends_framebuffer_schedule.o: frontends/framebuffer/schedule.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_bloom.o: utils/bloom.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_corestrings.o: utils/corestrings.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_file_pumpkin.o: utils/file_pumpkin.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_file.o: utils/file.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_filename_pumpkin.o: utils/filename_pumpkin.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_filename.o: utils/filename.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_filepath_pumpkin.o: utils/filepath_pumpkin.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_filepath.o: utils/filepath.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_hashmap.o: utils/hashmap.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_hashtable.o: utils/hashtable.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_cache-control.o: utils/http/cache-control.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_challenge.o: utils/http/challenge.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_content-disposition.o: utils/http/content-disposition.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_content-type.o: utils/http/content-type.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_generics.o: utils/http/generics.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_parameter.o: utils/http/parameter.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_primitives.o: utils/http/primitives.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_strict-transport-security.o: utils/http/strict-transport-security.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_http_www-authenticate.o: utils/http/www-authenticate.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_idna.o: utils/idna.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_libdom.o: utils/libdom.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_log.o: utils/log.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_messages.o: utils/messages.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_nscolour.o: utils/nscolour.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_nsoption.o: utils/nsoption.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_nsurl_nsurl.o: utils/nsurl/nsurl.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_nsurl_parse.o: utils/nsurl/parse.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_punycode.o: utils/punycode.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_ssl_certs.o: utils/ssl_certs.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_talloc.o: utils/talloc.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_time.o: utils/time.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_url.o: utils/url.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_useragent.o: utils/useragent.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_utf8.o: utils/utf8.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/utils_utils.o: utils/utils.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+
+#LDFLAGS=-L$(PIT)/lib -L$(FB)/lib -lcss -lparserutils -lwapcaplet -lnsutils -lcurl-4 -lssl -lcrypto -lutf8proc -lpng16 -lz -lnsbmp -lnsgif -lsvgtiny -ldom -lexpat -lhubbub -lrosprite -lnspsl -lnslog -lregex -lnsfb -losapi -lpit -ljpeg8 -liconv -lwsock32 -lws2_32 -lm
+LDFLAGS=-L$(PUMPKINOS)/bin -L$(FB)/lib -lcss -lparserutils -lwapcaplet -lnsutils -lcurl -lssl -lcrypto -lutf8proc -lpng16 -lz -lnsbmp -lnsgif -lsvgtiny -ldom -lexpat -lhubbub -lrosprite -lnspsl -lnslog -lnsfb -lpumpkin -lpit -ljpeg8 -lm
+
+NSLIBS=$(FB)/lib/libcss.a $(FB)/lib/libdom.a $(FB)/lib/libhubbub.a $(FB)/lib/libnsbmp.a $(FB)/lib/libnsfb.a $(FB)/lib/libnsgif.a $(FB)/lib/libnslog.a $(FB)/lib/libnspsl.a $(FB)/lib/libnsutils.a $(FB)/lib/libparserutils.a $(FB)/lib/librosprite.a $(FB)/lib/libsvgtiny.a $(FB)/lib/libutf8proc.a $(FB)/lib/libwapcaplet.a
+
+nsfb$(SOEXT): gen img $(OBJS) $(NSLIBS)
+	$(CC) -shared -o nsfb$(SOEXT) $(OBJS) $(LDFLAGS)
+
+clean:
+	rm -f nsfb$(SOEXT) $(OBJS) $(OUT)/convert_font $(OUT)/convert_image $(OUT)/font-ns-sans.c $(OUT)/testament.h $(OUT)/duktape/generics.js.inc $(OUT)/duktape/polyfill.js.inc gen img $(OUT)/*.[ch] $(OUT)/duktape/*.[ch] $(OUT)/duktape/Makefile
+

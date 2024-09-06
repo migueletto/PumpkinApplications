@@ -1,0 +1,28 @@
+include ../Makefile.common
+
+OUT=./build
+INC=-I./include/ -I./src -I$(PUMPKINOS)/src/libpit
+CFLAGS=-MMD -MP -D_BSD_SOURCE -D_DEFAULT_SOURCE $(INC) -Wall -W -Wno-error -D_ALIGNED="__attribute__((aligned))" -DSTMTEXPR=1 -fPIC -DNDEBUG $(OPT) -std=c99
+OBJS=$(OUT)/src_libnsgif.o $(OUT)/src_lzw.o
+LIB=$(OUT)/libnsgif.a
+FLIB=$(FB)/lib/libnsgif.a
+
+all: $(FLIB)
+
+$(OUT)/src_libnsgif.o: src/libnsgif.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(OUT)/src_lzw.o: src/lzw.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(LIB): $(OBJS)
+	ar cr $(LIB) $(OBJS)
+
+$(FLIB): $(LIB)
+	mkdir -p $(FB)/lib
+	mkdir -p $(FB)/include
+	install -m 644 $(LIB) $(FLIB)
+	install -m 644 include/libnsgif.h $(FB)/include
+
+clean:
+	rm -f $(OBJS) $(LIB) $(FLIB)
