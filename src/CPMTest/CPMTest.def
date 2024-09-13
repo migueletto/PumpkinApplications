@@ -1,0 +1,1 @@
+application { "CPMTest" CPMt stack=4096 }

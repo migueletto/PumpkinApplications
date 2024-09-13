@@ -1,0 +1,21 @@
+include ../common.mak
+include ../commonp.mak
+
+CC=m68k-palmos-gcc
+BUILDPRC=build-prc
+
+PROGRAM=CPMTest
+OBJS=main.o cpm.o
+CFLAGS=-O2 -Wall -Wno-switch -palmos5
+
+ $(PROGRAM).prc: $(PROGRAM).68k res.flag
+	$(BUILDPRC) $(PROGRAM).def $(PROGRAM).68k *.bin
+
+$(PROGRAM).68k: $(OBJS)
+	$(CC) -o $(PROGRAM).68k $(OBJS)
+
+res.flag: resource.rcp
+	$(PILRC) resource.rcp; touch res.flag
+
+clean:
+	rm -f $(PRC) $(PROGRAM).prc $(PROGRAM).68k $(OBJS) *.bin res.flag

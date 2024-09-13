@@ -5,6 +5,7 @@
 *.dll
 *.bin
 *.dlib
+*.68k
 *.prc
 *.pdb
 *.zip
