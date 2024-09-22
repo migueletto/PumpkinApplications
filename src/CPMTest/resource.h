@@ -1,3 +1,7 @@
+#define MAX_KEY       32
+#define MAX_HASH      64
+#define MAX_TEXT      64
+
 #define ProvidersForm 1000
 #define providerCtl   1001
 #define providerList  1002
@@ -15,7 +19,7 @@
 #define EncryptForm   1002
 #define DecryptForm   1003
 
-#define MainMenu 1000
+#define MainMenu      1000
 
-#define ErrorAlert 1000
-#define InfoAlert  1001
+#define ErrorAlert    1000
+#define InfoAlert     1001

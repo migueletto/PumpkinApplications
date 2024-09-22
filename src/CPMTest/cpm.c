@@ -5,8 +5,6 @@
 #include "resource.h"
 
 #define MAX_PROVIDERS 5
-#define MAX_KEY 32
-#define MAX_TEXT 64
 
 static char providerNames[MAX_PROVIDERS][32];
 static char providerOthers[MAX_PROVIDERS][64];
@@ -18,10 +16,11 @@ static UInt16 providerIndex;
 static UInt32 providerIDs[MAX_PROVIDERS];
 static UInt16 hashMethod;
 static UInt16 cipherMethod;
-static char key[MAX_KEY];
-static char text[MAX_TEXT];
-static char ascHash[MAX_TEXT];
-static char ascEnc[MAX_TEXT];
+static UInt8 key[MAX_KEY];
+static char text[MAX_TEXT + 2];
+static char ascHash[MAX_HASH*2 + 2];
+static char ascEnc[MAX_TEXT*2 + 2];
+static char ascKey[MAX_KEY*2 + 2];
 static APKeyInfoType keyInfo;
 
 void CpmInit(UInt16 r, UInt16 num) {
@@ -34,10 +33,7 @@ void CpmInit(UInt16 r, UInt16 num) {
   MemSet(text, sizeof(text), 0);
   MemSet(ascHash, sizeof(ascHash), 0);
   MemSet(ascEnc, sizeof(ascEnc), 0);
-
-  MemSet(&keyInfo, sizeof(APKeyInfoType), 0);
-  keyInfo.keyclass = apKeyClassSymmetric;
-  keyInfo.usage = apKeyUsageEncryption;
+  MemSet(ascKey, sizeof(ascKey), 0);
 }
 
 void CpmFinish(void) {
@@ -157,7 +153,7 @@ static void bin2hex(UInt8 b, char *h) {
 
 static void CpmHash(UInt32 providerID, UInt16 hashMethod) {
   APHashInfoType hashInfo;
-  UInt8 binHash[64];
+  UInt8 binHash[MAX_HASH];
   UInt16 method;
   UInt32 i, len;
   char buf[16];
@@ -169,16 +165,15 @@ static void CpmHash(UInt32 providerID, UInt16 hashMethod) {
     default: method = apHashTypeSHA1; break;
   }
 
-  MemSet(&binHash, sizeof(binHash), 0);
-  MemSet(&ascHash, sizeof(ascHash), 0);
+  MemSet(binHash, sizeof(binHash), 0);
+  MemSet(ascHash, sizeof(ascHash), 0);
 
   MemSet(&hashInfo, sizeof(APHashInfoType), 0);
   hashInfo.providerContext.providerID = providerID;
 
   if ((err = CPMLibHash(refnum, method, &hashInfo, (UInt8 *)text, StrLen(text), binHash, &len)) == errNone) {
-    for (i = 0; i < len; i++) {
-      bin2hex(binHash[i], buf);
-      StrNCat(ascHash, buf, sizeof(ascHash) - i*2);
+    for (i = 0; i < len && i < MAX_HASH; i++) {
+      bin2hex(binHash[i], &ascHash[i*2]);
     }
   } else {
     StrPrintF(buf, "%04X", err);
@@ -197,6 +192,57 @@ static UInt8 hex2bin(char *h) {
   return hex2bin1(h[0])* 16 + hex2bin1(h[1]);
 }
 
+static Err CpmExportKey(APKeyInfoType *keyInfo) {
+  char buf[16];
+  UInt32 i, len;
+  Err err;
+
+  MemSet(ascKey, sizeof(ascKey), 0);
+  len = 0;
+
+  if ((err = CPMLibExportKeyInfo(refnum, keyInfo, IMPORT_EXPORT_TYPE_RAW, NULL, &len)) == cpmErrBufTooSmall) {
+    if (len <= MAX_KEY) {
+      if ((err = CPMLibExportKeyInfo(refnum, keyInfo, IMPORT_EXPORT_TYPE_RAW, key, &len)) == errNone) {
+        for (i = 0; i < len; i++) {
+          bin2hex(key[i], &ascKey[i*2]);
+        }
+      } else {
+        StrPrintF(buf, "%04X", err);
+        FrmCustomAlert(ErrorAlert, "CPMLibExportKeyInfo data failed", buf, "");
+      }
+    } else {
+      StrPrintF(buf, "%d", (UInt16)len);
+      FrmCustomAlert(ErrorAlert, "CPMLibExportKeyInfo invalid len", buf, "");
+    }
+  } else {
+    StrPrintF(buf, "%04X", err);
+    FrmCustomAlert(ErrorAlert, "CPMLibExportKeyInfo len failed", buf, "");
+  }
+
+  return err;
+}
+
+/*
+static Err CpmImportKey(APKeyInfoType *keyInfo) {
+  char buf[16];
+  UInt32 i;
+  Err err;
+
+  MemSet(ascKey, sizeof(ascKey), 0);
+
+  if ((err = CPMLibImportKeyInfo(refnum, IMPORT_EXPORT_TYPE_RAW, key, keyInfo->length, keyInfo)) == errNone) {
+    for (i = 0; i < keyInfo->length; i++) {
+      bin2hex(key[i], &ascKey[i*2]);
+    }
+  } else {
+    StrPrintF(buf, "%04X", err);
+    FrmCustomAlert(ErrorAlert, "CPMLibImportKeyInfo failed", buf, "");
+  }
+
+  return err;
+}
+*/
+
 static void CpmCipher(UInt32 providerID, UInt16 cipherMethod, Boolean encrypt) {
   APCipherInfoType cipherInfo;
   UInt8 encrypted[MAX_TEXT];
@@ -213,38 +259,34 @@ static void CpmCipher(UInt32 providerID, UInt16 cipherMethod, Boolean encrypt) {
     default: method = apSymmetricTypeRijndael; keylen = 32; break;
   }
 
-  if (keyInfo.providerContext.providerID != providerID || keylen != keyInfo.length) {
-    if (keyInfo.length) CPMLibReleaseKeyInfo(refnum, &keyInfo);
-    keyInfo.providerContext.providerID = providerID;
-    keyInfo.length = keylen;
-    if ((err = CPMLibGenerateKey(refnum, NULL, 0, &keyInfo)) != errNone) {
-      StrPrintF(buf, "%04X", err);
-      FrmCustomAlert(ErrorAlert, "CPMLibGenerateKey failed", buf, "");
-    }
-  } else {
-    err = errNone;
-  }
+  MemSet(&keyInfo, sizeof(APKeyInfoType), 0);
+  keyInfo.providerContext.providerID = providerID;
+  keyInfo.keyclass = apKeyClassSymmetric;
+  keyInfo.usage = apKeyUsageEncryption;
+  keyInfo.length = keylen;
 
-  if (err == errNone) {
+  if ((err = CPMLibGenerateKey(refnum, NULL, 0, &keyInfo)) == errNone) {
+    CpmExportKey(&keyInfo);
+
     MemSet(&cipherInfo, sizeof(APCipherInfoType), 0);
     cipherInfo.providerContext.providerID = providerID;
     cipherInfo.type = method;
 
     if (encrypt) {
-      MemSet(&ascEnc, sizeof(ascEnc), 0);
+      MemSet(ascEnc, sizeof(ascEnc), 0);
+      MemSet(encrypted, sizeof(encrypted), 0);
       len = MAX_TEXT;
       if ((err = CPMLibEncrypt(refnum, &keyInfo, &cipherInfo, (UInt8 *)text, MAX_TEXT, encrypted, &len)) == errNone) {
-        for (i = 0; i < len; i++) {
-          bin2hex(encrypted[i], buf);
-          StrNCat(ascEnc, buf, sizeof(ascEnc) - i*2);
+        for (i = 0; i < len && i < MAX_TEXT; i++) {
+          bin2hex(encrypted[i], &ascEnc[i*2]);
         }
       } else {
         StrPrintF(buf, "%04X", err);
         FrmCustomAlert(ErrorAlert, "CPMLibEncrypt failed", buf, "");
       }
     } else {
-      MemSet(&text, sizeof(text), 0);
-      MemSet(&encrypted, sizeof(encrypted), 0);
+      MemSet(text, sizeof(text), 0);
+      MemSet(encrypted, sizeof(encrypted), 0);
       for (i = 0; i < MAX_TEXT; i++) {
         encrypted[i] = hex2bin(&ascEnc[i*2]);
       }
@@ -254,6 +296,8 @@ static void CpmCipher(UInt32 providerID, UInt16 cipherMethod, Boolean encrypt) {
         FrmCustomAlert(ErrorAlert, "CPMLibDecrypt failed", buf, "");
       }
     }
+    CPMLibReleaseKeyInfo(refnum, &keyInfo);
+    CPMLibReleaseCipherInfo(refnum, &cipherInfo);
   }
 }
 
@@ -278,28 +322,28 @@ Boolean CpmFormHandleEvent(EventType *event) {
       ctl = (ControlType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, methodCtl));
       CtlSetLabel(ctl, LstGetSelectionText(lst, LstGetSelection(lst)));
 
-      if (formId == EncryptForm || formId == DecryptForm) {
-        fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, keyFld));
-        FldDelete(fld, 0, MAX_TEXT);
-        if (key[0]) FldInsert(fld, key, StrLen(key));
-      }
-
       switch (formId) {
         case HashForm:
           fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, textFld));
           FldDelete(fld, 0, MAX_TEXT);
           if (text[0]) FldInsert(fld, text, StrLen(text));
+
           fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, binFld));
-          FldDelete(fld, 0, MAX_TEXT);
+          FldDelete(fld, 0, MAX_HASH*2);
           if (ascHash[0]) FldInsert(fld, ascHash, StrLen(ascHash));
           break;
         case EncryptForm:
         case DecryptForm:
+          fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, keyFld));
+          FldDelete(fld, 0, MAX_KEY*2);
+          if (ascKey[0]) FldInsert(fld, ascKey, StrLen(ascKey));
+
           fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, textFld));
           FldDelete(fld, 0, MAX_TEXT);
           if (text[0]) FldInsert(fld, text, StrLen(text));
+
           fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, binFld));
-          FldDelete(fld, 0, MAX_TEXT);
+          FldDelete(fld, 0, MAX_TEXT*2);
           if (ascEnc[0]) FldInsert(fld, ascEnc, StrLen(ascEnc));
           break;
       }
@@ -323,7 +367,7 @@ Boolean CpmFormHandleEvent(EventType *event) {
 
         switch (formId) {
           case HashForm:
-            MemSet(&text, sizeof(text), 0);
+            MemSet(text, sizeof(text), 0);
             fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, textFld));
             s = FldGetTextPtr(fld);
             if (s && s[0]) {
@@ -331,20 +375,25 @@ Boolean CpmFormHandleEvent(EventType *event) {
               hashMethod = LstGetSelection(lst);
               CpmHash(providerIDs[providerIndex], hashMethod);
               fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, binFld));
-              FldDelete(fld, 0, MAX_TEXT);
+              FldDelete(fld, 0, MAX_HASH*2);
               FldInsert(fld, ascHash, StrLen(ascHash));
             }
             break;
           case EncryptForm:
-            MemSet(&text, sizeof(text), 0);
+            MemSet(text, sizeof(text), 0);
             fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, textFld));
             s = FldGetTextPtr(fld);
             if (s && s[0]) {
               StrNCopy(text, s, MAX_TEXT);
               cipherMethod = LstGetSelection(lst);
               CpmCipher(providerIDs[providerIndex], cipherMethod, true);
+
+              fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, keyFld));
+              FldDelete(fld, 0, MAX_KEY*2);
+              FldInsert(fld, ascKey, StrLen(ascKey));
+
               fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, binFld));
-              FldDelete(fld, 0, MAX_TEXT);
+              FldDelete(fld, 0, MAX_TEXT*2);
               FldInsert(fld, ascEnc, StrLen(ascEnc));
             }
             break;
@@ -353,9 +402,14 @@ Boolean CpmFormHandleEvent(EventType *event) {
             fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, binFld));
             s = FldGetTextPtr(fld);
             if (s && s[0]) {
-              StrNCopy(ascEnc, s, MAX_TEXT);
+              StrNCopy(ascEnc, s, MAX_TEXT*2);
               cipherMethod = LstGetSelection(lst);
               CpmCipher(providerIDs[providerIndex], cipherMethod, false);
+
+              fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, keyFld));
+              FldDelete(fld, 0, MAX_KEY*2);
+              FldInsert(fld, ascKey, StrLen(ascKey));
+
               fld = (FieldType *)FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, textFld));
               FldDelete(fld, 0, MAX_TEXT);
               FldInsert(fld, text, StrLen(text));
@@ -383,12 +437,12 @@ Boolean CpmFormHandleEvent(EventType *event) {
       switch (formId) {
         case HashForm:
           MemSet(ascHash, sizeof(ascHash), 0);
-          if (s && s[0]) StrNCopy(ascHash, s, MAX_TEXT);
+          if (s && s[0]) StrNCopy(ascHash, s, MAX_HASH*2);
           break;
         case EncryptForm:
         case DecryptForm:
           MemSet(ascEnc, sizeof(ascEnc), 0);
-          if (s && s[0]) StrNCopy(ascEnc, s, MAX_TEXT);
+          if (s && s[0]) StrNCopy(ascEnc, s, MAX_TEXT*2);
           break;
       }
       break;
