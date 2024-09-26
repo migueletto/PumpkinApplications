@@ -187,7 +187,7 @@ UInt32 PilotMain(UInt16 cmd, void *cmdPBP, UInt16 launchFlags) {
 
         while (1) {
             if (game.state == game.PLAYING)
-                EvtGetEvent(&e, 0);
+                EvtGetEvent(&e, 5);
             else
                 EvtGetEvent(&e, evtWaitForever);
 
@@ -306,7 +306,7 @@ UInt32 PilotMain(UInt16 cmd, void *cmdPBP, UInt16 launchFlags) {
 
             /* do some kind of 50Hz timer event */
             if (game.state == game.PLAYING) {
-                long ticksToGo = next_draw_ticks - TimGetTicks();
+                Int32 ticksToGo = (Int32)next_draw_ticks - (Int32)TimGetTicks();
                 Boolean didUpdate = false;
                 if (ticksToGo < 0) {
                     game.update();
@@ -314,7 +314,7 @@ UInt32 PilotMain(UInt16 cmd, void *cmdPBP, UInt16 launchFlags) {
                     game.refresh();
                     didUpdate = true;
 
-                    if (ticksToGo < -tick_rate) {
+                    if (ticksToGo < -((Int32)tick_rate)) {
                         next_draw_ticks = TimGetTicks();
                     }
                     next_draw_ticks += tick_rate;

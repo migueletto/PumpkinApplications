@@ -5,6 +5,7 @@ PROGRAM=pBill
 PRC=$(VFS)/app_install/$(PROGRAM).prc
 OBJS=sauce/Bucket.o sauce/Cable.o sauce/Computer.o sauce/Game.o sauce/Horde.o sauce/Library.o sauce/Monster.o sauce/Network.o sauce/Picture.o sauce/Scorelist.o sauce/Spark.o sauce/UI.o sauce/colors.o sauce/deviceInfo.o sauce/drawhelper.o sauce/pBill.o
 CUSTOMPFLAGS=-DHIRESBUILD
+CPPFLAGS=$(CFLAGS)
 
 $(PRC): $(PROGRAM).prc
 	cp $(PROGRAM).prc $(PRC)

@@ -7,7 +7,7 @@
 
 #define endgamestr "Module pBill has caused a segmentation fault at memory address 097E:F1A0.\nCore dumped.\n\n We apologize for the inconvenience."
 
-//Picture pause;
+static Picture pause;
 Horde bill;
 Network net;
 Library OS;
@@ -176,7 +176,7 @@ void Game::refresh() {
     } else {
        if (ui.drawInBackground()) {
             net.drawStatic();
-            //ui.draw(pause, 150, 0);
+            ui.draw(pause, 150, 0);
             ui.endDrawInBackground();
         }
         net.drawDynamic();
@@ -226,7 +226,7 @@ void Game::init() {
     net.load_pix();
     bucket.load_pix();
     spark.load_pix();
-    //pause.load(GFX_RES_EXTRAS + 3, GFX_RES_EXTRAS_WIDTH, GFX_RES_EXTRAS_HEIGHT);
+    pause.load(GFX_RES_EXTRAS + 3, GFX_RES_EXTRAS_WIDTH, GFX_RES_EXTRAS_HEIGHT);
 }
 
 void Game::releaseImages() {
@@ -235,5 +235,5 @@ void Game::releaseImages() {
     net.release_pix();
     bucket.release_pix();
     spark.release_pix();
-    //pause.release();
+    pause.release();
 }
