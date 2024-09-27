@@ -60,8 +60,10 @@ void UI::writeBackgroundBufferToScreen() {
 }
 
 void UI::update_cursor_position(int x, int y) {
-    updatedCursorX = x - cursorPic->width / 2;
-    updatedCursorY = y - cursorPic->height / 2;
+    if (cursorPic != NONE) {
+      updatedCursorX = x - cursorPic->width / 2;
+      updatedCursorY = y - cursorPic->height / 2;
+    }
 }
 
 void UI::draw_cursor() {
