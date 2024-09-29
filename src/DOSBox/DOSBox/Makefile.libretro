@@ -216,7 +216,7 @@ else
 endif
 
 OBJECTS  = $(sort $(SOURCES_CXX:.cpp=.o) $(SOURCES_C:.c=.o))
-CXXFLAGS += -D__LIBRETRO__ $(fpic) $(INCFLAGS) $(COMMONFLAGS)
+CXXFLAGS += -D__LIBRETRO__ $(fpic) $(INCFLAGS) $(COMMONFLAGS) -std=c++11
 CFLAGS   += -D__LIBRETRO__ $(fpic) $(INCFLAGS) $(COMMONFLAGS)
 LIBM     ?= -lm
 LDFLAGS  += $(LIBM) $(fpic)
