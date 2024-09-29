@@ -128,12 +128,9 @@ struct retro_vfs_dir_handle {
 
 static mutex_t *mutex;
 static UInt16 depth;
-static BitmapType *bmp;
 static int last_x, last_y;
 static int64_t dt;
 static int ebuttons;
-static int bWidth, bHeight;
-static RectangleType screenRect;
 
 static vfs_session_t *session;
 static liblretro_core_t core;
@@ -478,6 +475,7 @@ static bool liblretro_environment(unsigned cmd, void *data) {
     case RETRO_ENVIRONMENT_SET_GEOMETRY:
       geometry = (struct retro_game_geometry *)data;
       debug(DEBUG_INFO, "LIBRETRO", "retro_environment RETRO_ENVIRONMENT_SET_GEOMETRY %d,%d", geometry->base_width, geometry->base_height);
+      pumpkin_change_display(geometry->base_width, geometry->base_height);
       r = true;
       break;
 
@@ -665,57 +663,54 @@ static void fill_rgba(uint32_t *src, uint16_t *rgb16, uint32_t len) {
   }
 }
 
+static void fill_rgba_le16(uint32_t *src, uint16_t *rgb16, uint32_t len) {
+  uint16_t red, green, blue, w;
+  uint32_t i;
+
+  for (i = 0; i < len; i++) {
+    red   = (src[i] >> 16) & 0xff;
+    green = (src[i] >>  8) & 0xff;
+    blue  =  src[i]        & 0xff;
+    w = rgb565(red, green, blue);
+    put2l(w, (uint8_t *)&rgb16[i], 0);
+  }
+}
+
 static void liblretro_video_refresh(const void *data, unsigned width, unsigned height, size_t pitch) {
-  uint16_t *bits;
   UInt32 sWidth, sHeight;
-  RectangleType rect;
-  RGBColorType rgb;
-  Err err;
+  WinHandle wh;
+  BitmapType *bmp;
+  Boolean le16;
+  uint16_t *bits;
 
   if (data) {
-    if (bWidth != width || bHeight != height) {
-      if (bmp) BmpDelete(bmp);
-      bmp = NULL;
-      bWidth = width;
-      bHeight = height;
-    }
+    WinScreenGetAttribute(winScreenWidth, &sWidth);
+    WinScreenGetAttribute(winScreenHeight, &sHeight);
 
-    if (!bmp) {
-      debug(DEBUG_INFO, "LIBRETRO", "video refresh %dx%d depth %d pitch %d", width, height, depth, pitch);
-
-      WinScreenGetAttribute(winScreenWidth, &sWidth);
-      WinScreenGetAttribute(winScreenHeight, &sHeight);
-      RctSetRectangle(&rect, 0, 15, sWidth/2, sHeight/2 - 15);
-      rgb.r = rgb.g = rgb.b = 0;
-      WinSetBackColorRGB(&rgb, NULL);
-      WinEraseRectangle(&rect, 0);
-      sHeight -= 30; // title bar (2x)
-
-      if (width == sWidth) {
-        bmp = BmpCreate3(width, height, 0, kDensityDouble, 16, false, 0, NULL, &err);
-        RctSetRectangle(&screenRect, (sWidth-width)/2, 30+(sHeight-height)/2, width, height);
-        WinSetCoordinateSystem(kCoordinatesDouble);
-        WinUnscaleRectangle(&screenRect);
-        WinSetCoordinateSystem(kCoordinatesStandard);
-      } else {
-        bmp = BmpCreate3(width, height, 0, kDensityLow, 16, false, 0, NULL, &err);
-        RctSetRectangle(&screenRect, (sWidth/2-width)/2, 15+(sHeight/2-height)/2, width, height);
-      }
-    }
-
-    if (bmp) {
+    if (sWidth == width && sHeight == height) {
+      wh = WinGetDisplayWindow();
+      bmp = WinGetBitmap(wh);
       bits = (uint16_t *)BmpGetBits(bmp);
+      le16 = BmpGetLittleEndian16();
+
       switch (depth) {
         case 16:
-          fill_rgb565((uint16_t *)data, bits, width * height);
+          if (le16) {
+            xmemcpy(bits, data, width * height * 2);
+          } else {
+            fill_rgb565((uint16_t *)data, bits, width * height);
+          }
           break;
         case 32:
-          fill_rgba((uint32_t *)data, bits, width * height);
+          if (le16) {
+            fill_rgba_le16((uint32_t *)data, bits, width * height);
+          } else {
+            fill_rgba((uint32_t *)data, bits, width * height);
+          }
           break;
       }
 
-      //debug(DEBUG_INFO, "LIBRETRO", "draw %d,%d depth %d at %d,%d", width, height, depth, screenRect.topLeft.x, screenRect.topLeft.y);
-      WinDrawBitmap(bmp, screenRect.topLeft.x, screenRect.topLeft.y);
+      pumpkin_screen_dirty(wh, 0, 0, width, height);
     }
   }
 }
@@ -733,7 +728,7 @@ static void liblretro_input_poll(void) {
 }
 
 static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned index, unsigned id) {
-  UInt32 state;
+  UInt32 state, sWidth, sHeight;
   Int16 x, y;
   Boolean penDown;
   int r = 0;
@@ -789,9 +784,8 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
       break;
 
     case RETRO_DEVICE_MOUSE:
-      EvtGetPen(&x, &y, &penDown);
-      x *= 2;
-      y *= 2;
+      EvtGetPenEx(&x, &y, &penDown);
+      y *= 2; // XXX why is it necessary to do this ?
 
       switch (id) {
         case RETRO_DEVICE_ID_MOUSE_X:
@@ -815,24 +809,30 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
       }
       break;
 
-/*
     case RETRO_DEVICE_POINTER:
+      EvtGetPen(&x, &y, &penDown);
+      x *= 2;
+      y *= 2;
+
       switch (id) {
         case RETRO_DEVICE_ID_POINTER_X:
-          r = (pen_x * 65536) / screen_width - 32768;
+          WinScreenGetAttribute(winScreenWidth, &sWidth);
+          r = ((int)x * 65536) / sWidth - 32768;
           break;
         case RETRO_DEVICE_ID_POINTER_Y:
-          r = (pen_y * 65536) / screen_height - 32768;
+          WinScreenGetAttribute(winScreenHeight, &sHeight);
+          r = ((int)y * 65536) / sHeight - 32768;
           break;
         case RETRO_DEVICE_ID_POINTER_PRESSED:
-          r = pen_status;
+          r = penDown;
+/*
           if (pen_status && !pen_down && (sys_get_clock() - pen_t) > 15000) {
             pen_status = 0;
           }
+*/
           break;
       }
       break;
-*/
 
     default:
       debug(DEBUG_INFO, "LIBRETRO", "retro_input_state port %u, device %u, index %u, id %u ignored", port, device, index, id);
@@ -1027,7 +1027,6 @@ static int liblretro_core_start(liblretro_core_t *core) {
   dt = 1000000 / core->avinfo.timing.fps;
   debug(DEBUG_INFO, "LIBRETRO", "fps=%.1f dt=%ld", core->avinfo.timing.fps, dt);
   stop = 0;
-  bmp = NULL;
 
   return 0;
 }
@@ -1039,8 +1038,6 @@ static int liblretro_core_stop(liblretro_core_t *core) {
     core->configured = 0;
   }
 
-  if (bmp) BmpDelete(bmp);
-  bmp = NULL;
   dt = 0;
 
   return 0;
@@ -1067,7 +1064,6 @@ static void LibretroFinish(void) {
 
 static Err StartApplication(void) {
   session = vfs_open_session();
-  bWidth = bHeight = 0;
   dt = 0;
   pause = 0;
   stop = 0;
@@ -1075,14 +1071,6 @@ static Err StartApplication(void) {
   FrmCenterDialogs(true);
 
   return errNone;
-}
-
-static void MenuEvent(UInt16 id) {
-  switch (id) {
-    case aboutCmd:
-      AbtShowAbout(AppID);
-      break;
-  }
 }
 
 static void resize(FormType *frm) {
@@ -1118,11 +1106,6 @@ static Boolean MainFormHandleEvent(EventPtr event) {
       frm = FrmGetActiveForm();
       resize(frm);
       FrmDrawForm(frm);
-      handled = true;
-      break;
-
-    case menuEvent:
-      MenuEvent(event->data.menu.itemID);
       handled = true;
       break;
 
