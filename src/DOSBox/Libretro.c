@@ -495,9 +495,9 @@ static bool liblretro_environment(unsigned cmd, void *data) {
         variables[i].key = var[i].key;
         variables[i].value = NULL;
         if (var[i].value) {
-          char *s = strstr(var[i].value, "; ");
+          char *s = sys_strstr(var[i].value, "; ");
           if (s) {
-            char *q = strchr(s + 2, '|');
+            char *q = sys_strchr(s + 2, '|');
             if (q) {
               int len = q - (s + 2);
               if (len > 0) {

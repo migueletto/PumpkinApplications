@@ -1,7 +1,5 @@
 #include <PalmOS.h>
 
-#include <string.h>
-
 #include "script.h"
 #include "thread.h"
 #include "mutex.h"
@@ -10,6 +8,7 @@
 #include "bytes.h"
 #include "rgb.h"
 #include "pumpkin.h"
+#include "dosbox.h"
 #include "debug.h"
 #include "xalloc.h"
 
@@ -18,7 +17,7 @@
 
 #define AppID 'DOSb'
 
-static const char *COREPATH = "/app_card/PALM/Programs/Libretro/cores/dosbox_libretro" SOEXT;
-static const char *GAMEPATH = "vfs/app_card/PALM/Programs/Libretro/dosbox/dosbox.conf";
+static const char *COREPATH = "/app_card/" DOSBOX_LIBRETRO "/cores/dosbox_libretro" SOEXT;
+static const char *GAMEPATH = "vfs/app_card/" DOSBOX_HOME "/dosbox.conf";
 
 #include "Libretro.c"
