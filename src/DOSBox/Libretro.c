@@ -1253,7 +1253,7 @@ void StopApplication(void) {
 }
 
 UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags) {
-  if (cmd == sysAppLaunchCmdNormalLaunch) {
+  if (cmd == sysAppLaunchCmdNormalLaunch || cmd == dosboxLaunchCmd) {
     if (StartApplication() == errNone) {
       FrmGotoForm(MainForm);
       EventLoop();
