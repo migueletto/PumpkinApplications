@@ -3,6 +3,7 @@ include ../commonp.mak
 
 PROGRAM=DOSBox
 OBJS=DOSBox.o
+CUSTOMPFLAGS=-I../Libretro
 
 PRC=$(VFS)/app_install/$(PROGRAM).prc
 
@@ -26,9 +27,6 @@ $(DLIB): $(PROGRAM).dlib
 
 $(PROGRAM).dlib: $(OBJS)
 	$(CC) -shared -o $(PROGRAM).dlib $(OBJS) -L$(BIN) -lpumpkin -lpit
-
-DOSBox.o: DOSBox.c Libretro.c
-	$(CC) $(CFLAGS) -c DOSBox.c
 
 $(PROGRAM).res: $(PROGRAM).rcp
 	$(PILRC) $(PROGRAM).rcp; touch $(PROGRAM).res

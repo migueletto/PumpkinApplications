@@ -11,6 +11,7 @@
 #include "joystick.h"
 #include <string.h>
 #include <stdlib.h>
+#include "dos/drives.h"
 
 #define RDEV(x) RETRO_DEVICE_##x
 #define RDIX(x) RETRO_DEVICE_INDEX_##x
@@ -238,6 +239,10 @@ struct JoystickHat : public Processable
 
 void keyboard_event(bool down, unsigned keycode, uint32_t character, uint16_t key_modifiers)
 {
+if (keycode == RETROK_F4) {
+  DriveManager::CycleAllDisks();
+}
+else
     for (int i = 0; keyMap[i].retroID; i ++)
     {
         if (keyMap[i].retroID == keycode)

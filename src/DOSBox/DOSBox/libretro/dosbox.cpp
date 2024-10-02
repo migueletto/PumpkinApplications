@@ -45,6 +45,7 @@
 #include "render.h"
 #include "pci_bus.h"
 #include "libretro.h"
+#include "dos/drives.h"
 
 extern retro_log_printf_t log_cb;
 extern MachineType machine;
@@ -289,6 +290,10 @@ static void DOSBOX_UnlockSpeed( bool pressed ) {
 	}
 }
 
+void next_disk(bool pressed) {
+  if (pressed) DriveManager::CycleAllDisks();
+}
+
 static void DOSBOX_RealInit(Section * sec) {
 	Section_prop * section=static_cast<Section_prop *>(sec);
 	/* Initialize some dosbox internals */
@@ -298,6 +303,8 @@ static void DOSBOX_RealInit(Section * sec) {
 	ticksLocked = true;
 	DOSBOX_SetLoop(&Normal_Loop);
 	MSG_Init(section);
+
+  MAPPER_AddHandler(next_disk, MK_f4, MMOD1, "swapimg", "Swap Image");
 
 	MAPPER_AddHandler(DOSBOX_UnlockSpeed, MK_f12, MMOD2,"speedlock","Speedlock");
 	std::string cmd_machine;
