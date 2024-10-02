@@ -239,10 +239,9 @@ struct JoystickHat : public Processable
 
 void keyboard_event(bool down, unsigned keycode, uint32_t character, uint16_t key_modifiers)
 {
-if (keycode == RETROK_F4) {
-  DriveManager::CycleAllDisks();
-}
-else
+  if (down && keycode == RETROK_F4 && key_modifiers == RETROKMOD_CTRL) {
+    DriveManager::CycleAllDisks();
+  } else {
     for (int i = 0; keyMap[i].retroID; i ++)
     {
         if (keyMap[i].retroID == keycode)
@@ -255,6 +254,7 @@ else
             return;
         }
     }
+  }
 }
 
 void MAPPER_Init()

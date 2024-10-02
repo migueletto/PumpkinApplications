@@ -739,7 +739,7 @@ static void liblretro_input_poll(void) {
 static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned index, unsigned id) {
   UInt32 state, sWidth, sHeight;
   Int16 x, y;
-  Boolean penDown;
+  Boolean penDown, penRight;
   int r = 0;
 
   //debug(DEBUG_INFO, "LIBRETRO", "retro_input_state port %u, device %u, index %u, id %u", port, device, index, id);
@@ -793,8 +793,7 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
       break;
 
     case RETRO_DEVICE_MOUSE:
-      EvtGetPenEx(&x, &y, &penDown);
-      //y *= 2; // XXX why is it necessary to do this ?
+      EvtGetPenEx(&x, &y, &penDown, &penRight);
 
       switch (id) {
         case RETRO_DEVICE_ID_MOUSE_X:
@@ -811,6 +810,7 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
         case RETRO_DEVICE_ID_MOUSE_MIDDLE:
           break;
         case RETRO_DEVICE_ID_MOUSE_RIGHT:
+          r = (penDown && penRight) ? 1 : 0;
           break;
         default:
           debug(DEBUG_INFO, "LIBRETRO", "retro_input_state mouse index %u, id %u ignored", index, id);
@@ -1094,30 +1094,48 @@ static Boolean ApplicationHandleEvent(EventPtr event) {
       handled = true;
       break;
 
+    case modKeyDownEvent:
+    case modKeyUpEvent:
+      if (event->data.keyDown.modifiers & shiftKeyMask) key = RETROK_LSHIFT;
+      else if (event->data.keyDown.modifiers & controlKeyMask) key = RETROK_LCTRL;
+      else if (event->data.keyDown.modifiers & optionKeyMask)  key = RETROK_LALT;
+      else key = 0;
+
+      if (key) {
+        core.retro_keyboard_event(event->eType == modKeyDownEvent, key, key, 0);
+      }
+      break;
+
     case keyDownEvent:
       if (dt && !pause) {
-        if (!(event->data.keyDown.modifiers & commandKeyMask)) {
-          key = event->data.keyDown.chr;
+        key = event->data.keyDown.chr;
 
+        if ((event->data.keyDown.modifiers & commandKeyMask)) {
           switch (key) {
-            case 10:
-              key = 13;
-              break;
-            case vchrPageUp:
-              key = RETROK_UP;
-              break;
-            case vchrPageDown:
-              key = RETROK_DOWN;
-              break;
-            case vchrRockerLeft:
-              key = RETROK_LEFT;
-              break;
-            case vchrRockerRight:
-              key = RETROK_RIGHT;
-              //key = RETROK_F4;
-              break;
+            case vchrHard1: key = RETROK_F1; break;
+            case vchrHard2: key = RETROK_F2; break;
+            case vchrHard3: key = RETROK_F3; break;
+            case vchrHard4: key = RETROK_F4; break;
+            default: key = 0; break;
           }
 
+          if (key) {
+            modifiers = 0;
+            if (event->data.keyDown.modifiers & shiftKeyMask)   modifiers |= RETROKMOD_SHIFT;
+            if (event->data.keyDown.modifiers & controlKeyMask) modifiers |= RETROKMOD_CTRL;
+            if (event->data.keyDown.modifiers & optionKeyMask)  modifiers |= RETROKMOD_ALT;
+            core.retro_keyboard_event(true,  key, key, modifiers);
+            core.retro_keyboard_event(false, key, key, modifiers);
+          }
+
+        } else {
+          switch (key) {
+            case 10:              key = 13; break;
+            case vchrPageUp:      key = RETROK_UP; break;
+            case vchrPageDown:    key = RETROK_DOWN; break;
+            case vchrRockerLeft:  key = RETROK_LEFT; break;
+            case vchrRockerRight: key = RETROK_RIGHT; break;
+          }
           keycode = key;
           modifiers = 0;
 
@@ -1232,7 +1250,9 @@ static void *PluginMain(void *p) {
 
   if (mutex_lock(mutex) == 0) {
     if (lp && StartApplication(lp->corepath, lp->gamepath) == errNone) {
+      pumpkin_pendown_right(true);
       EventLoop();
+      pumpkin_pendown_right(false);
       StopApplication();
     }
     mutex_unlock(mutex);

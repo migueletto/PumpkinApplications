@@ -461,7 +461,11 @@ void Mouse_CursorMoved(float xrel,float yrel,float x,float y,bool emulate) {
 
 	if((fabs(xrel) > 1.0) || (mouse.senv_x < 1.0)) dx *= mouse.senv_x;
 	if((fabs(yrel) > 1.0) || (mouse.senv_y < 1.0)) dy *= mouse.senv_y;
-	if (useps2callback) dy *= 2;	
+
+	//if (useps2callback) dy *= 2;	
+  // XXX always multiply by 2, otherwise PC/GEOS will get only half the vertical range.
+  // there must be a better way to fix this.
+	dy *= 2;	
 
 	mouse.mickey_x += (dx * mouse.mickeysPerPixel_x);
 	mouse.mickey_y += (dy * mouse.mickeysPerPixel_y);
