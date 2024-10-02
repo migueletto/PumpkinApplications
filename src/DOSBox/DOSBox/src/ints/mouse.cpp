@@ -458,6 +458,10 @@ void DrawCursor() {
 void Mouse_CursorMoved(float xrel,float yrel,float x,float y,bool emulate) {
 	float dx = xrel * mouse.pixelPerMickey_x;
 	float dy = yrel * mouse.pixelPerMickey_y;
+  float oldx, oldy;
+
+  oldx = mouse.x;
+  oldy = mouse.y;
 
 	if((fabs(xrel) > 1.0) || (mouse.senv_x < 1.0)) dx *= mouse.senv_x;
 	if((fabs(yrel) > 1.0) || (mouse.senv_y < 1.0)) dy *= mouse.senv_y;
@@ -507,7 +511,10 @@ void Mouse_CursorMoved(float xrel,float yrel,float x,float y,bool emulate) {
 		if (mouse.y >= 32768.0) mouse.y -= 65536.0;
 		else if (mouse.y <= -32769.0) mouse.y += 65536.0;
 	}
-	Mouse_AddEvent(MOUSE_HAS_MOVED);
+
+  if (mouse.x != oldx || mouse.y != oldy) {
+	  Mouse_AddEvent(MOUSE_HAS_MOVED);
+  }
 	DrawCursor();
 }
 
