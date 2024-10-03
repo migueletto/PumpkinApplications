@@ -1112,10 +1112,22 @@ static Boolean ApplicationHandleEvent(EventPtr event) {
 
         if ((event->data.keyDown.modifiers & commandKeyMask)) {
           switch (key) {
-            case vchrHard1: key = RETROK_F1; break;
-            case vchrHard2: key = RETROK_F2; break;
-            case vchrHard3: key = RETROK_F3; break;
-            case vchrHard4: key = RETROK_F4; break;
+            case vchrHard1:  key = RETROK_F1; break;
+            case vchrHard2:  key = RETROK_F2; break;
+            case vchrHard3:  key = RETROK_F3; break;
+            case vchrHard4:  key = RETROK_F4; break;
+            case vchrHard5:  key = RETROK_F5; break;
+            case vchrHard6:  key = RETROK_F6; break;
+            case vchrHard7:  key = RETROK_F7; break;
+            case vchrHard8:  key = RETROK_F8; break;
+            case vchrHard9:  key = RETROK_F9; break;
+            case vchrHard10: key = RETROK_F10; break;
+            case vchrNativeInsert: key = RETROK_INSERT; break;
+            case vchrNativeDelete: key = RETROK_DELETE; break;
+            case vchrNativeHome:   key = RETROK_HOME; break;
+            case vchrNativeEnd:    key = RETROK_END; break;
+            case vchrNativePgUp:   key = RETROK_PAGEUP; break;
+            case vchrNativePgDown: key = RETROK_PAGEDOWN; break;
             default: key = 0; break;
           }
 
@@ -1250,9 +1262,11 @@ static void *PluginMain(void *p) {
 
   if (mutex_lock(mutex) == 0) {
     if (lp && StartApplication(lp->corepath, lp->gamepath) == errNone) {
-      pumpkin_pendown_right(true);
+      pumpkin_pendown_right(1);
+      pumpkin_set_native_keys(1);
       EventLoop();
-      pumpkin_pendown_right(false);
+      pumpkin_set_native_keys(0);
+      pumpkin_pendown_right(0);
       StopApplication();
     }
     mutex_unlock(mutex);
