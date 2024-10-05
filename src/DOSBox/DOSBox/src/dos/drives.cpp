@@ -262,6 +262,7 @@ void DriveManager::CycleAllDisks(void) {
 			newDisk->Activate();
 			Drives[idrive] = newDisk;
 			LOG_MSG("Drive %c: disk %d of %d now active", 'A'+idrive, currentDisk+1, numDisks);
+			fprintf(stderr, "Drive %c: disk %d of %d now active\n", 'A'+idrive, currentDisk+1, numDisks);
 		}
 	}
 }
