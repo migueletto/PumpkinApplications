@@ -805,7 +805,7 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
           last_y = y;
           break;
         case RETRO_DEVICE_ID_MOUSE_LEFT:
-          r = penDown ? 1 : 0;
+          r = (penDown && !penRight) ? 1 : 0;
           break;
         case RETRO_DEVICE_ID_MOUSE_MIDDLE:
           break;
@@ -1264,7 +1264,9 @@ static void *PluginMain(void *p) {
     if (lp && StartApplication(lp->corepath, lp->gamepath) == errNone) {
       pumpkin_pendown_right(1);
       pumpkin_set_native_keys(1);
+      pumpkin_set_cursor(0);
       EventLoop();
+      pumpkin_set_cursor(1);
       pumpkin_set_native_keys(0);
       pumpkin_pendown_right(0);
       StopApplication();
