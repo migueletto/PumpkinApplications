@@ -191,7 +191,7 @@ else ifeq ($(platform), win)
 	TARGET := $(TARGET_NAME)_libretro.dll
 	CXXFLAGS += --std=c++11
 #	LDFLAGS += -shared -static-libgcc -static-libstdc++ -Wl,--version-script=libretro/link.T -lwinmm -Wl,-Bstatic `sdl-config --static-libs` -Wl,-Bdynamic
-	LDFLAGS += -shared -static-libgcc -static-libstdc++ -Wl,--version-script=libretro/link.T -lwinmm -Wl,-Bdynamic -Wl,-lpit
+	LDFLAGS += -shared -static-libgcc -static-libstdc++ -Wl,--version-script=libretro/link.T -lwinmm -Wl,-Bdynamic
 else ifeq ($(platform), genode)
 	TARGET  := $(TARGET_NAME)_libretro.lib.so
 	CC      := $(shell pkg-config genode-base --variable=cc)
