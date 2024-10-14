@@ -700,7 +700,7 @@ static void liblretro_video_refresh(const void *data, unsigned width, unsigned h
       wh = WinGetDisplayWindow();
       bmp = WinGetBitmap(wh);
       bits = (uint16_t *)BmpGetBits(bmp);
-      le16 = BmpGetLittleEndian16();
+      le16 = BmpGetLittleEndianBits(bmp);
 
       switch (depth) {
         case 16:
@@ -1263,9 +1263,9 @@ static void *PluginMain(void *p) {
   if (mutex_lock(mutex) == 0) {
     if (lp && StartApplication(lp->corepath, lp->gamepath) == errNone) {
       pumpkin_set_native_keys(1);
-      pumpkin_set_cursor(0);
+      pumpkin_set_lockable(1);
       EventLoop();
-      pumpkin_set_cursor(1);
+      pumpkin_set_lockable(0);
       pumpkin_set_native_keys(0);
       StopApplication();
     }
