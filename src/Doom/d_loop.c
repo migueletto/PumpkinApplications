@@ -713,6 +713,8 @@ void TryRunTics (void)
     int	availabletics;
     int	counts;
 
+    I_Sleep(0);
+
     // get real tics
     entertic = I_GetTime() / ticdup;
     realtics = entertic - oldentertics;

@@ -24,7 +24,7 @@
 #include <string.h>             /* for memcpy() */
 #include <sys/types.h>          /* for stupid systems */
 
-#include "md5.h"
+#include "dmd5.h"
 
 #ifdef WORDS_BIGENDIAN
 void

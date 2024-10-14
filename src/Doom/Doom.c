@@ -116,7 +116,7 @@ static void addKeyToQueue(int down, int key){
   KeyQueue[KeyQueueWriteIndex] = keyData;
   KeyQueueWriteIndex++;
   KeyQueueWriteIndex %= KEYQUEUE_SIZE;
-  //debug(1, "XXX", "key %d %s", key, down ? "down" : "up");
+  //debug(1, "XXX", "put key %d %s", key, down ? "down" : "up");
 }
 
 static void process_normal_keys(uint32_t oldMask, uint32_t newMask) {
@@ -199,6 +199,7 @@ void DG_DrawFrame(void) {
   WinHandle wh, old;
   BitmapType *bmp;
   RectangleType rect;
+  Coord bwidth, bheight;
   uint32_t *src;
   uint16_t *dst, aux;
   int i, j, k, w, fh;
@@ -216,8 +217,9 @@ void DG_DrawFrame(void) {
   WinSetBackColorRGB(&white, NULL);
 
   bmp = WinGetBitmap(wh);
+  BmpGetDimensions(bmp, &bwidth, &bheight, NULL);
   dst = BmpGetBits(bmp);
-  dst += Y0 * bmp->width;
+  dst += Y0 * bwidth;
   src = (uint32_t *)DG_ScreenBuffer;
 
   for (i = 0, k = 0; i < height; i++) {
@@ -249,7 +251,7 @@ void DG_DrawFrame(void) {
   WinSetDrawWindow(old);
   WinSetCoordinateSystem(kCoordinatesStandard);
 
-  pumpkin_screen_dirty(wh, 0, 0, bmp->width, bmp->height);
+  pumpkin_screen_dirty(wh, 0, 0, bwidth, bheight);
 }
 
 void DG_StatusTop(char *s) {
@@ -553,6 +555,7 @@ int DG_GetKey(int *pressed, unsigned char *doomKey) {
 
   *pressed = keyData >> 8;
   *doomKey = keyData & 0xFF;
+  //debug(1, "XXX", "get key %d %s", *doomKey, *pressed ? "down" : "up");
 
   return 1;
 }
@@ -736,6 +739,7 @@ UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags) {
     DmReleaseResource(fontH);
     MemHandleUnlock(mfontH);
     DmReleaseResource(mfontH);
+    FrmCloseAllForms();
   }
 
   return 0;

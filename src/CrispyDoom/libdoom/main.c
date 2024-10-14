@@ -364,6 +364,8 @@ static void gameStart(void) {
   MemPtrFree(config);
   MemPtrFree(wad);
   MemPtrFree(rootdir);
+
+  FrmCloseAllForms();
 }
 
 static void setList(FormPtr frm, UInt16 extraID, UInt16 listID, UInt16 controlID, UInt16 width, UInt16 num, char **items) {
@@ -822,6 +824,9 @@ static void gamePrepare(void) {
   Boolean present[MAX_ITEMS];
   char *rootdir, *ext, name[128];
 
+  iterator = vfsIteratorStart;
+  VFSVolumeEnumerate(&volref, &iterator);
+
   ready = false;
   title = gameName();
   rootdir = getGameRoot(title);
@@ -834,9 +839,6 @@ static void gamePrepare(void) {
   for (i = 0; i < MAX_ITEMS; i++) {
     present[i] = false;
   }
-
-  iterator = vfsIteratorStart;
-  VFSVolumeEnumerate(&volref, &iterator);
 
   if (VFSFileOpen(volref, rootdir, vfsModeRead, &fr) == errNone) {
     iterator = vfsIteratorStart;

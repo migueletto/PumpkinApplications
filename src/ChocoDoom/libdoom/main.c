@@ -370,7 +370,7 @@ static char *getGameRoot(char *name) {
 
 static void gameStart(void) {
   FileRef fr;
-  char *rootdir, *wad, *wadfile, *extrawad, *config, *savedir, *argv[16];
+  char *rootdir, *wad, *wadfile, *extrawad, *config, *extraconfig, *savedir, *argv[16];
   UInt16 len, i;
 
   title = gameName();
@@ -392,6 +392,16 @@ static void gameStart(void) {
     VFSFileCreate(volref, config);
   }
 
+  len = StrLen(rootdir) + 1 + 5 + 1 + 4 + 1;
+  extraconfig = MemPtrNew(len);
+  sys_snprintf(extraconfig, len, "%s/extra%d.cfg", rootdir, i);
+
+  if (VFSFileOpen(volref, extraconfig, vfsModeRead, &fr) == errNone) {
+    VFSFileClose(fr);
+  } else {
+    VFSFileCreate(volref, extraconfig);
+  }
+
   len = StrLen(rootdir) + 1 + 7 + 1 + 1;
   savedir = MemPtrNew(len);
   sys_snprintf(savedir, len, "%s/savedir%d", rootdir, i);
@@ -408,6 +418,8 @@ static void gameStart(void) {
   argv[myargc++] = wad;
   argv[myargc++] = "-config";
   argv[myargc++] = config;
+  argv[myargc++] = "-extraconfig";
+  argv[myargc++] = extraconfig;
   argv[myargc++] = "-savedir";
   argv[myargc++] = savedir;
   if (extraIndex > 0) {
@@ -435,6 +447,7 @@ static void gameStart(void) {
   if (extrawad) MemPtrFree(extrawad);
   MemPtrFree(savedir);
   MemPtrFree(config);
+  MemPtrFree(extraconfig);
   MemPtrFree(wad);
   MemPtrFree(rootdir);
 }
@@ -973,6 +986,8 @@ static void gamePrepare(void) {
       gameStart();
     }
   }
+
+  FrmCloseAllForms();
 }
 
 UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags) {

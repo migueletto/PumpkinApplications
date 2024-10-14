@@ -346,7 +346,7 @@ static void setList(FormPtr frm, UInt16 extraID, UInt16 listID, UInt16 controlID
 
   index = FrmGetObjectIndex(frm, listID);
   lst = (ListType *)FrmGetObjectPtr(frm, index);
-  if (num > 1) {
+  if (num >= 1) {
     LstSetHeight(lst, num);
     FrmGetObjectBounds(frm, index, &rect);
     rect.extent.x = width + 8;
@@ -356,7 +356,7 @@ static void setList(FormPtr frm, UInt16 extraID, UInt16 listID, UInt16 controlID
   }
 
   index = FrmGetObjectIndex(frm, controlID);
-  if (num > 1) {
+  if (num >= 1) {
     ctl = (ControlType *)FrmGetObjectPtr(frm, index);
     CtlSetLabel(ctl, LstGetSelectionText(lst, 0));
   } else {
@@ -812,6 +812,9 @@ static void gamePrepare(void) {
   Boolean present[MAX_ITEMS];
   char *rootdir, *ext, name[128];
 
+  iterator = vfsIteratorStart;
+  VFSVolumeEnumerate(&volref, &iterator);
+
   ready = false;
   title = gameName();
   rootdir = getGameRoot(title);
@@ -824,9 +827,6 @@ static void gamePrepare(void) {
   for (i = 0; i < MAX_ITEMS; i++) {
     present[i] = false;
   }
-
-  iterator = vfsIteratorStart;
-  VFSVolumeEnumerate(&volref, &iterator);
 
   if (VFSFileOpen(volref, rootdir, vfsModeRead, &fr) == errNone) {
     iterator = vfsIteratorStart;
@@ -887,6 +887,8 @@ static void gamePrepare(void) {
       gameStart();
     }
   }
+
+  FrmCloseAllForms();
 }
 
 UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags) {

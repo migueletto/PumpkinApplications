@@ -23,7 +23,7 @@
 #include "doomstat.h"
 #include "g_game.h"
 #include "m_file.h"
-#include "md5.h"
+#include "dmd5.h"
 #include "lprintf.h"
 #include "e6y.h"
 #include "p_saveg.h"

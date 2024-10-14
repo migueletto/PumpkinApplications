@@ -17,7 +17,7 @@
 
 #include <string.h>
 
-#include "md5.h"
+#include "dmd5.h"
 #include "lprintf.h"
 #include "m_file.h"
 #include "w_wad.h"

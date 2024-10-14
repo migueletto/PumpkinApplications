@@ -15,7 +15,7 @@
 //	DSDA Compatibility
 //
 
-#include "md5.h"
+#include "dmd5.h"
 #include "doomdata.h"
 #include "doomstat.h"
 #include "doomtype.h"
