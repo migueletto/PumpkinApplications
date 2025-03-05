@@ -25,8 +25,6 @@
 #include "librarianTransfer.h"
 #include "librarianRsc.h"
 
-#include "debug.h"
-
 
 /***********************************************************************
  *
@@ -1890,7 +1888,6 @@ static UInt16 EditFormGetFieldHeight (TableType *table, UInt16 fieldIndex,
     FieldType  *field;
 
 
-debug(1, "XXX", "EditFormGetFieldHeight fieldIndex=%d colWidth=%d maxHeight=%d begin", fieldIndex, columnWidth, maxHeight);
     if (TblEditing(table))
     {
         TblGetSelection(table, &row, &column);
@@ -1898,18 +1895,15 @@ debug(1, "XXX", "EditFormGetFieldHeight fieldIndex=%d colWidth=%d maxHeight=%d b
         {
             field = TblGetCurrentField(table);
             str = FldGetTextPtr(field);
-debug(1, "XXX", "EditFormGetFieldHeight editing 1 str=[%s]", str ? str : "NULL");
         }
         else
         {
             str = record->fields[fieldIndex];
-debug(1, "XXX", "EditFormGetFieldHeight editing 2 str=[%s]", str ? str : "NULL");
         }
     }
     else
     {
         str = record->fields[fieldIndex];
-debug(1, "XXX", "EditFormGetFieldHeight not editing str=[%s]", str ? str : "NULL");
     }
 
     // If the field contains text, or the field is the current field,
@@ -1921,7 +1915,6 @@ debug(1, "XXX", "EditFormGetFieldHeight not editing str=[%s]", str ? str : "NULL
     {
         *fontID = gEditFont;
         curFont = FntSetFont(*fontID);
-debug(1, "XXX", "EditFormGetFieldHeight str=%p font=%d", str, *fontID);
     }
 
     // If the height of the font used to display blank lines is the same 
@@ -1935,24 +1928,18 @@ debug(1, "XXX", "EditFormGetFieldHeight str=%p font=%d", str, *fontID);
         FntSetFont(gEditFont);
         if (lineHeight == FntLineHeight()) {
             *fontID = gEditFont;
-debug(1, "XXX", "EditFormGetFieldHeight no str 1st font=%d", *fontID);
 	}
         else
         {
             *fontID = libEditBlankFont;
             FntSetFont(libEditBlankFont);
-debug(1, "XXX", "EditFormGetFieldHeight no str 2nd font=%d", *fontID);
         }
     }
   
     height = FldCalcFieldHeight(str, columnWidth);
-debug(1, "XXX", "EditFormGetFieldHeight FldCalcFieldHeight height=%d", height);
     lineHeight = FntLineHeight();
-debug(1, "XXX", "EditFormGetFieldHeight lineHeight=%d", lineHeight);
     height = min(height, (maxHeight / lineHeight));
-debug(1, "XXX", "EditFormGetFieldHeight calc min height=%d", height);
     height *= lineHeight;
-debug(1, "XXX", "EditFormGetFieldHeight mult height=%d", height);
 
     FntSetFont(curFont);
   
@@ -2380,7 +2367,6 @@ static void EditFormHandleSelectField (Int16 row, const UInt8 column)
     LibDBRecordType  record;
  
  
-debug(1, "XXX", "EditFormHandleSelectField row=%d col=%d", row, column);
     table = GetObjectPtr(EditTable);
     // If the user selects a label, set the table to edit the field to
     // the right of the label.
@@ -2395,29 +2381,22 @@ debug(1, "XXX", "EditFormHandleSelectField row=%d col=%d", row, column);
     // font used to display a blank line is a different height than the
     // font used to display field text.
     fieldIndex = TblGetRowID(table, row);
-debug(1, "XXX", "EditFormHandleSelectField fieldIndex=%d gCurrentFieldIndex=%d", fieldIndex, gCurrentFieldIndex);
 
     if (fieldIndex != gCurrentFieldIndex || TblGetCurrentField(table) == NULL)
     {
         LibGetRecord(gLibDB, gCurrentRecord, &record, &recordH);
-debug(1, "XXX", "EditFormHandleSelectField LibGetRecord");
 
         curFont = FntGetFont();
-debug(1, "XXX", "EditFormHandleSelectField curFont=%d", curFont);
 
         // If the current field is empty, set its font and row height to
         // the blank row height.
         if (! record.fields[gCurrentFieldIndex])
         {
-debug(1, "XXX", "EditFormHandleSelectField fields[%d] null", gCurrentFieldIndex);
             if (TblFindRowID(table, gCurrentFieldIndex, &curRow))
             {
-debug(1, "XXX", "EditFormHandleSelectField TblFindRowID != 0");
                 FntSetFont(libEditBlankFont);
-debug(1, "XXX", "EditFormHandleSelectField setFont(libEditBlankFont) (%d)", libEditBlankFont);
                 if (FntLineHeight() != TblGetRowHeight(table, curRow))
                 {
-debug(1, "XXX", "EditFormHandleSelectField lineHeight (%d) != rowHeight (%d)", FntLineHeight(), TblGetRowHeight(table, curRow));
                     TblMarkRowInvalid(table, curRow);
                     redraw = true;
                 }
@@ -2425,18 +2404,14 @@ debug(1, "XXX", "EditFormHandleSelectField lineHeight (%d) != rowHeight (%d)", F
         }
 
         gCurrentFieldIndex = fieldIndex;
-debug(1, "XXX", "EditFormHandleSelectField gCurrentFieldIndex=%d", gCurrentFieldIndex);
 
         // If the newly selected field is empty, set its font and row
         // height to the current font height for the Edit view.
         if (! record.fields[fieldIndex])
         {
-debug(1, "XXX", "EditFormHandleSelectField fieldIndex %d null", fieldIndex);
-debug(1, "XXX", "EditFormHandleSelectField setFont %d", gEditFont);
             FntSetFont(gEditFont);
             if (FntLineHeight() != TblGetRowHeight(table, row))
             {
-debug(1, "XXX", "EditFormHandleSelectField lineHeight (%d) != rowHeight (%d)", FntLineHeight(), TblGetRowHeight(table, row));
                 TblMarkRowInvalid(table, row);
                 redraw = true;
             }
@@ -2448,27 +2423,22 @@ debug(1, "XXX", "EditFormHandleSelectField lineHeight (%d) != rowHeight (%d)", F
   
         if (redraw)
         {
-debug(1, "XXX", "EditFormHandleSelectField redraw");
             TblReleaseFocus(table);
             EditFormLoadTable();
             TblFindRowID(table, fieldIndex, &row);
             TblRedrawTable (table);
         }
 
-debug(1, "XXX", "EditFormHandleSelectField setFont %d", curFont);
         FntSetFont(curFont);
     }
 
     // Set the focus
     if (TblGetCurrentField(table) == NULL)
     {
-debug(1, "XXX", "EditFormHandleSelectField set focus row %d col %d", row, dataColumn);
         TblGrabFocus(table, row, dataColumn);
         field = TblGetCurrentField(table);
         FldGrabFocus(field);
         FldMakeFullyVisible(field);
-    } else {
-debug(1, "XXX", "EditFormHandleSelectField currentField already set");
     }
 }
 
@@ -2662,7 +2632,6 @@ static void EditFormLoadTable(void)
                 (TblGetRowID(table, row) != fieldIndex) ||
                 fontChanged)
             {
-debug(1, "XXX", "EditFormLoadTable EditInitTableRow1 row=%d height=%d", row, height);
                 EditInitTableRow(table, row, fieldIndex, height, fontID,
                                  &record, appInfo);
             }
@@ -2671,7 +2640,6 @@ debug(1, "XXX", "EditFormLoadTable EditInitTableRow1 row=%d height=%d", row, hei
             // the item.
             else if (height != oldHeight)
             {
-debug(1, "XXX", "EditFormLoadTable TblSetRowHeight row=%d height=%d", row, height);
                 TblSetRowHeight(table, row, height);
                 TblMarkRowInvalid(table, row);
             }
@@ -2751,7 +2719,6 @@ debug(1, "XXX", "EditFormLoadTable TblSetRowHeight row=%d height=%d", row, heigh
         // Insert a row before the first row.
         TblInsertRow(table, 0);
 
-debug(1, "XXX", "EditFormLoadTable EditInitTableRow2 row=%d height=%d", row, height);
         EditInitTableRow(table, 0, fieldIndex, height, fontID, &record,
                          appInfo);
   
@@ -3576,7 +3543,6 @@ static void EditInitTableRow(TableType *table, UInt16 row, UInt16 fieldIndex,
     TblSetRowUsable(table, row, true);
  
     // Set the height of the row to the height of the data text field.
-debug(1, "XXX", "EditInitTableRow TblSetRowHeight row=%d height=%d", row, rowHeight);
     TblSetRowHeight(table, row, rowHeight);
  
     // Store the record number as the row ID.
@@ -4533,7 +4499,6 @@ static void ListFormLoadTable(void)
         // Store the record number as the row ID.
         TblSetRowID(table, row, recordNum);
   
-debug(1, "XXX", "ListFormLoadTable TblSetRowHeight row=%d height=%d", row, lineHeight);
         TblSetRowHeight(table, row, lineHeight);
   
         recordNum++;
