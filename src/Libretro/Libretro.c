@@ -747,20 +747,24 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
   switch (device) {
     case RETRO_DEVICE_ANALOG:
 /*
-      if (index == RETRO_DEVICE_INDEX_ANALOG_LEFT) {
+      if (index == RETRO_DEVICE_INDEX_ANALOG_RIGHT) {
+        EvtGetPenEx(&x, &y, &penDown, &penRight);
+
         switch (id) {
           case RETRO_DEVICE_ID_ANALOG_X:
-            r = (pen_x * 65536) / screen_width - 32768;
+            WinScreenGetAttribute(winScreenWidth, &sWidth);
+            r = ((int)x * 65536) / sWidth - 32768;
             break;
           case RETRO_DEVICE_ID_ANALOG_Y:
-            r = (pen_y * 65536) / screen_height - 32768;
+            WinScreenGetAttribute(winScreenHeight, &sHeight);
+            r = ((int)y * 65536) / sHeight - 32768;
             break;
           default:
             debug(DEBUG_INFO, "LIBRETRO", "retro_input_state analog index %u, id %u ignored", index, id);
             break;
         }
       } else {
-        //debug(DEBUG_INFO, "LIBRETRO", "retro_input_state analog index %u, id %u ignored", index, id);
+        debug(DEBUG_INFO, "LIBRETRO", "retro_input_state analog index %u, id %u ignored", index, id);
       }
 */
       break;
@@ -819,9 +823,7 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
       break;
 
     case RETRO_DEVICE_POINTER:
-      EvtGetPen(&x, &y, &penDown);
-      x *= 2;
-      y *= 2;
+      EvtGetPenEx(&x, &y, &penDown, &penRight);
 
       switch (id) {
         case RETRO_DEVICE_ID_POINTER_X:
@@ -833,12 +835,7 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
           r = ((int)y * 65536) / sHeight - 32768;
           break;
         case RETRO_DEVICE_ID_POINTER_PRESSED:
-          r = penDown;
-/*
-          if (pen_status && !pen_down && (sys_get_clock() - pen_t) > 15000) {
-            pen_status = 0;
-          }
-*/
+          r = (penDown && !penRight) ? 1 : 0;
           break;
       }
       break;
