@@ -15,7 +15,7 @@ $(PROGRAM).prc: $(DLIB) res.flag
 $(DLIB): $(ZIGLIB)
 	cp $(ZIGLIB) $(DLIB)
 
-$(ZIGLIB): main.zig $(SRC)libpumpkin/pumpkin.zig
+$(ZIGLIB): main.zig $(SRC)/libpumpkin/pumpkin.zig
 	$(ZIG) build
 	touch $(ZIGLIB)
 

@@ -11,6 +11,7 @@
 *.zip
 *.d
 res.flag
+.zig-cache
 /src/netsurf-all-3.10/libnspsl/build/*
 /src/netsurf-all-3.10/libparserutils/out/*
 /src/netsurf-all-3.10/libsvgtiny/build/*

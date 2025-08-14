@@ -71,7 +71,7 @@ fn controlHandler(event: *pumpkin.EventType) bool {
       sim.running = true;
       sim.i = 0;
     } else {
-      var prev: u16 = c.WinSetCoordinateSystem(144);
+      const prev: u16 = c.WinSetCoordinateSystem(144);
       c.WinCopyWindow(sim.background, c.WinGetActiveWindow(), null, 0, 0);
       _ = c.WinSetCoordinateSystem(prev);
       sim.running = false;
@@ -88,7 +88,7 @@ fn menuHandler(event: *pumpkin.EventType) bool {
     return true;
   }
   if (event.data.menu.itemID == paramsCmd and !sim.running) {
-    var formP = Frm.initForm(1001);
+    const formP = Frm.initForm(1001);
     Frm.setFieldNum(formP.?, 1001, sim.ballElasticity);
     Frm.setFieldNum(formP.?, 1002, sim.ballFriction);
     Frm.setFieldNum(formP.?, 1003, sim.ballVelocity);
@@ -117,7 +117,7 @@ fn idle() bool {
 }
 
 fn simpleFrmOpenHandler() bool {
-  var formP = pumpkin.Frm.getActiveForm();
+  const formP = pumpkin.Frm.getActiveForm();
   pumpkin.Frm.drawForm(formP);
   var width: i16 = 0;
   var height: i16 = 0;
@@ -126,10 +126,10 @@ fn simpleFrmOpenHandler() bool {
     .topLeft = PointType { .x = 0, .y = 15 },
     .extent  = PointType { .x = width, .y = 21 },
   };
-  var old = c.WinSetForeColor(36);
+  const old = c.WinSetForeColor(36);
   c.WinPaintRectangle(&rect, 0);
   _ = c.WinSetForeColor(old);
-  var dy: i16 = @floatToInt(i16, groundY / 2.0);
+  const dy: i16 = @intFromFloat(groundY / 2.0);
   c.WinPaintLine(0, height - dy, width - 1, height - dy);
   initSimulation();
   return true;
@@ -152,28 +152,28 @@ fn mainFormEventHandler(event: *pumpkin.EventType) bool {
 // x and y positions represent the center of an object
 
 fn initSimulation() void {
-  var svgHandle = Dm.getResource(svgRsc, 1000);
-  var svgText = Mem.handleLock(svgHandle);
-  var svgLen = Mem.handleSize(svgHandle);
-  var vg = @ptrCast(*VectorGraphicsType, c.VgCreate(svgText, svgLen));
+  const svgHandle = Dm.getResource(svgRsc, 1000);
+  const svgText = Mem.handleLock(svgHandle);
+  const svgLen = Mem.handleSize(svgHandle);
+  const vg: *VectorGraphicsType = @ptrCast(c.VgCreate(svgText, svgLen));
   c.VgScale(vg, 0.15);
   c.VgFreeze(vg);
   var vgWidth: f64 = 0;
   var vgHeight: f64 = 0;
   c.VgSize(vg, &vgWidth, &vgHeight);
-  var ballRadius: f64 = vgWidth / 2.0;
+  const ballRadius: f64 = vgWidth / 2.0;
 
-  var prev: u16 = c.WinSetCoordinateSystem(144);
+  const prev: u16 = c.WinSetCoordinateSystem(144);
   var width: i16 = 0;
   var height: i16 = 0;
   Win.dimensions(&width, &height);
-  var spaceWidth: f64 = @intToFloat(f64, width);
-  var spaceHeight: f64 = @intToFloat(f64, height);
+  const spaceWidth: f64 = @floatFromInt(width);
+  const spaceHeight: f64 = @floatFromInt(height);
 
   var s: space.Space2D = space.init();
   s.setGravity(0, -100);
-  var ground = s.addSegment(0, groundY, spaceWidth, groundY, -1);
-  var ball = s.addCircle(ballRadius, 5);
+  const ground = s.addSegment(0, groundY, spaceWidth, groundY, -1);
+  const ball = s.addCircle(ballRadius, 5);
   var err: u16 = 0;
 
   sim = Simulation {
@@ -189,14 +189,14 @@ fn initSimulation() void {
     .i = 0,
     .oldRect = RectangleType {
       .topLeft = PointType { .x = 0, .y = 0 },
-      .extent  = PointType { .x = @floatToInt(i16, vgWidth), .y = @floatToInt(i16, vgHeight) },
+      .extent  = PointType { .x = @intFromFloat(vgWidth), .y = @intFromFloat(vgHeight) },
     },
     .newRect = RectangleType {
       .topLeft = PointType { .x = 0, .y = 0 },
-      .extent  = PointType { .x = @floatToInt(i16, vgWidth), .y = @floatToInt(i16, vgHeight) },
+      .extent  = PointType { .x = @intFromFloat(vgWidth), .y = @intFromFloat(vgHeight) },
     },
-    .buffer = @ptrCast(*WindowType, c.WinCreateOffscreenWindow(width, height, @enumToInt(pumpkin.windowFormats.native), &err)),
-    .background = @ptrCast(*WindowType, c.WinCreateOffscreenWindow(width, height, @enumToInt(pumpkin.windowFormats.native), &err)),
+    .buffer = @ptrCast(c.WinCreateOffscreenWindow(width, height, @intFromEnum(pumpkin.windowFormats.native), &err)),
+    .background = @ptrCast(c.WinCreateOffscreenWindow(width, height, @intFromEnum(pumpkin.windowFormats.native), &err)),
   };
 
   c.WinCopyWindow(c.WinGetActiveWindow(), sim.background, null, 0, 0);
@@ -218,17 +218,17 @@ fn iterateSimulation(dt: f64) void {
   c.VgRotate(sim.vg, pi2 - angle, 200, 200);
   pumpkin.debug(pumpkin.DEBUG_INFO, "test", "{d:.2}: x = {d:.2}, y = {d:.2}, angle = {d:.2}", .{ sim.i, x, y, angle });
 
-  var ballX: i16 = @floatToInt(i16, x - sim.ballRadius);
-  var ballY: i16 = @floatToInt(i16, y - sim.ballRadius);
+  const ballX: i16 = @intFromFloat(x - sim.ballRadius);
+  const ballY: i16 = @intFromFloat(y - sim.ballRadius);
 
   sim.newRect.topLeft.x = ballX;
   sim.newRect.topLeft.y = ballY;
   var rect: RectangleType = undefined;
   c.RctGetUnion(&sim.oldRect, &sim.newRect, &rect);
 
-  var prev: u16 = c.WinSetCoordinateSystem(144);
+  const prev: u16 = c.WinSetCoordinateSystem(144);
   c.WinCopyWindow(sim.background, sim.buffer, &rect, rect.topLeft.x, rect.topLeft.y);
-  var old = @ptrCast(*WindowType, c.WinSetDrawWindow(sim.buffer));
+  const old: *WindowType = @ptrCast(c.WinSetDrawWindow(sim.buffer));
   c.VgRender(sim.vg, ballX, ballY);
   _ = c.WinSetDrawWindow(old);
   c.WinCopyWindow(sim.buffer, c.WinGetActiveWindow(), &rect, rect.topLeft.x, rect.topLeft.y);
@@ -250,7 +250,7 @@ fn deinitSimulation() void {
 }
 
 export fn PilotMain(cmd: c_ushort, cmdPBP: *void, launchFlags: c_ushort) c_uint {
-  var launchCode = @intToEnum(pumpkin.launchCodes, cmd);
+  const launchCode: pumpkin.launchCodes = @enumFromInt(cmd);
   _ = cmdPBP;
   _ = launchFlags;
 
