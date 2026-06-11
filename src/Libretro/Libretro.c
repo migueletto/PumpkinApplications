@@ -804,6 +804,7 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
       switch (id) {
         case RETRO_DEVICE_ID_MOUSE_X:
           r = x - last_x;
+          r *= 2; // XXX FOTAQ needs this (why?)
           last_x = x;
           break;
         case RETRO_DEVICE_ID_MOUSE_Y:
@@ -1150,39 +1151,30 @@ static Boolean ApplicationHandleEvent(EventPtr event) {
           keycode = key;
           modifiers = 0;
 
-          if (event->data.keyDown.modifiers & shiftKeyMask) {
-            modifiers |= RETROKMOD_SHIFT;
-            core.retro_keyboard_event(true,  RETROK_LSHIFT, 0, 0);
-            for (i = 0; keymap[i].to; i++) {
-              if (keymap[i].to == key && keymap[i].mods == WINDOW_MOD_SHIFT) {
+          for (i = 0; keymap[i].to; i++) {
+            if (keymap[i].to == key) {
+              if (keymap[i].mods == WINDOW_MOD_SHIFT) {
+                modifiers |= RETROKMOD_SHIFT;
                 key = keycode = keymap[i].from;
-                break;
-              }
-            }
-          } else if (event->data.keyDown.modifiers & controlKeyMask) {
-            modifiers |= RETROKMOD_CTRL;
-            core.retro_keyboard_event(true,  RETROK_LCTRL, 0, 0);
-            for (i = 0; keymap[i].to; i++) {
-              if (keymap[i].to == key && keymap[i].mods == WINDOW_MOD_CTRL) {
+                core.retro_keyboard_event(true,  RETROK_LSHIFT, 0, 0);
+              } else if (keymap[i].mods == WINDOW_MOD_CTRL) {
+                modifiers |= RETROKMOD_CTRL;
                 key = keycode = keymap[i].from;
-                break;
+                core.retro_keyboard_event(true,  RETROK_LCTRL, 0, 0);
               }
+              break;
             }
-          } else if (event->data.keyDown.modifiers & optionKeyMask) {
-            modifiers |= RETROKMOD_ALT;
-            core.retro_keyboard_event(true,  RETROK_LALT, 0, 0);
           }
 
           core.retro_keyboard_event(true,  keycode, key, modifiers);
           core.retro_keyboard_event(false, keycode, key, modifiers);
 
-          if (event->data.keyDown.modifiers & shiftKeyMask) {
+          if (modifiers & RETROKMOD_SHIFT) {
             core.retro_keyboard_event(false, RETROK_LSHIFT, 0, 0);
-          } else if (event->data.keyDown.modifiers & controlKeyMask) {
+          } else if (modifiers & RETROKMOD_CTRL) {
             core.retro_keyboard_event(false, RETROK_LCTRL, 0, 0);
-          } else if (event->data.keyDown.modifiers & optionKeyMask) {
-            core.retro_keyboard_event(false, RETROK_LALT, 0, 0);
           }
+
           handled = true;
         }
       }
