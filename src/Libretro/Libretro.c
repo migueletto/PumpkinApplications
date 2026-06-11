@@ -719,7 +719,9 @@ static void liblretro_video_refresh(const void *data, unsigned width, unsigned h
           break;
       }
 
+      pumpkin_dirty_region_mode(dirtyRegionBegin);
       pumpkin_screen_dirty(wh, 0, 0, width, height);
+      pumpkin_dirty_region_mode(dirtyRegionEnd);
     }
   }
 }
