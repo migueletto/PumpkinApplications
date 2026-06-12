@@ -1,4 +1,5 @@
 #include <PalmOS.h>
+#include <VFSMgr.h>
 
 #include "pumpkin.h"
 #include "libretro_plugin.h"
@@ -10,8 +11,15 @@ static const char *GAMEPATH = "vfs/app_card/" DOSBOX_HOME "/dosbox.conf";
 UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags) {
   pumpkin_plugin_t *plugin;
   libretro_plugin_t lp;
+  char buf[256];
 
   if (cmd == sysAppLaunchCmdNormalLaunch || cmd == dosboxLaunchCmd) {
+    if (cmd == sysAppLaunchCmdNormalLaunch) {
+      // if it is a normal launch, delete run.bat, which means command.com will run
+      StrNPrintF(buf, sizeof(buf)-1, "%s/%s", DOSBOX_DRIVEC, DOSBOX_RUN);
+      VFSFileDelete(1, buf);
+    }
+
     if ((plugin = pumpkin_get_plugin(emulationPluginType, libretroPluginId)) != NULL) {
       lp.corepath = (char *)COREPATH;
       lp.gamepath = (char *)GAMEPATH;
