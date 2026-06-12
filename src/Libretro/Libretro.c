@@ -803,8 +803,9 @@ static int16_t liblretro_input_state(unsigned port, unsigned device, unsigned in
 
       switch (id) {
         case RETRO_DEVICE_ID_MOUSE_X:
+          WinScreenGetAttribute(winScreenWidth, &sWidth);
+          if (sWidth == 320) x *= 2;
           r = x - last_x;
-          r *= 2; // XXX FOTAQ needs this (why?)
           last_x = x;
           break;
         case RETRO_DEVICE_ID_MOUSE_Y:
