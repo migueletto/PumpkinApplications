@@ -158,7 +158,9 @@ static int pit_update(nsfb_t *nsfb, nsfb_bbox_t *box) {
       if (dst2) dst2 += nsfb->width;
       src += nsfb->width;
     }
+    pumpkin_dirty_region_mode(dirtyRegionBegin);
     pumpkin_screen_dirty(wh, box->x0, Y0 + box->y0, box->x1 - box->x0, box->y1 - box->y0);
+    pumpkin_dirty_region_mode(dirtyRegionEnd);
   }
 
   return 0;
