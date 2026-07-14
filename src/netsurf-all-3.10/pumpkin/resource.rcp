@@ -41,6 +41,9 @@ END
 HEX "wind" ID 1
   0x02 0x80 0x01 0xE0
 
+HEX "heap" ID 1
+  0x00 0x20
+
 DATA "ZipF" ID 1 "data.zip"
 
 VERSION "3.10"
