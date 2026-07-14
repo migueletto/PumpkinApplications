@@ -22,4 +22,4 @@ $(FLIB): $(LIB)
 	install -m 644 include/libnsbmp.h $(FB)/include
 
 clean:
-	rm -f $(OBJS) $(LIB) $(FLIB)
+	rm -f $(OBJS) $(LIB) $(FLIB) $(OUT)/*.d

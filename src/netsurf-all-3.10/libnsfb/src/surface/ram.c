@@ -16,7 +16,7 @@
 #include "libnsfb_event.h"
 
 #include "nsfb.h"
-#include "surface.h"
+#include "nssurface.h"
 #include "plot.h"
 
 #define UNUSED(x) ((x) = (x))

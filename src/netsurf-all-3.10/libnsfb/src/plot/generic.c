@@ -23,7 +23,7 @@
 
 #include "nsfb.h"
 #include "plot.h"
-#include "surface.h"
+#include "nssurface.h"
 
 extern const nsfb_plotter_fns_t _nsfb_1bpp_plotters;
 extern const nsfb_plotter_fns_t _nsfb_8bpp_plotters;

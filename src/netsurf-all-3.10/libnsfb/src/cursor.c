@@ -21,7 +21,7 @@
 #include "nsfb.h"
 #include "cursor.h"
 #include "plot.h"
-#include "surface.h"
+#include "nssurface.h"
 
 bool nsfb_cursor_init(nsfb_t *nsfb)
 {

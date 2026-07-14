@@ -1,5 +1,5 @@
 CC=gcc
-NS=$(HOME)/PumpkinApps/src/netsurf-all-3.10
+NS=$(HOME)/PumpkinApplications/src/netsurf-all-3.10
 FB=$(NS)/inst-framebuffer
 PUMPKINOS=$(HOME)/PumpkinOS
 OPT=-O2 -g

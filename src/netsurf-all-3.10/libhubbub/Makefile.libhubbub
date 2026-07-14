@@ -86,4 +86,4 @@ $(FLIB): $(LIB)
 	install -m 644 include/hubbub/types.h $(FB)/include/hubbub
 
 clean:
-	rm -f $(OBJS) $(LIB) $(FLIB) src/tokeniser/entities.inc
+	rm -f $(OBJS) $(LIB) $(FLIB) src/tokeniser/entities.inc $(OUT)/*.d

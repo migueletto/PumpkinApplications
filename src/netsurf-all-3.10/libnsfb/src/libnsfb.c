@@ -19,7 +19,7 @@
 #include "nsfb.h"
 #include "cursor.h"
 #include "palette.h"
-#include "surface.h"
+#include "nssurface.h"
 
 /* exported interface documented in libnsfb.h */
 nsfb_t*

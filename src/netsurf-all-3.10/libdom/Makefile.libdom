@@ -404,4 +404,4 @@ $(FLIB): $(LIB)
 	install -m 644 include/dom/html/html_isindex_element.h $(FB)/include/dom/html
 
 clean:
-	rm -f $(OBJS) $(LIB) $(FLIB)
+	rm -f $(OBJS) $(LIB) $(FLIB) $(OUT)/*.d

@@ -42,4 +42,4 @@ $(FLIB): $(LIB)
 	install -m 644 include/nslog/nslog.h $(FB)/include/nslog
 
 clean:
-	rm -f $(OBJS) $(LIB) $(FLIB) $(OUT)/filter-parser.c $(OUT)/filter-parser.h $(OUT)/filter-lexer.inc $(OUT)/filter-lexer.h $(OUT)/filter-lexer.c $(OUT)/filter-parser.output
+	rm -f $(OBJS) $(LIB) $(FLIB) $(OUT)/filter-parser.c $(OUT)/filter-parser.h $(OUT)/filter-lexer.inc $(OUT)/filter-lexer.h $(OUT)/filter-lexer.c $(OUT)/filter-parser.output $(OUT)/*.d

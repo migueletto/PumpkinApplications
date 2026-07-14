@@ -5,7 +5,7 @@
 #include "libnsfb_plot.h"
 #include "libnsfb_event.h"
 #include "nsfb.h"
-#include "surface.h"
+#include "nssurface.h"
 #include "plot.h"
 
 #include <PalmOS.h>

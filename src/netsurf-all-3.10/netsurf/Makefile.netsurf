@@ -355,5 +355,5 @@ nsfb$(SOEXT): gen img $(OBJS) $(NSLIBS)
 	$(CC) -shared -o nsfb$(SOEXT) $(OBJS) $(LDFLAGS)
 
 clean:
-	rm -f nsfb$(SOEXT) $(OBJS) $(OUT)/convert_font $(OUT)/convert_image $(OUT)/font-ns-sans.c $(OUT)/testament.h $(OUT)/duktape/generics.js.inc $(OUT)/duktape/polyfill.js.inc gen img $(OUT)/*.[ch] $(OUT)/duktape/*.[ch] $(OUT)/duktape/Makefile
+	rm -f nsfb$(SOEXT) $(OBJS) $(OUT)/convert_font $(OUT)/convert_image $(OUT)/font-ns-sans.c $(OUT)/testament.h $(OUT)/duktape/generics.js.inc $(OUT)/duktape/polyfill.js.inc gen img $(OUT)/*.[ch] $(OUT)/duktape/*.[ch] $(OUT)/duktape/Makefile $(MSG)
 

@@ -14,7 +14,7 @@
 
 #include "sys.h"
 #include "surfaces.h"
-#include "surface.h"
+#include "nssurface.h"
 #include "plot.h"
 
 #include "debug.h"

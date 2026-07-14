@@ -8,7 +8,7 @@ PROGRAM=NetSurf
 PRC=$(VFS)/app_install/$(PROGRAM).prc
 
 $(PROGRAM).prc: $(DLIB) res.flag
-	$(PRCDUILD) -f $(PROGRAM).prc -t appl -c Nsrf -n $(PROGRAM) *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t appl -c Nsrf -n $(PROGRAM) *.bin
 	cp $(PROGRAM).prc $(PRC)
 
 $(DLIB): ../netsurf/nsfb$(SOEXT)

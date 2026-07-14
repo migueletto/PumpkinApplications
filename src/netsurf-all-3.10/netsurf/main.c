@@ -103,7 +103,7 @@ PIT_EXPORT UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags) {
   char *argv[16], width[32], height[32], depth[32];
   int argc;
 
-  pumpkin_unzip_resource(zipRsc, 1, (char *)RESDIR);
+  pumpkin_unzip_resource(zipRsc, 1, 1, (char *)RESDIR);
 
   if (cmd == sysAppLaunchCmdNormalLaunch) {
     FrmCenterDialogs(true);
