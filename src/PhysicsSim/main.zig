@@ -3,6 +3,7 @@ const pi = std.math.pi;
 const pi2 = 2 * pi;
 
 const pumpkin = @import("pumpkin");
+const c = pumpkin.c;
 const Win = pumpkin.Win;
 const Frm = pumpkin.Frm;
 const Ctl = pumpkin.Ctl;
@@ -15,11 +16,7 @@ const RectangleType = pumpkin.RectangleType;
 const PointType = pumpkin.PointType;
 
 const space = @import("space");
-
-const c = @cImport({
-  @cInclude("zigpumpkin.h");
-  @cInclude("vg.h");
-});
+const vg = @import("vg");
 
 const mainForm: u16 = 1000;
 const aboutCmd: u16 = 1;
@@ -155,12 +152,12 @@ fn initSimulation() void {
   const svgHandle = Dm.getResource(svgRsc, 1000);
   const svgText = Mem.handleLock(svgHandle);
   const svgLen = Mem.handleSize(svgHandle);
-  const vg: *VectorGraphicsType = @ptrCast(c.VgCreate(svgText, svgLen));
-  c.VgScale(vg, 0.15);
-  c.VgFreeze(vg);
+  const vgt: *VectorGraphicsType = @ptrCast(vg.VgCreate(svgText, svgLen));
+  vg.VgScale(vgt, 0.15);
+  vg.VgFreeze(vgt);
   var vgWidth: f64 = 0;
   var vgHeight: f64 = 0;
-  c.VgSize(vg, &vgWidth, &vgHeight);
+  vg.VgSize(vgt, &vgWidth, &vgHeight);
   const ballRadius: f64 = vgWidth / 2.0;
 
   const prev: u16 = c.WinSetCoordinateSystem(144);
@@ -179,7 +176,7 @@ fn initSimulation() void {
   sim = Simulation {
     .svgHandle = svgHandle,
     .svgText = svgText,
-    .vg = vg,
+    .vg = vgt,
     .space = s,
     .ground = ground,
     .ball = ball,
@@ -215,7 +212,7 @@ fn iterateSimulation(dt: f64) void {
   var angle = sim.ball.getAngle();
   while (angle < 0) { angle += pi2; }
   while (angle >= pi2) { angle -= pi2; }
-  c.VgRotate(sim.vg, pi2 - angle, 200, 200);
+  vg.VgRotate(sim.vg, pi2 - angle, 200, 200);
   pumpkin.debug(pumpkin.DEBUG_INFO, "test", "{d:.2}: x = {d:.2}, y = {d:.2}, angle = {d:.2}", .{ sim.i, x, y, angle });
 
   const ballX: i16 = @intFromFloat(x - sim.ballRadius);
@@ -229,7 +226,7 @@ fn iterateSimulation(dt: f64) void {
   const prev: u16 = c.WinSetCoordinateSystem(144);
   c.WinCopyWindow(sim.background, sim.buffer, &rect, rect.topLeft.x, rect.topLeft.y);
   const old: *WindowType = @ptrCast(c.WinSetDrawWindow(sim.buffer));
-  c.VgRender(sim.vg, ballX, ballY);
+  vg.VgRender(sim.vg, ballX, ballY);
   _ = c.WinSetDrawWindow(old);
   c.WinCopyWindow(sim.buffer, c.WinGetActiveWindow(), &rect, rect.topLeft.x, rect.topLeft.y);
   _ = c.WinSetCoordinateSystem(prev);
@@ -241,7 +238,7 @@ fn iterateSimulation(dt: f64) void {
 fn deinitSimulation() void {
   sim.space.deinit();
 
-  c.VgDestroy(sim.vg);
+  vg.VgDestroy(sim.vg);
   Mem.handleUnlock(sim.svgHandle);
   _ = Dm.releaseResource(sim.svgHandle);
 
