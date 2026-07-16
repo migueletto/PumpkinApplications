@@ -131,6 +131,7 @@ PIT_EXPORT UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags) {
     argv[argc++] = width;
     argv[argc++] = (char *)"-h";
     argv[argc++] = height;
+    debug(DEBUG_INFO, "NetSurf", "ns_main depth=%s width=%s height=%s", depth, width, height);
     ns_main(argc, argv);
 
     FrmCloseAllForms();

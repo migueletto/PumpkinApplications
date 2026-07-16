@@ -491,10 +491,12 @@ process_cmdline(int argc, char** argv)
 
 	fewidth = nsoption_int(window_width);
 	if (fewidth <= 0) {
+		NSLOG(netsurf, INFO, "fewidth %d", fewidth);
 		fewidth = 800;
 	}
 	feheight = nsoption_int(window_height);
 	if (feheight <= 0) {
+		NSLOG(netsurf, INFO, "feheight %d", feheight);
 		feheight = 600;
 	}
 
@@ -505,8 +507,10 @@ process_cmdline(int argc, char** argv)
 		feurl = NETSURF_HOMEPAGE;
 	}
 
+	optind = 1;
 	while((opt = getopt_long(argc, argv, "f:b:w:h:",
 				 long_options, &option_index)) != -1) {
+		NSLOG(netsurf, INFO, "argv opt '%c'", opt);
 		switch (opt) {
 		case 'f':
 			fename = optarg;
@@ -514,14 +518,17 @@ process_cmdline(int argc, char** argv)
 
 		case 'b':
 			febpp = atoi(optarg);
+			NSLOG(netsurf, INFO, "argv febpp %d", febpp);
 			break;
 
 		case 'w':
 			fewidth = atoi(optarg);
+			NSLOG(netsurf, INFO, "argv fewidth %d", fewidth);
 			break;
 
 		case 'h':
 			feheight = atoi(optarg);
+			NSLOG(netsurf, INFO, "argv feheight %d", feheight);
 			break;
 
 		default:
