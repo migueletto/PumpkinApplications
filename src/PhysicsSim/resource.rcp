@@ -52,4 +52,7 @@ END
 
 DATA "tSVG" ID 1000 "ball.svg"
 
+HEX "heap" ID 1
+  0x00 0x10 0x00 0x08
+
 VERSION "1.0"

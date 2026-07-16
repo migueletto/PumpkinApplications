@@ -32,13 +32,12 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    lib.addIncludePath(b.path("../../../PumpkinOS/src/libpumpkin"));
-    lib.addIncludePath(b.path("."));
-    lib.addLibraryPath(b.path("../../../PumpkinOS/bin"));
-    lib.linkSystemLibrary("pit");
-    lib.linkSystemLibrary("pumpkin");
-    lib.linkSystemLibrary("chipmunk");
-    lib.linkSystemLibrary("pluto");
-    lib.linkLibC();
+    lib.root_module.addIncludePath(b.path("../../../PumpkinOS/src/libpumpkin"));
+    lib.root_module.addIncludePath(b.path("."));
+    lib.root_module.addLibraryPath(b.path("../../../PumpkinOS/bin"));
+    lib.root_module.linkSystemLibrary("pit", .{});
+    lib.root_module.linkSystemLibrary("pumpkin", .{});
+    lib.root_module.linkSystemLibrary("chipmunk", .{});
+    lib.root_module.linkSystemLibrary("pluto", .{});
     b.installArtifact(lib);
 }
