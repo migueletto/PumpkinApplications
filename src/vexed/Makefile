@@ -32,7 +32,7 @@ LEVELS=levelpacks/ChildrensPack.pdb \
 all: $(PROGRAM).prc levels
 
 $(PROGRAM).prc: $(DLIB) res.flag
-	$(PRCDUILD) -f $(PROGRAM).prc -t appl -c Vexd -n $(PROGRAM) *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t appl -c Vexd -n $(PROGRAM) *.bin
 	cp $(PROGRAM).prc $(PRC)
 
 $(DLIB): $(PROGRAM).dlib

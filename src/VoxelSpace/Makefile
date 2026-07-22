@@ -6,7 +6,7 @@ PRC=$(VFS)/app_install/$(PROGRAM).prc
 OBJS=main.o player.o display.o input.o noise.o
 
 $(PROGRAM).prc: $(DLIB) res.flag
-	$(PRCDUILD) -f $(PROGRAM).prc -t appl -c VoxS -n Voxels *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t appl -c VoxS -n Voxels *.bin
 	cp $(PROGRAM).prc $(PRC)
 
 $(DLIB): $(PROGRAM).dlib

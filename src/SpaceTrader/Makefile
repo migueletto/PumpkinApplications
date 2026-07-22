@@ -7,7 +7,7 @@ OBJS=AppHandleEvent.o Bank.o BuyEquipEvent.o BuyShipEvent.o Cargo.o CmdrStatusEv
 CUSTOMPFLAGS=-DBPP8
 
 $(PROGRAM).prc: $(DLIB) res.flag
-	$(PRCDUILD) -f $(PROGRAM).prc -t appl -c STra -n $(PROGRAM) *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t appl -c STra -n $(PROGRAM) *.bin
 	cp $(PROGRAM).prc $(PRC)
 
 $(DLIB): $(PROGRAM).dlib

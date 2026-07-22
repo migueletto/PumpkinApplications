@@ -6,7 +6,7 @@ PRC=$(VFS)/app_install/$(PROGRAM).prc
 OBJS=commandchat.o
 
 $(PROGRAM).prc: $(DLIB) res.flag
-	$(PRCDUILD) -f $(PROGRAM).prc -t CmdE -c CmdC -n $(PROGRAM) *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t CmdE -c CmdC -n $(PROGRAM) *.bin
 	cp $(PROGRAM).prc $(PRC)
 
 $(DLIB): $(PROGRAM).dlib

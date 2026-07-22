@@ -165,10 +165,10 @@
 #define tamSerBuf	4096
 #define tamBuf		256
 
-#define font4x6Id    1001
-#define font5x9Id    1002
-#define font8x14Id   1003
-#define font12x22Id  1004
+#define pfont4x6Id    1001
+#define pfont5x9Id    1002
+#define pfont8x14Id   1003
+#define pfont12x22Id  1004
 
 #define font4x6    128
 #define font5x9    129

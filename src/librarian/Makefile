@@ -9,7 +9,7 @@ $(PRC): $(PROGRAM).prc
 	cp $(PROGRAM).prc $(PRC)
 
 $(PROGRAM).prc: $(DLIB) res.flag
-	$(PRCDUILD) -f $(PROGRAM).prc -t appl -c LFlb -n $(PROGRAM) *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t appl -c LFlb -n $(PROGRAM) *.bin
 
 $(DLIB): $(PROGRAM).dlib
 	cp $(PROGRAM).dlib $(DLIB)

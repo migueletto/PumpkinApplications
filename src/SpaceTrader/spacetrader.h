@@ -434,7 +434,7 @@
 #define MOON 2
 
 // size of a UInt16
-#define MAX_WORD 65535
+#define SMAX_WORD 65535
 
 // these have been added to avoid tracking down the math library.
 #define min( a, b ) ( (a) <= (b) ? (a) : (b) )

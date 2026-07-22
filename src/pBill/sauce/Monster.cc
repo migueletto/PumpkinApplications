@@ -14,7 +14,7 @@ void Monster::get_border() {
 
 /*  Adds a bill to the in state*/
 void Monster::enter(){
-	state = IN;
+	state = SIN;
 	get_border();
 	x = target_x; y=target_y;
 	index = 0;
@@ -62,7 +62,7 @@ int Monster::move (int mode) {
 
 void Monster::draw() {
 	switch (state) {
-		case IN:
+		case SIN:
 		case OUT:
 		case DYING: draw_std(); break;
 		case AT: draw_at(); break;
@@ -185,7 +185,7 @@ void Monster::update_dying() {
 
 void Monster::update() {
 	switch (state) {
-		case IN: update_in(); break;
+		case SIN: update_in(); break;
 		case AT: update_at(); break;
 		case OUT: update_out(); break;
 		case DYING: update_dying(); break;

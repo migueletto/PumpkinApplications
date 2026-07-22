@@ -15,7 +15,7 @@ $(PRC): $(PROGRAM).prc
 	cp $(PROGRAM).prc $(PRC)
 
 $(PROGRAM).prc: $(DLIB) res.flag
-	$(PRCDUILD) -f $(PROGRAM).prc -t appl -c RoGe -n iRogue *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t appl -c RoGe -n iRogue *.bin
 
 $(DLIB): $(PROGRAM).dlib
 	cp $(PROGRAM).dlib $(DLIB)

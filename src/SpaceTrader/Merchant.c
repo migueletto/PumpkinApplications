@@ -62,13 +62,15 @@ int GetBitmapWidth( BitmapPtr BmpPtr )
 {
 	Coord W;
 
+/*
 	if (BELOW40)
 		return BmpPtr->width;
 	else
 	{
+*/
 		BmpGetDimensions( BmpPtr, &W, 0, 0 );
 		return W;
-	}
+	//}
 }
 
 // *************************************************************************
@@ -78,13 +80,15 @@ int GetBitmapHeight( BitmapPtr BmpPtr )
 {
 	Coord H;
 
+/*
 	if (BELOW40)
 		return BmpPtr->height;
 	else
 	{
+*/
 		BmpGetDimensions( BmpPtr, 0, &H, 0 );
 		return H;
-	}
+	//}
 }
 // *************************************************************************
 // Determines if the OS supports this resolution

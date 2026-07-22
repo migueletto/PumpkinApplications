@@ -41,7 +41,7 @@ all:
 
 $(DOOM).prc: $(DOOM).dlib doom/res.flag
 	cp $(DOOM).dlib doom/$(DLIB)
-	$(PRCDUILD) -f $(DOOM).prc -t appl -c $(DOOMCREATOR) -n $(DOOM) doom/*.bin
+	$(PRCBUILD) -f $(DOOM).prc -t appl -c $(DOOMCREATOR) -n $(DOOM) doom/*.bin
 	rm -f doom/$(DLIB)
 	cp $(DOOM).prc $(DOOMPRC)
 
@@ -50,7 +50,7 @@ $(DOOM).dlib: $(DOOMOBJS) libdoom/libdoom.a
 
 $(HERETIC).prc: $(HERETIC).dlib heretic/res.flag
 	cp $(HERETIC).dlib heretic/$(DLIB)
-	$(PRCDUILD) -f $(HERETIC).prc -t appl -c $(HERETICCREATOR) -n $(HERETIC) heretic/*.bin
+	$(PRCBUILD) -f $(HERETIC).prc -t appl -c $(HERETICCREATOR) -n $(HERETIC) heretic/*.bin
 	rm -f heretic/$(DLIB)
 	cp $(HERETIC).prc $(HERETICPRC)
 
@@ -59,7 +59,7 @@ $(HERETIC).dlib: $(HERETICOBJS) libdoom/libdoom.a
 
 $(HEXEN).prc: $(HEXEN).dlib hexen/res.flag
 	cp $(HEXEN).dlib hexen/$(DLIB)
-	$(PRCDUILD) -f $(HEXEN).prc -t appl -c $(HEXENCREATOR) -n $(HEXEN) hexen/*.bin
+	$(PRCBUILD) -f $(HEXEN).prc -t appl -c $(HEXENCREATOR) -n $(HEXEN) hexen/*.bin
 	rm -f hexen/$(DLIB)
 	cp $(HEXEN).prc $(HEXENPRC)
 
@@ -68,7 +68,7 @@ $(HEXEN).dlib: $(HEXENOBJS) libdoom/libdoom.a
 
 $(STRIFE).prc: $(STRIFE).dlib strife/res.flag
 	cp $(STRIFE).dlib strife/$(DLIB)
-	$(PRCDUILD) -f $(STRIFE).prc -t appl -c $(STRIFECREATOR) -n $(STRIFE) strife/*.bin
+	$(PRCBUILD) -f $(STRIFE).prc -t appl -c $(STRIFECREATOR) -n $(STRIFE) strife/*.bin
 	rm -f strife/$(DLIB)
 	cp $(STRIFE).prc $(STRIFEPRC)
 

@@ -20,7 +20,7 @@ $(PRC): $(PROGRAM).prc
 	cp $(PROGRAM).prc $(PRC)
 
 $(PROGRAM).prc: $(DLIB) $(PROGRAM).res
-	$(PRCDUILD) -f $(PROGRAM).prc -t appl -c DOSb -n DOSBox *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t appl -c DOSb -n DOSBox *.bin
 
 $(DLIB): $(PROGRAM).dlib
 	cp $(PROGRAM).dlib $(DLIB)

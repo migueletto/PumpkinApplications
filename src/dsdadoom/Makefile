@@ -10,7 +10,7 @@ DOOMOBJS=data/rd_graphic.o data/rd_main.o data/rd_output.o data/rd_palette.o dat
 
 $(DOOM).prc: $(DOOM).dlib res.flag
 	cp $(DOOM).dlib $(DLIB)
-	$(PRCDUILD) -f $(DOOM).prc -t appl -c $(DOOMCREATOR) -n $(DOOM) *.bin
+	$(PRCBUILD) -f $(DOOM).prc -t appl -c $(DOOMCREATOR) -n $(DOOM) *.bin
 	rm -f $(DLIB)
 	cp $(DOOM).prc $(DOOMPRC)
 

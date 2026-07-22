@@ -112,11 +112,13 @@ static uint8_t get_colormap(int x, int y, uint8_t h) {
 static void init_framebuffer(void) {
   WinHandle wh;
   BitmapType *bmp;
+  Coord width;
 
   wh = WinGetDisplayWindow();
   bmp = WinGetBitmap(wh);
   framebuffer = BmpGetBits(bmp);
-  framebuffer += Y0 * bmp->width;
+  BmpGetDimensions(bmp, &width, NULL, NULL);
+  framebuffer += Y0 * width;
 }
 
 static void clear_framebuffer(uint16_t color) {

@@ -21,7 +21,7 @@ public:
 	static const int FAST = 1;
 
 	static const int OFF = 0;	/* Bill's states */
-	static const int IN = 1;
+	static const int SIN = 1;
 	static const int AT = 2;
 	static const int OUT = 3;
 	static const int DYING = 4;

@@ -10,7 +10,7 @@ CUSTOMPFLAGS=-I. -I./zlib -DNEWGCC -DERROR_CHECK_LEVEL=ERROR_CHECK_FULL -DHAVE_C
 all: $(PROGRAM).prc
 
 $(PROGRAM).prc: $(DLIB) res.flag
-	$(PRCDUILD) -f $(PROGRAM).prc -t appl -c Plkr -n $(PROGRAM) *.bin
+	$(PRCBUILD) -f $(PROGRAM).prc -t appl -c Plkr -n $(PROGRAM) *.bin
 	cp $(PROGRAM).prc $(PRC)
 
 $(DLIB): $(PROGRAM).dlib

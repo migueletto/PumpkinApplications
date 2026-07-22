@@ -221,7 +221,7 @@ void mc1000_reset(void) {
 void mc1000_finish(void) {
   PrefSetAppPreferences(AppID, 128 + id, 1, &prefs, sizeof(prefs), true);
 
-  if (buffer);
+  if (buffer)
     MemPtrFree(buffer);
   buffer = NULL;
 

@@ -92,10 +92,10 @@ UInt16 Rand()
    static UInt16 a = 18000;
    static UInt16 b = 30903;
 
-   SeedX = a*(SeedX&MAX_WORD) + (SeedX>>16);
-   SeedY = b*(SeedY&MAX_WORD) + (SeedY>>16);
+   SeedX = a*(SeedX&SMAX_WORD) + (SeedX>>16);
+   SeedY = b*(SeedY&SMAX_WORD) + (SeedY>>16);
 
-   return ((SeedX<<16) + (SeedY&MAX_WORD));
+   return ((SeedX<<16) + (SeedY&SMAX_WORD));
 }
 
 void RandSeed( UInt16 seed1, UInt16 seed2 )

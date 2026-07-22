@@ -282,10 +282,10 @@ BEGIN
   BUTTONS "Ok"
 END  
 
-FONT ID font4x6Id    FONTID font4x6    "4x6.txt"
-FONT ID font5x9Id    FONTID font5x9    "5x9.txt"
-FONT ID font8x14Id   FONTID font8x14   "8x14.txt"
-FONT ID font12x22Id  FONTID font12x22  "12x22.txt"
+FONT ID pfont4x6Id    FONTID font4x6    "4x6.txt"
+FONT ID pfont5x9Id    FONTID font5x9    "5x9.txt"
+FONT ID pfont8x14Id   FONTID font8x14   "8x14.txt"
+FONT ID pfont12x22Id  FONTID font12x22  "12x22.txt"
 
 ICONFAMILY "icon.bmp" "" "" "iconc.bmp"
 SMALLICON "smallicon.bmp"

@@ -47,16 +47,16 @@ static const RGBColorType high_color_table[COLOR_SIZE] = {
 void InitFonts(void) {
   FontType *f;
 
-  if ((f = DmGet1Resource(fontRscType, font4x6Id)) != NULL) {
+  if ((f = DmGet1Resource(fontRscType, pfont4x6Id)) != NULL) {
     FntDefineFont(font4x6, MemHandleLock(f));
   }
-  if ((f = DmGet1Resource(fontRscType, font5x9Id)) != NULL) {
+  if ((f = DmGet1Resource(fontRscType, pfont5x9Id)) != NULL) {
     FntDefineFont(font5x9, MemHandleLock(f));
   }
-  if ((f = DmGet1Resource(fontRscType, font8x14Id)) != NULL) {
+  if ((f = DmGet1Resource(fontRscType, pfont8x14Id)) != NULL) {
     FntDefineFont(font8x14, MemHandleLock(f));
   }
-  if ((f = DmGet1Resource(fontRscType, font12x22Id)) != NULL) {
+  if ((f = DmGet1Resource(fontRscType, pfont12x22Id)) != NULL) {
     FntDefineFont(font12x22, MemHandleLock(f));
   }
 }
