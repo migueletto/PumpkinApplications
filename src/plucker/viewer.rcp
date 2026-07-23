@@ -896,13 +896,12 @@ END
 DATA "NFNT" 0x204   "fonts/narrowfont.bin"
 DATA "NFNT" 0x205   "fonts/narrowboldfont.bin"
 DATA "NFNT" 0x208   "fonts/narrowfixedfont.bin"
-
+DATA "NFNT" 0x406   "fonts/stdfixedfont_sony.bin"
 DATA "nfnt" 0x60A   "fonts/tinyfont_palm.bin"
 DATA "nfnt" 0x60B   "fonts/tinyboldfont_palm.bin"
 DATA "nfnt" 0x60C   "fonts/smallfont_palm.bin"
 DATA "nfnt" 0x60D   "fonts/smallboldfont_palm.bin"
 DATA "nfnt" 0x606   "fonts/stdfixedfont_palm.bin"
-DATA "NFNT" 0x406   "fonts/stdfixedfont_sony.bin"
 
 HEX "wTap" ID 1000
     0x00 0x00 0x00 0x01

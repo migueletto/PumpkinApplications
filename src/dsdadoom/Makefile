@@ -1,5 +1,4 @@
-include ../common.mak
-include ../commonp.mak
+include ../env.mak
 
 CUSTOMPFLAGS=-I. -I./src -I./data -I$(SRC)/libzip
 

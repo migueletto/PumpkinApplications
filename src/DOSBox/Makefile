@@ -1,5 +1,4 @@
-include ../common.mak
-include ../commonp.mak
+include ../env.mak
 
 PROGRAM=DOSBox
 OBJS=DOSBox.o

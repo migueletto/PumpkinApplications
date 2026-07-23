@@ -1,5 +1,4 @@
-include ../common.mak
-include ../commonp.mak
+include ../env.mak
 
 PROGRAM=Plucker
 PRC=$(VFS)/app_install/$(PROGRAM).prc
@@ -20,7 +19,9 @@ $(PROGRAM).dlib: $(OBJS)
 	$(CC) -shared -o $(PROGRAM).dlib $(OBJS) -L$(BIN) -lpumpkin -lpit
 
 res.flag: viewer.rcp
+	cd fonts; make; cd ..
 	$(PILRC) -I . -I ./fonts -I ./icons -L en viewer.rcp; touch res.flag
 
 clean:
+	cd fonts; make clean; cd ..
 	rm -f $(PRC) $(PROGRAM).prc $(PROGRAM).dlib $(PROGRAM) $(OBJS) *.bin res.flag PyPlucker/*.pyc PyPlucker/helper/*.pyc

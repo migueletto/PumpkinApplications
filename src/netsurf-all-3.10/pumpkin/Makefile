@@ -1,8 +1,7 @@
 include ../Makefile.common
-ROOT=$(PUMPKINOS)
 
-include $(ROOT)/src/common.mak
-include $(ROOT)/src/commonp.mak
+include $(PUMPKINOS)/src/common.mak
+include $(PUMPKINOS)/src/commonp.mak
 
 PROGRAM=NetSurf
 PRC=$(VFS)/app_install/$(PROGRAM).prc

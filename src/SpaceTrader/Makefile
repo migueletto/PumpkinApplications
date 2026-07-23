@@ -1,5 +1,4 @@
-include ../common.mak
-include ../commonp.mak
+include ../env.mak
 
 PROGRAM=SpaceTrader
 PRC=$(VFS)/app_install/$(PROGRAM).prc

@@ -1,5 +1,4 @@
-include ../common.mak
-include ../commonp.mak
+include ../env.mak
 
 GENOBJS=libdoom/m_config.o libdoom/i_sound.o libdoom/i_system.o libdoom/i_video.o libdoom/m_argv.o libdoom/m_misc.o libdoom/aes_prng.o libdoom/d_event.o libdoom/d_iwad.o libdoom/d_loop.o libdoom/d_mode.o libdoom/deh_str.o libdoom/i_endoom.o libdoom/i_glob.o libdoom/i_input.o libdoom/i_timer.o libdoom/m_bbox.o libdoom/m_cheat.o libdoom/m_controls.o libdoom/m_fixed.o libdoom/net_client.o libdoom/net_common.o libdoom/net_io.o libdoom/net_loop.o libdoom/net_packet.o libdoom/net_petname.o libdoom/net_query.o libdoom/net_server.o libdoom/net_structrw.o libdoom/sha1.o libdoom/memio.o libdoom/tables.o libdoom/v_video.o libdoom/v_trans.o libdoom/w_checksum.o libdoom/w_main.o libdoom/w_wad.o libdoom/w_file.o libdoom/w_file_stdc.o libdoom/w_file_posix.o libdoom/w_file_win32.o libdoom/w_merge.o libdoom/z_zone.o libdoom/deh_main.o libdoom/deh_io.o libdoom/deh_mapping.o libdoom/deh_text.o libdoom/a11y.o libdoom/crispy.o libdoom/quit.o libdoom/palette.o libdoom/main.o
 

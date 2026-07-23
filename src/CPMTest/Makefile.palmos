@@ -1,5 +1,4 @@
-include ../common.mak
-include ../commonp.mak
+include ../env.mak
 
 CC=m68k-palmos-gcc
 BUILDPRC=build-prc
