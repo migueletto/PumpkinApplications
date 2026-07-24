@@ -1,3 +1,4 @@
+USE_C99=no
 include ../env.mak
 
 PROGRAM=Doom

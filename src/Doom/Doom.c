@@ -226,7 +226,7 @@ void DG_DrawFrame(void) {
     for (j = 0; j < width; j++, k++) {
       surface_rgb_color(SURFACE_ENCODING_ARGB, NULL, 0, src[k], &red, &green, &blue, &alpha);
       aux = surface_color_rgb(SURFACE_ENCODING_RGB565, NULL, 0, red, green, blue, 0xFF);
-      dst[k] = htobe16(aux);
+      dst[k] = sys_htobe16(aux);
     }
   }
 

@@ -1,3 +1,4 @@
+USE_C99=no
 include ../env.mak
 
 CUSTOMPFLAGS=-I. -I./src -I./data -I$(SRC)/libzip
@@ -14,7 +15,7 @@ $(DOOM).prc: $(DOOM).dlib res.flag
 	cp $(DOOM).prc $(DOOMPRC)
 
 $(DOOM).dlib: $(DOOMOBJS)
-	g++ -shared -o $(DOOM).dlib $(DOOMOBJS) -L$(BIN) -lpumpkin -lpit -lpzip
+	g++ -shared -o $(DOOM).dlib $(DOOMOBJS) -L$(BIN) -lpumpkin -lpit -lzip
 
 src/dsda/mapinfo/doom/parser.o: src/dsda/mapinfo/doom/parser.cpp
 	g++ $(CFLAGS) -c -o $@ $<
