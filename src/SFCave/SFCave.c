@@ -695,7 +695,6 @@ static void AppEventLoop(void)
 
 	do {
 		EvtGetEvent(&event, EVENT_INTERVAL /*evtWaitForever*/ );
-debug(1, "XXX", "got event %d", event.eType);
 
 		// disable Sys/MenuHandleEvent for hardware keys
 		if ( event.eType == keyDownEvent && (event.data.keyDown.chr==gButtonCode[gControlButton])) {
