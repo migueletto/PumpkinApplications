@@ -128,7 +128,9 @@ static void clear_framebuffer(uint16_t color) {
 }
 
 static void render_framebuffer(void) {
+  pumpkin_dirty_region_mode(dirtyRegionBegin);
   pumpkin_screen_dirty(WinGetDisplayWindow(), 0, Y0, SCREEN_WIDTH, SCREEN_HEIGHT);
+  pumpkin_dirty_region_mode(dirtyRegionEnd);
 }
 
 static void draw(void) {
