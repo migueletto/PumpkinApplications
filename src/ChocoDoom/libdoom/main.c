@@ -217,7 +217,9 @@ void DG_DrawFrame(void) {
     }
   }
 
+  pumpkin_dirty_region_mode(dirtyRegionBegin);
   pumpkin_screen_dirty(wh, x0, Y0, width, height);
+  pumpkin_dirty_region_mode(dirtyRegionEnd);
 }
 
 uint32_t DG_GetTicksMs(void) {
