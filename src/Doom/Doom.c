@@ -251,7 +251,9 @@ void DG_DrawFrame(void) {
   WinSetDrawWindow(old);
   WinSetCoordinateSystem(kCoordinatesStandard);
 
+  pumpkin_dirty_region_mode(dirtyRegionBegin);
   pumpkin_screen_dirty(wh, 0, 0, bwidth, bheight);
+  pumpkin_dirty_region_mode(dirtyRegionEnd);
 }
 
 void DG_StatusTop(char *s) {
