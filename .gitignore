@@ -9,6 +9,7 @@
 *.prc
 *.pdb
 *.zip
+*.pyc
 *.d
 res.flag
 .zig-cache
