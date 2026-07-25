@@ -192,7 +192,9 @@ void DG_DrawFrame(void) {
   if ((t - lastDraw) < 33333) return;
   lastDraw = t;
 
+  pumpkin_dirty_region_mode(dirtyRegionBegin);
   pumpkin_screen_copy(DG_ScreenBuffer, Y0, Y0 + gameHeight);
+  pumpkin_dirty_region_mode(dirtyRegionEnd);
 }
 
 uint32_t DG_GetTicksMs(void) {
